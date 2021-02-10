@@ -1,0 +1,325 @@
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.display-1000{
+    display: none!important;
+}
+.display-phone{
+    display: none!important;
+}
+.allVM th, .allVM td{
+    width: auto;
+}
+.color-lightgrey{
+    color: lightgray;
+}
+.color-active{
+    color: #007bff;
+}
+.searchBoxUser{
+    overflow-y: scroll;
+    -webkit-overflow-y: scroll;
+    height: 100px;
+}
+.unlink{
+    text-decoration: none;
+    color: black;
+}
+
+.unlink:hover{
+    color: black;
+    text-decoration: none;
+}
+.search-responsive{
+    width: calc(100% - 200px - 130px)!important;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(137,196,255,0.3)!important;
+}
+.w-150-px{
+    width: 150px !important;
+}
+.w-470-px{
+    width: 470px !important;
+}
+.w-15{
+    width: 15% !important;
+}
+
+.w-20{
+    width: 20% !important;
+}
+
+.w-25-m{
+    width: 25% !important;
+}
+
+.w-33{
+    width: calc(100%/3)!important;
+}
+
+.w-40{
+    width: 40% !important;
+}
+
+.w-45{
+    width: 45% !important;
+}
+
+.w-50-m{
+    width: 50% !important;
+}
+
+.w-55{
+    width: 55% !important;
+}
+
+.w-66{
+    width: calc(100%/3*2)!important;
+}
+
+.w-75-m{
+    width: 75% !important;
+}
+/* ----------------------------------- select2 ---------------------------------*/
+.select2-container--default .select2-selection--multiple{
+    border: 1px solid #ced4da!important;
+    height: 38px!important;
+}
+.select2-selection .select2-selection--multiple{
+    min-height: 38px!important;
+}
+.select2-container{
+    width: 100%!important;
+}
+
+/* ----------------------------------- w3 schools ---------------------------------*/
+.w3-sidebar{height:100%;width:200px;background-color:#343a40;position:fixed!important;z-index:1;overflow:auto}
+.w3-bar-block .w3-dropdown-hover,.w3-bar-block .w3-dropdown-click{width:100%}
+.w3-bar-block .w3-dropdown-hover .w3-dropdown-content,.w3-bar-block .w3-dropdown-click .w3-dropdown-content{min-width:100%}
+.w3-bar-block .w3-dropdown-hover .w3-button,.w3-bar-block .w3-dropdown-click .w3-button{width:100%;text-align:left;padding:8px 16px}
+.w3-bar-block .w3-bar-item{width:100%;display:block;padding:8px 16px;text-align:left;border:none;white-space:normal;float:none;outline:0}
+.w3-bar-block.w3-center .w3-bar-item{text-align:center}.w3-block{display:block;width:100%}
+.w3-card,.w3-card-2{box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)}
+.w3-card-4,.w3-hover-shadow:hover{box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)}
+.w3-animate-right{position:relative;animation:animateright 0.4s}@keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
+.w3-animate-bottom{position:relative;animation:animatebottom 0.8s}@keyframes animatebottom{from{bottom:-90%;opacity:0;} to{bottom:0;opacity:1;}}
+.w3-animate-left{position:relative;animation:animateleft 0.4s}@keyframes animateleft{from{left:-300px;opacity:0} to{left:0;opacity:1}}
+
+/* ------------------------------------------- Responsive correction -------------------------------------------------*/
+@media screen and (min-width: 1050px) {
+    .responsive-menu-min{
+        visibility: hidden;
+    }
+    .padding-left{
+        padding-left: 200px;
+    }
+    .logo-responsive{
+        max-width: 200px;
+        min-width: 200px;
+        background-color: rgba(255,0,0,0)!important;
+    }
+    .signIn-responsive{
+        max-width: 130px;
+        min-width: 130px;
+    }
+}
+@media screen and (max-width: 1050px) {
+    .responsive-menu-max{
+        visibility: hidden;
+    }
+    .padding-left{
+        padding-left: 0;
+    }
+    .logo-responsive{
+        max-width: 200px;
+        min-width: 200px;
+        background-color: rgba(255,0,0,0)!important;
+    }
+    .signIn-responsive{
+        max-width: 130px;
+        min-width: 130px;
+    }
+    .search-responsive{
+        width: calc(100% - 200px - 120px);
+    }
+}
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+/* ------------------------------------------- sidebar (responsive menu) -------------------------------------------------*/
+
+.animate{-webkit-transition:all .3s ease-in-out;-moz-transition:all .3s ease-in-out;-o-transition:all .3s ease-in-out;-ms-transition:all .3s ease-in-out;transition:all .3s ease-in-out}
+/* The side navigation menu */
+.sidenav {
+    margin-top: 48px;
+    height: 100%; /* 100% Full-height */
+    width: 200px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    opacity: 0.95; /* Background are translucent */
+}
+@media screen and (min-width: 1050px) {
+    .sidenav{
+        visibility: hidden;
+    }
+}
+
+/* ------------------------------------------- Responsive for screen < 1050px -------------------------------------------------*/
+@media screen and (max-width: 1050px){
+    .display-laptop{
+        display: none!important;
+    }
+    #responsiveDisplay{
+        width: 100%!important;
+        padding-left: 0!important;
+        padding-right: 0!important;
+        margin-bottom: 0!important;
+    }
+    .responsiveButton{
+        height: 60px;
+    }
+    .responsiveDisplay{
+        width: 100%!important;
+        margin: 2px 0px;
+    }
+    .logo-responsive{
+        max-width: 100px;
+        min-width: 100px;
+        background-color: rgba(255,0,0,0)!important;
+    }
+    .signIn-responsive{
+        max-width: 75px;
+        min-width: 75px;
+    }
+    .search-responsive{
+        width: calc(100% - 100px - 75px)!important;
+    }
+    .navbar-toggler-icon{
+        width: 50px!important;
+    }
+
+    .responsive-phone{
+        width: 100%!important;
+        padding: 25% 5px 0px;
+    }
+
+    .responsive-phone-bg{
+        background-color: #272727;
+    }
+
+    .w-25-responsive{
+        width: 25%!important;
+    }
+    .w-100-responsive{
+        width: 100%!important;
+    }
+    /* The side navigation menu */
+    .sidenav {
+        height: 100%; /* 100% Full-height */
+        width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Stay on top */
+        top: 0; /* Stay at the top */
+        left: 0;
+        background-color: #111; /* Black*/
+        overflow-x: hidden; /* Disable horizontal scroll */
+        overflow-y: initial;
+        transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+        padding-top: 20px;
+    }
+
+    /* The navigation menu links */
+    .sidenav a {
+        padding: 5px 5px 5px 32px;
+        text-decoration: none;
+        font-size: 20px;
+        color: lightgray;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .sidenav .title{
+        font-size: 25px;
+        color: #6c757d ;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        pointer-events: none;
+    }
+
+    .sidenav .last{
+        margin-bottom: 20px;
+    }
+
+    /* When you mouse over the navigation links, change their color */
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    /* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+    /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+    #main {
+        transition: margin-left .5s;
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
+    }
+}
+/* ------------------------------------------- Responsive for phones -------------------------------------------------*/
+@media handheld and (min-device-width: 600px){
+    .responsive-phone{
+        width: 100%;
+        padding: 0% 15% 0px;
+    }
+}
+@media handheld,(max-device-width: 1000px) and (max-width: 900px){
+    #main{
+        margin-top: -21px!important;
+        margin-bottom: 70px;
+    }
+    .menu-phone-selected{
+        text-decoration: underline red!important;
+    }
+    .display-phone{
+        display: inline-block!important;
+    }
+    .display-1000{
+        display: none!important;
+    }
+    .responsiveDisplay{
+        width: 100%!important;
+        margin: 2px 0px;
+    }
+    .mb-70-px{
+        margin-bottom: 70px!important;
+    }
+    .w-470-px{
+        width: 95%!important;
+    }
+    .btn-close-phone{
+        width: 100%;
+    }
+}
