@@ -21,9 +21,8 @@
         <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.bundle.js"></script>
         <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.js"></script>
         <script rel="javascript" src="view/js/script.js"></script>
-        <script rel="javascript" src="view/js/searchBox.js"></script>
-        <script rel="javascript" src="view/js/sortTable.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     </head>
 <body>
@@ -89,12 +88,16 @@
         </nav>
     <!-------------------------- Gabarit desktop  ------------------------------->
         <div class="d-inline-block w-100 fixed-top p-0 shadow" style="background-color: #e30613; height: 48px;">
+            <div class="float-left text-center ml-3" style="margin-top: 0.5rem !important;">
+                <button class="btn"><a class="responsive-phone-hidden text-decoration-none" href="index.php?action=home"><i class="fa fa-home"></i></a></button>
+            </div>
             <div class="float-right text-center mr-3" style="margin-top: 0.9rem !important;">
                 <h6><a class="responsive-phone-hidden text-decoration-none" href="index.php?action=signOut" style="color: white;">Déconnexion</a></h6>
             </div>
             <div class="m-auto text-center h-100" style="width: 125px">
                 <h4 class="m-auto font-weight-bold text-white" style="margin-top: 0.5rem!important">CPA-CP</h4>
             </div>
+
         </div>
     <?php endif; ?>
     <main id="main" role="main" class="h-100 w-100 mt-5">

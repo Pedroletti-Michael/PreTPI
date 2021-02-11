@@ -14,7 +14,6 @@ ob_start();
 <head>
     <script rel="javascript" src="view/js/jquery.js"></script>
     <script rel="javascript" src="view/js/script.js"></script>
-    <script rel="javascript" src="view/js/searchBox.js"></script>
     <meta charset="UTF-8">
     <title>Page d'accueil - CPA-CP</title>
 </head>
@@ -30,6 +29,7 @@ ob_start();
                 <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Liste visites CPA</a>
                 <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Liste contre-visites CPA</a>
                 <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Statistiques CPA</a>
+                <a href="index.php?action=displayUser" type="button" class="btn btn-primary btn-block text-decoration-none">Création d'utilisateur</a>
             </div>
         </div>
     </div>

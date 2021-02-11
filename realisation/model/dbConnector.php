@@ -11,24 +11,24 @@ require 'model/encryption.php';
 * Function used to open connexion with an DB.
 */
 function openDBConnexion(){
-  $tempDbConnexion = null;
+    $tempDbConnexion = null;
 
-  $sqlDriver = 'mysql';
-  $hostname = ''; //TODO Field to complete
-  $port = 3306;
-  $charset = 'utf8';
-  $dbName = 'dbName'; //TODO Field to complete
-  $userName = 'username'; //TODO Field to complete
-  $userPwd = decrypt("mkHndhU83csnUia.Dhjc73jhRzh6UDRNTjJUOQ=="); //TODO Field to complete
-  $dsn = $sqlDriver . ':host=' . $hostname . ';dbname=' . $dbName . ';port=' . $port . ';charset=' . $charset;
+    $sqlDriver = 'mysql';
+    $hostname = 'gg110.myd.infomaniak.com';
+    $port = 3306;
+    $charset = 'utf8';
+    $dbName = 'gg110_cpa';
+    $userName = 'gg110_cpa_viewer';
+    $userPwd = 'Ah213Ahbc12';
 
-  try{
-      $tempDbConnexion = new PDO($dsn, $userName, $userPwd);
-  }
-  catch (PDOException $exception){
-    echo 'Connection failed: ' . $exception->getMessage() . ' ' . $userPwd;
-  }
-  return $tempDbConnexion;
+    $dsn = $sqlDriver . ':host=' . $hostname . ';dbname=' . $dbName . ';port=' . $port . ';charset=' . $charset;
+
+    try {
+        $tempDbConnexion = new PDO($dsn, $userName, $userPwd);
+    } catch (PDOException $exception) {
+        echo 'Connection failed: ' . $exception->getMessage() . ' ' . $userPwd;
+    }
+    return $tempDbConnexion;
 }
 
 /**
@@ -37,52 +37,16 @@ function openDBConnexion(){
 * return = result of the query
 */
 function executeQuery($query){
-  $queryResult = null;
+    $queryResult = null;
 
-  $dbConnexion = openDBConnexion();
+    $dbConnexion = openDBConnexion();
 
-  if ($dbConnexion != null){
-    $statement = $dbConnexion->prepare($query);
-    $statement->execute();
-    $queryResult = $statement->fetchAll();
-  }
+    if ($dbConnexion != null) {
+        $statement = $dbConnexion->prepare($query);
+        $statement->execute();
+        $queryResult = $statement->fetchAll();
+    }
 
-  $dbConnexion = null;
-  return $queryResult;
-}
-
-/**
-* Function used to execute a selet query.
-* $query = query needed
-* return = result of the query
-*/
-function executeQuerySelect($query){
-  $queryResult = null;
-
-  $dbConnexion = openDBConnexion();
-  if ($dbConnexion != null){
-    $statement = $dbConnexion->prepare($query);
-    $statement->execute();
-    $queryResult = $statement->fetchAll();
-  }
-
-  $dbConnexion = null;
-  return $queryResult;
-}
-
-/**
-* Function ued to execute a insert query
-* $query = query needed
-* return = result of the query
-*/
-function executeQueryInsert($query){
-  $queryResult = null;
-
-  $dbConnexion = openDBConnexion();
-  if($dbConnexion != null){
-    $statement = $dbConnexion->prepare($query);
-    $queryResult = $statement->execute();
-  }
-  $dbConnexion = null;
-  return $queryResult;
+    $dbConnexion = null;
+    return $queryResult;
 }

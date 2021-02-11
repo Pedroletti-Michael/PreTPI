@@ -9,49 +9,13 @@
 require_once 'model/dbConnector.php';
 
 /**
- * Get all users from DB
- */
-function getAllUsers(){
-    $query = 'SELECT mail, lastname, firstname, type, user_id FROM user ORDER BY lastname ASC';
-
-    return executeQuerySelect($query);
-}
-
-/**
- * @return array|null
- */
-function getAllAdmin(){
-    $query = 'SELECT mail, lastname, firstname, type, user_id FROM user WHERE type = 1 ORDER BY lastname ASC';
-
-    return executeQuerySelect($query);
-}
-
-/**
-* This function is used to know if the user exist in our db.
-* If the user exist -> function return true
-* Else -> function return false
-*/
-function dbVerification($userMail){
-  $queryResult = getAllUsers();
-
-  //do the test to every user we have
-  foreach ($queryResult as $value) {
-    if ($userMail == $value[0]){
-        return true;
-    }
-  }
-
-  return false;
-}
-
-/**
 * Function used to add an user into data base
 * return the query result
 */
-function adUserToDB($lastname, $firstname, $mail){
+function addUserToDB($lastname, $firstname, $mail, $pwd){
   $strSep = '\'';
 
-  $query = "INSERT INTO user (lastname, firstname, mail) VALUES(".$strSep.$lastname.$strSep.",".$strSep.$firstname.$strSep.",".$strSep.$mail.$strSep.")";
+  $query = "INSERT INTO utilisateurs (nom, prenom, mail, password) VALUES('".$lastname."', '".$firstname."', '".$mail."', '".$pwd."');";
 
   return executeQuery($query);
 }
@@ -74,18 +38,4 @@ function userLogin($userLogin, $userPwd){
     }
 
 
-}
-
-/**
- * Get the type of the user
- * @param $userMail = mail of the user
- * @return = type of the user
- */
-function getUserType($userMail){
-    $strSep = '\'';
-
-    $query = "SELECT type FROM `user` WHERE mail = ". $strSep.$userMail.$strSep;
-
-    $result = executeQuery($query);
-    return $result[0][0];
 }

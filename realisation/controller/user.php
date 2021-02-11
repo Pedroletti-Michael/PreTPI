@@ -100,3 +100,26 @@ function signOut()
 
     displayLogin();
 }
+
+/**
+ * Function serve to create a user
+ */
+function displayUser(){
+    $_GET['action'] = 'displayUser';
+    require 'view/creationUser.php';
+}
+
+/**
+ * Function deserve
+ */
+function userCreation($info){
+
+    if(addUserToDB($info['lastaname'], $info['firstname'], $info['mail'], $info['password']) != null){
+        $_SESSION['message'] = "addUserSuccesses";
+        displayUser();
+    }
+    else{
+        $_SESSION['message'] = "addUserFailed";
+        displayUser();
+    }
+}
