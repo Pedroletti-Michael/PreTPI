@@ -113,13 +113,22 @@ function displayUser(){
  * Function deserve
  */
 function userCreation($info){
-
-    if(addUserToDB($info['lastaname'], $info['firstname'], $info['mail'], $info['password']) != null){
-        $_SESSION['message'] = "addUserSuccesses";
-        displayUser();
+    require_once 'model/userManager.php';
+    if(!userAlreadyExist($info['mail'])){
+        // Add user to the db and if it's okay return to the form
+        if(!addUserToDB($info['lastname'], $info['firstname'], $info['mail'], password_hash($info['password'], PASSWORD_DEFAULT))){
+            $_SESSION['message'] = "addUserSuccesses";
+            displayUser();
+        }
+        // else go back to the form with an error message
+        else{
+            $_SESSION['message'] = "addUserFailed";
+            displayUser();
+        }
     }
     else{
-        $_SESSION['message'] = "addUserFailed";
+        $_SESSION['message'] = "userAlreadyExist";
         displayUser();
     }
+
 }

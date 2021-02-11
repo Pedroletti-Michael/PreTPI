@@ -89,7 +89,7 @@
     <!-------------------------- Gabarit desktop  ------------------------------->
         <div class="d-inline-block w-100 fixed-top p-0 shadow" style="background-color: #e30613; height: 48px;">
             <div class="float-left text-center ml-3" style="margin-top: 0.5rem !important;">
-                <button class="btn"><a class="responsive-phone-hidden text-decoration-none" href="index.php?action=home"><i class="fa fa-home"></i></a></button>
+                <a class="responsive-phone-hidden text-decoration-none" href="index.php?action=home"><button class="btn"><i class="fa fa-home"></i></button></a>
             </div>
             <div class="float-right text-center mr-3" style="margin-top: 0.9rem !important;">
                 <h6><a class="responsive-phone-hidden text-decoration-none" href="index.php?action=signOut" style="color: white;">Déconnexion</a></h6>

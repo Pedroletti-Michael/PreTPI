@@ -14,6 +14,8 @@ ob_start();
 <head>
     <script rel="javascript" src="view/js/jquery.js"></script>
     <script rel="javascript" src="view/js/script.js"></script>
+    <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.bundle.js"></script>
+    <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.js"></script>
     <meta charset="UTF-8">
     <title>Page de de création d'utilisateur - CPA-CP</title>
 </head>
@@ -36,6 +38,8 @@ ob_start();
                                         echo 'Succès de l\'ajout de l\'utilisateur à la base de données.';
                                     } else if ($_SESSION['message'] == "addUserFailed") {
                                         echo 'Échec de l\'ajout de l\'utilisateur à la base de données. Veuillez contactez le support.';
+                                    } else if ($_SESSION['message'] == "userAlreadyExist"){
+                                        echo 'Échec de l\'ajout de l\'utilisateur à la base de données, l\'adresse e-mail est déjà utilisée.';
                                     } ?>
                                 </h6>
                                 <button type="submit" class="btn btn-success float-right btn-close-phone" data-dismiss="modal">
@@ -47,7 +51,7 @@ ob_start();
                 </div>
             </div>
             <script>$('.modal').modal('show')</script>
-        <?php unset($_SESSION['saveContentMail']); endif; ?>
+        <?php unset($_SESSION['message']); endif; ?>
 
         <div class="text-center">
             <div class="btn-group-vertical" role="group">
