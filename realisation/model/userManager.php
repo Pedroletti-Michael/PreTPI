@@ -21,9 +21,15 @@ function addUserToDB($lastname, $firstname, $mail, $pwd){
 }
 
 /**
-* This function verify login of user with db data
+* This function use different function to connect user. And if this is the first
+* connection for the user, the function ad user into our db.
+* We only need to use this function in controller to know if the user success to
+* connect or not.
+* If all things pass -> function return mail of the user
+* Else -> return false
 */
 function userLogin($userLogin, $userPwd){
+    //TODO FONCTION A REVOIR ENTIERMENT AFIN DE CORRESPONDRE AUX ATTENTES
     if($userLogin == 'admin'){
         return "amdin@test.ch";
     }
@@ -34,7 +40,7 @@ function userLogin($userLogin, $userPwd){
         $result = false;
 
         foreach ($information as $loginInfo){
-            if($loginInfo['mail'] == $userLogin && password_verify($userPwd, $loginInfo['password'])){
+            if($loginInfo['mail'] == $userLogin && password_verify($loginInfo['password'], $userPwd)){
                 $result = true;
             }
         }
