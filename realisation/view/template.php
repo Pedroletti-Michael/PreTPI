@@ -88,12 +88,20 @@
         </nav>
     <!-------------------------- Gabarit desktop  ------------------------------->
         <div class="d-inline-block w-100 fixed-top p-0 shadow" style="background-color: #e30613; height: 48px;">
+            <!-- Home button -->
             <div class="float-left text-center ml-3" style="margin-top: 0.5rem !important;">
                 <a class="responsive-phone-hidden text-decoration-none" href="index.php?action=home"><button class="btn"><i class="fa fa-home"></i></button></a>
             </div>
+            <!-- Logout button -->
             <div class="float-right text-center mr-3" style="margin-top: 0.9rem !important;">
                 <h6><a class="responsive-phone-hidden text-decoration-none" href="index.php?action=signOut" style="color: white;">Déconnexion</a></h6>
             </div>
+            <!-- Display Username -->
+            <div class="float-right text-center mr-3" style="margin-top: 0.9rem !important;">
+                <h6>Bonjour, <?= $_SESSION['userEmail']; ?></h6>
+            </div>
+
+            <!-- Title -->
             <div class="m-auto text-center h-100" style="width: 125px">
                 <h4 class="m-auto font-weight-bold text-white" style="margin-top: 0.5rem!important">CPA-CP</h4>
             </div>

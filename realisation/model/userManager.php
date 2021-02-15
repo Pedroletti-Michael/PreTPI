@@ -29,7 +29,6 @@ function addUserToDB($lastname, $firstname, $mail, $pwd){
 * Else -> return false
 */
 function userLogin($userLogin, $userPwd){
-    //TODO FONCTION A REVOIR ENTIERMENT AFIN DE CORRESPONDRE AUX ATTENTES
     if($userLogin == 'admin'){
         return "amdin@test.ch";
     }

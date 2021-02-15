@@ -12,7 +12,7 @@
 .display-phone{
     display: none!important;
 }
-.allVM th, .allVM td{
+.tableSpecific th, .tableSpecific td{
     width: auto;
 }
 .color-lightgrey{
