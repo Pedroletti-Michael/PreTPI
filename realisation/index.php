@@ -36,6 +36,9 @@ if(isset($_GET['action']))
         case 'userCreation':
             userCreation($_POST);
             break;
+        case 'displayGlobalList':
+            displayGlobalList();
+            break;
         case 'home':
         default:
             if(testSessionTime()){break;}

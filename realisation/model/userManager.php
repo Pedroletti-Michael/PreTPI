@@ -39,8 +39,8 @@ function userLogin($userLogin, $userPwd){
         $result = false;
 
         foreach ($information as $loginInfo){
-            if($loginInfo['mail'] == $userLogin && password_verify($loginInfo['password'], $userPwd)){
-                $result = true;
+            if($loginInfo['mail'] == $userLogin && password_verify($userPwd, $loginInfo['password'])){
+                $result = $loginInfo['mail'];
             }
         }
 

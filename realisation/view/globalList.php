@@ -31,23 +31,25 @@ ob_start();
                 <th scope="col">Statut</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Commune</th>
-                <th scope="col">Région</th>
                 <th scope="col">Places disponibles</th>
                 <th scope="col">Responsable</th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($renewalVM as $value): //TODO CHANGE VALUE TO WORK
+            <?php foreach ($informationBunkers as $value): //TODO CHANGE VALUE TO WORK
+                if ($value['statutVisite'] != null) :
                 ?>
                 <tr>
-                    <td><?php echo $value['name']?></td>
-                    <td><?php echo $value['usageType']?></td>
-                    <td><?php echo $value['cpu']?></td>
-                    <td><?php echo $value['ram']?></td>
-                    <td><?php echo $value['disk']?></td>
-                    <td><?php echo $value['network']?></td>
+                    <td style="width: 100px"><?php echo $value['statutVisite']?></td>
+                    <td><?php echo $value['nom']?></td>
+                    <td><?php echo $value['nom']?></td>
+                    <td><?php echo $value['placesDisponibles']?></td>
+                    <td><?php echo $value['responsable']?></td>
                 </tr>
-            <?php endforeach;?>
+            <?php
+            endif;
+            endforeach;
+            ?>
             </tbody>
         </table>
 </div>

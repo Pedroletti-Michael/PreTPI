@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Authors : Pedroletti Michael
+ * Author : Pedroletti Michael
  * CreationFile date : 08.02.2021
  * ModifFile date : 10.02.2021
  **/
@@ -26,6 +26,7 @@ ob_start();
         <div class="text-center">
             <div class="btn-group-vertical" role="group">
                 <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Formulaire CPA</a>
+                <a href="index.php?action=displayGlobalList" type="button" class="btn btn-primary btn-block text-decoration-none">Liste globale des abris</a>
                 <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Liste visites CPA</a>
                 <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Liste contre-visites CPA</a>
                 <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Statistiques CPA</a>
