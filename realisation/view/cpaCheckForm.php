@@ -70,6 +70,28 @@ ob_start();
             }
         }
     </script>
+    <script>
+        function addIssue() {
+            var issueBlock = document.getElementById("issueBlock");
+
+            issueBlock.innerHTML +=
+                '   <div class="pr-2 mb-2">'+
+                '        <select class="form-control form form w-25 float-left" id="addIssue" name="addIssue" onchange="">'+
+                '           <option>Sélectionner un type de défauts</option>'+
+                            <?php
+                                foreach ($issueType as $issue){
+                                    echo "'<option>".$issue."</option>'+";
+                                }
+                            ?>
+                '        </select>'+
+                '    </div>'+
+                '    <div class="pl-2">'+
+                '        <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="issueDescription" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l\'entrée.">'+
+                '    </div>'+
+                '    <br>'
+            ;
+        }
+    </script>
     <meta charset="UTF-8">
     <title>Formulaire contrôles CPA - CPA-CP</title>
 </head>
@@ -117,17 +139,18 @@ ob_start();
 
             <!-- part reserved for room and information about bunker -->
             <div class="d-inline-block w-100">
+                <!-- Bunker name -->
+                <div class="form-group w-100 float-left mt-3">
+                    <label class="font-weight-bold">Nom de l'abris : <?= /*$selectedBunkerName;*/"test"; ?></label>
+                </div>
+            </div>
+            <div class="d-inline-block w-100">
                 <div class="form-group w-50 float-left pr-4" id="responsiveDisplay">
-                    <!-- Bunker name -->
-                    <div class="form-group w-100 float-left mt-3">
-                        <label class="font-weight-bold">Nom de l'abris : <?= /*$selectedBunkerName;*/"test"; ?></label>
-                    </div>
-
-                    <!-- kitchen template -->
+                    <!-- base template -->
                     <div class="form-group w-50 float-left pr-1">
                         <!-- Room Name -->
-                        <label for="inputKitchenName" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
-                        <input type="text" class="form-control form form" id="inputKitchenName" name="inputKitchenName" value="Cuisine" aria-describedby="inputKitchenNameHelp" required>
+                        <label for="inputRoomName" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
+                        <input type="text" class="form-control form form" id="inputRoomName" name="inputRoomName" value="Cuisine" aria-describedby="inputRoomNameHelp" required>
                     </div>
                     <div class="form-group w-50 float-right pl-1">
                         <!-- Room available seats -->
@@ -136,92 +159,76 @@ ob_start();
                     </div>
                     <br>
                     <div class="form-group w-100 float-left mt-3">
-                        <!-- defaults -->
-                        <label for="inputDefaults" class="font-weight-bold mr-2">Défaut(s) présent(s) dans la pièce<a style="color: red"> *</a> :</label>
+                        <!-- defaults description -->
                         <div class="w-100 d-inline-block">
                             <div class="pr-2">
-                                <label for="inputElectricalIssue" class="font-weight-bold mr-2">Problèmes électriques</label>
-                                <input type="checkbox" class="form-control form form w-25 float-left" id="inputElectricalIssue" name="inputElectricalIssue" aria-describedby="inputElectricalIssuedHelp">
+                                <label for="inputDefaults" class="font-weight-bold form form w-25 float-left mr-2">Défaut(s) présent(s) dans la pièce :</label>
                             </div>
                             <div class="pl-2">
-                                <input type="text" class="form-control form form w-75 float-right" id="infoInputElectricalIssueSSD" name="infoInputElectricalIssueSSD" value="" aria-describedby="infoInputElectricalIssueSSDHelp" placeholder="Exemple : Problème avec la prise directement a droite de l'entrée.">
+                                <a onclick="addIssue()" type="button" class="btn btn-primary btn-block text-decoration-none form-control form form w-75 float-right">Ajouter un défaut</a>
+                            </div>
+                        </div>
+
+                        <!-- defaults information -->
+                        <div class="w-100 d-inline-block" id="issueBlock">
+                            <div class="pr-2">
+                                <!-- select a type of issue -->
+                                <select class="form-control form form w-25 float-left" id="addIssue" name="addIssue" onchange="">
+                                    <option>Sélectionner un type de défauts</option>
+                                    <?php
+                                    foreach ($issueType as $issue){
+                                        echo "<option>".$issue."</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="pl-2">
+                                <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="issueDescription" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l'entrée.">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group w-50 float-right pl-4" id="responsiveDisplay">
-                    <!--Name of the technical manager-->
-                    <div class="form-group w-50 float-left pr-1" id="responsiveDisplay">
-                        <label for="inputTMNam" class="font-weight-bold">Responsable technique<a style="color: red"> *</a></label>
-                        <input type="text" class="form-control form form" id="inputTMNam" name="inputTMNam" value="<?php if(isset($_SESSION['formRequest']['inputTMNam'])){echo($_SESSION['formRequest']['inputTMNam']);} ?>" aria-describedby="tmNameHelp" placeholder="Sélectionner une personne" required onkeyup="searchFunctionTm()">
-                        <small id="inputTMNameHelp" class="form-text text-muted">Personne qui va gérer la VM</small>
-                        <ul id="tmNameUl" class="border border-light searchBoxUser list-group list-group-flush mt-2">
-                            <?php
-                            $id = 'liTm';
-                            $i = 0;
-                            $endSeparator = '';
-
-                            foreach($users as $user){
-                                echo '<li class="list-group-item list-group-item-action h-25 p-0 pl-2"><a class="unlink" href="#" onclick="displayIntoInputTm('.$i.', this.text)">'. $user[1]. ' ' .$user[2] .'</a></li>';
-                                echo '<input type="hidden" value="'.$user[0].'" id="'.$id.$i.$endSeparator.'">';
-                                $i++;
-                            }
-                            ?>
-                        </ul>
-                        <input type="hidden" name="inputTMName" id="inputTMName" value="<?php if(isset($_SESSION['formRequest']['inputTMName'])){echo($_SESSION['formRequest']['inputTMName']);} ?>" required>
-                        <script>
-                            var input, filter, ul, li, a, i, txtValue;
-                            input = document.getElementById("inputTMNam");
-                            filter = input.value.toUpperCase();
-                            ul = document.getElementById("tmNameUl");
-                            li = ul.getElementsByTagName("li");
-                            for (i = 0; i < li.length; i++) {
-                                a = li[i].getElementsByTagName("a")[0];
-                                txtValue = a.textContent || a.innerText;
-                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                    li[i].style.display = "";
-                                } else {
-
-                                    li[i].style.display = "none";
-                                }
-                            }
-                        </script>
+                    <!-- base template -->
+                    <div class="form-group w-50 float-left pr-1">
+                        <!-- Room Name -->
+                        <label for="inputRoomName" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
+                        <input type="text" class="form-control form form" id="inputRoomName" name="inputRoomName" value="Cuisine" aria-describedby="inputRoomNameHelp" required>
                     </div>
-                    <div class="form-group w-50 float-right pl-1 mb-0" id="responsiveDisplay">
-                        <!--Name of the responsible administrator-->
-                        <label for="inputRANam" class="font-weight-bold">Responsable administratif<a style="color: red"> *</a></label>
-                        <input type="text" class="form-control form form" id="inputRANam" name="inputRANam" value="<?php if(isset($_SESSION['formRequest']['inputRANam'])){echo($_SESSION['formRequest']['inputRANam']);} ?>" aria-describedby="raNameHelp" placeholder="Sélectionner une personne" required onkeyup="searchFunctionRa()">
-                        <small id="raNameHelp" class="form-text text-muted">Direction, Doyen , Directeur d'institut ou Chef de service</small>
-                        <ul id="raNameUl" class="border border-light searchBoxUser list-group list-group-flush mt-2">
-                            <?php
-                            $id = 'liRa';
-                            $i = 0;
-                            $endSeparator = '';
+                    <div class="form-group w-50 float-right pl-1">
+                        <!-- Room available seats -->
+                        <label for="inputAvailableSeats" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
+                        <input type="number" class="form-control form form" id="inputAvailableSeats" name="inputAvailableSeats" value="42"  aria-describedby="inputAvailableSeatsHelp" min="1" max="10000" required>
+                    </div>
+                    <br>
+                    <div class="form-group w-100 float-left mt-3">
+                        <!-- defaults description -->
+                        <div class="w-100 d-inline-block">
+                            <div class="pr-2">
+                                <label for="inputDefaults" class="font-weight-bold form form w-25 float-left mr-2">Défaut(s) présent(s) dans la pièce :</label>
+                            </div>
+                            <div class="pl-2">
+                                <a onclick="addIssue()" type="button" class="btn btn-primary btn-block text-decoration-none form-control form form w-75 float-right">Ajouter un défaut</a>
+                            </div>
+                        </div>
 
-                            foreach($users as $user){
-                                echo '<li class="list-group-item list-group-item-action h-25 p-0 pl-2"><a class="unlink" href="#" onclick="displayIntoInputRa('.$i.', this.text)">'. $user[1]. ' ' .$user[2] .'</a></li>';
-                                echo '<input type="hidden" value="'.$user[0].'" id="'.$id.$i.$endSeparator.'">';
-                                $i++;
-                            }
-                            ?>
-                        </ul>
-                        <input type="hidden" name="inputRAName" id="inputRAName" value="<?php if(isset($_SESSION['formRequest']['inputRAName'])){echo($_SESSION['formRequest']['inputRAName']);} ?>" required>
-                        <script>
-                            var input, filter, ul, li, a, i, txtValue;
-                            input = document.getElementById("inputRANam");
-                            filter = input.value.toUpperCase();
-                            ul = document.getElementById("raNameUl");
-                            li = ul.getElementsByTagName("li");
-                            for (i = 0; i < li.length; i++) {
-                                a = li[i].getElementsByTagName("a")[0];
-                                txtValue = a.textContent || a.innerText;
-                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                    li[i].style.display = "";
-                                } else {
-                                    li[i].style.display = "none";
-                                }
-                            }
-                        </script>
+                        <!-- defaults information -->
+                        <div class="w-100 d-inline-block" id="issueBlock">
+                            <div class="pr-2">
+                                <!-- select a type of issue -->
+                                <select class="form-control form form w-25 float-left" id="addIssue" name="addIssue" onchange="">
+                                    <option>Sélectionner un type de défauts</option>
+                                    <?php
+                                    foreach ($issueType as $issue){
+                                        echo "<option>".$issue."</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="pl-2">
+                                <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="issueDescription" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l'entrée.">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

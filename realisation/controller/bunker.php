@@ -7,6 +7,7 @@
 
 function displayForm(){
     $bunkerName = array('AbrisTest1', 'AbrisTest2');
+    $issueType = array('électrique', 'eau', 'sanitaire', 'mobilier', 'portes', 'fenêtre');
     require 'view/cpaCheckForm.php';
 }
 
