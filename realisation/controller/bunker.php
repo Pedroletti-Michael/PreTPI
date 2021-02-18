@@ -6,7 +6,8 @@
  **/
 
 function displayForm(){
-
+    $bunkerName = array('AbrisTest1', 'AbrisTest2');
+    require 'view/cpaCheckForm.php';
 }
 
 function displayGlobalList(){

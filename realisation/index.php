@@ -39,6 +39,9 @@ if(isset($_GET['action']))
         case 'displayGlobalList':
             displayGlobalList();
             break;
+        case 'displayForm':
+            displayForm();
+            break;
         case 'home':
         default:
             if(testSessionTime()){break;}

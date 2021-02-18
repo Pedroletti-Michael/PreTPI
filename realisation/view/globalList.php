@@ -3,7 +3,7 @@
 /**
  * Authors : Pedroletti Michael
  * CreationFile date : 15.02.2021
- * ModifFile date : 15.02.2021
+ * ModifFile date : 18.02.2021
  * Description File : Page for display of global list of bunker
  **/
 
@@ -19,8 +19,8 @@ ob_start();
     <title>Liste globale des abris - CPA-CP</title>
 </head>
 <body>
-<div>
-    <div class="text-center">
+<div class="container-fluid pt-3">
+    <div class="text-center border border-danger border-left-0 border-right-0 border-top-0 pb-3">
         <h1>Liste globale des abris</h1>
     </div>
 
@@ -36,11 +36,24 @@ ob_start();
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($informationBunkers as $value): //TODO CHANGE VALUE TO WORK
+            <?php foreach ($informationBunkers as $value):
                 if ($value['statutVisite'] != null) :
                 ?>
                 <tr>
-                    <td style="width: 100px"><?php echo $value['statutVisite']?></td>
+                    <td style="width: 100px; background-color: <?php
+                    switch($value['statutVisite']){
+                        case 1 :
+                            echo "red";
+                            break;
+                        case 2 :
+                            echo "green";
+                            break;
+                        case 0 :
+                        default :
+                            echo "yellow";
+                            break;
+                    }
+                    ?>"></td>
                     <td><?php echo $value['nom']?></td>
                     <td><?php echo $value['nom']?></td>
                     <td><?php echo $value['placesDisponibles']?></td>
