@@ -92,6 +92,16 @@ ob_start();
             ;
         }
     </script>
+    <script>
+        function getBunkerInformation(id){
+            var blocInformation = document.getElementById("ID DU BLOCK DE DONNEES ABRIS");
+
+            $.post( "/selectBunkerInformation.php", { id: id})
+                .done(function( data ) {
+                    blocInformation.innerHTML = data;
+                });
+        }
+    </script>
     <meta charset="UTF-8">
     <title>Formulaire contrôles CPA - CPA-CP</title>
 </head>
@@ -145,19 +155,24 @@ ob_start();
                 </div>
             </div>
             <div class="d-inline-block w-100">
+                <!-- base template -->
                 <div class="form-group w-50 float-left pr-4" id="responsiveDisplay">
-                    <!-- base template -->
+
+                    <!-- Room Name -->
                     <div class="form-group w-50 float-left pr-1">
-                        <!-- Room Name -->
+
                         <label for="inputRoomName" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
                         <input type="text" class="form-control form form" id="inputRoomName" name="inputRoomName" value="Cuisine" aria-describedby="inputRoomNameHelp" required>
                     </div>
+
+                    <!-- Room available seats -->
                     <div class="form-group w-50 float-right pl-1">
-                        <!-- Room available seats -->
                         <label for="inputAvailableSeats" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
                         <input type="number" class="form-control form form" id="inputAvailableSeats" name="inputAvailableSeats" value="42"  aria-describedby="inputAvailableSeatsHelp" min="1" max="10000" required>
                     </div>
                     <br>
+
+                    <!-- Part reserved for issue -->
                     <div class="form-group w-100 float-left mt-3">
                         <!-- defaults description -->
                         <div class="w-100 d-inline-block">
@@ -186,21 +201,26 @@ ob_start();
                                 <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="issueDescription" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l'entrée.">
                             </div>
                         </div>
+
                     </div>
+
                 </div>
                 <div class="form-group w-50 float-right pl-4" id="responsiveDisplay">
-                    <!-- base template -->
+                    <!-- Room Name -->
                     <div class="form-group w-50 float-left pr-1">
-                        <!-- Room Name -->
+
                         <label for="inputRoomName" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
                         <input type="text" class="form-control form form" id="inputRoomName" name="inputRoomName" value="Cuisine" aria-describedby="inputRoomNameHelp" required>
                     </div>
+
+                    <!-- Room available seats -->
                     <div class="form-group w-50 float-right pl-1">
-                        <!-- Room available seats -->
                         <label for="inputAvailableSeats" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
                         <input type="number" class="form-control form form" id="inputAvailableSeats" name="inputAvailableSeats" value="42"  aria-describedby="inputAvailableSeatsHelp" min="1" max="10000" required>
                     </div>
                     <br>
+
+                    <!-- Part reserved for issue -->
                     <div class="form-group w-100 float-left mt-3">
                         <!-- defaults description -->
                         <div class="w-100 d-inline-block">
@@ -229,6 +249,7 @@ ob_start();
                                 <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="issueDescription" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l'entrée.">
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

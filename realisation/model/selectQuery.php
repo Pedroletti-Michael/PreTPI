@@ -8,10 +8,24 @@
 
 require_once 'dbConnector.php';
 
+
 function getInformationForm(){
+    $result = array('bunkerBasicInformation', 'issueType', 'bunkerRoomInformation');
+    //TODO bunkerBasicInformation = aux infos de base de l'abris nom nombre de places globales commune, responsable
+    $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `idAbris` = 0";
+
+    //TODO issueType = aux différents type de défauts possibles d'avoir
+    $query = "";
+
+    //TODO bunkerRoomInformation = récupérer toutes les pièces d'un abris avec leurs informations donc nom de la pièce, place dispo, type de pièce
     $query = "";
 }
 
+
+/**
+ * Function used to get the list of bunker with complete information for display.
+ * With param status we can choose which list we want to get
+ */
 function getListBunkerInformation($status = null){
     $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris`";
 
