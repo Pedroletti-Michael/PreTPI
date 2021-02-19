@@ -55,7 +55,7 @@ ob_start();
                     }
                     ?>"></td>
                     <td><?php echo $value['nom']?></td>
-                    <td><?php echo $value['fkCommune']?></td>
+                    <td><?php echo $value['nom']?></td>
                     <td><?php echo $value['placesDisponibles']?></td>
                     <td><?php echo $value['responsable']?></td>
                 </tr>

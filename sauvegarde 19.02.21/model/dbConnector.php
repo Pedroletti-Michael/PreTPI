@@ -5,9 +5,7 @@
 * ModificationFile date : 18.03.2020
 * Description : File used to create a connection with the db and send query
 */
-
 require 'model/encryption.php';
-
 
 /**
 * Function used to open connexion with an DB.

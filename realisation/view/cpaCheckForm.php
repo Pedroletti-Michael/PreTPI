@@ -35,6 +35,7 @@ ob_start();
 
             }
             else{
+                getBunkerInformation(selectBunkerName.value);
                 subBtn.disabled = false;
             }
 
@@ -71,8 +72,8 @@ ob_start();
         }
     </script>
     <script>
-        function addIssue() {
-            var issueBlock = document.getElementById("issueBlock");
+        function addIssue(id) {
+            var issueBlock = document.getElementById(id);
 
             issueBlock.innerHTML +=
                 '   <div class="pr-2 mb-2">'+
@@ -80,7 +81,7 @@ ob_start();
                 '           <option>Sélectionner un type de défauts</option>'+
                             <?php
                                 foreach ($issueType as $issue){
-                                    echo "'<option>".$issue."</option>'+";
+                                    echo "'<option>".$issue['type']."</option>'+";
                                 }
                             ?>
                 '        </select>'+
@@ -93,13 +94,25 @@ ob_start();
         }
     </script>
     <script>
-        function getBunkerInformation(id){
-            var blocInformation = document.getElementById("ID DU BLOCK DE DONNEES ABRIS");
+        function getBunkerInformation(bunkerName){
+            var htmlRoomsSection = document.getElementById("htmlRoomsSection");
+            var htmlBunkerInformation = document.getElementById("htmlBunkerInformation");
 
-            $.post( "/selectBunkerInformation.php", { id: id})
-                .done(function( data ) {
-                    blocInformation.innerHTML = data;
-                });
+            $.ajax({
+                type: "POST",
+                url: "https://pretpi.pedroletti.ch/model/selectBunkerInformation.php",
+                data: {
+                    bunkerName: bunkerName
+                },
+                cache: false,
+                success: function(data) {
+                    htmlRoomsSection.innerHTML = data['bunkerRoom'];
+                    htmlBunkerInformation.innerHTML = data['bunkerBaseInformation'];
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr);
+                }
+            });
         }
     </script>
     <meta charset="UTF-8">
@@ -123,7 +136,7 @@ ob_start();
                             <option>Sélectionner un abris</option>
                             <?php
                             foreach ($bunkerName as $bunker){
-                                echo "<option>".$bunker."</option>";
+                                echo "<option>".$bunker['nom']."</option>";
                             }
                             ?>
                             <option>Autre</option>
@@ -149,112 +162,12 @@ ob_start();
 
             <!-- part reserved for room and information about bunker -->
             <div class="d-inline-block w-100">
-                <!-- Bunker name -->
-                <div class="form-group w-100 float-left mt-3">
-                    <label class="font-weight-bold">Nom de l'abris : <?= /*$selectedBunkerName;*/"test"; ?></label>
+                <div class="form-group w-100 float-left mt-3" id="htmlBunkerInformation">
                 </div>
             </div>
-            <div class="d-inline-block w-100">
-                <!-- base template -->
-                <div class="form-group w-50 float-left pr-4" id="responsiveDisplay">
+            <div class="d-inline-block w-100" id="htmlRoomsSection">
 
-                    <!-- Room Name -->
-                    <div class="form-group w-50 float-left pr-1">
-
-                        <label for="inputRoomName" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
-                        <input type="text" class="form-control form form" id="inputRoomName" name="inputRoomName" value="Cuisine" aria-describedby="inputRoomNameHelp" required>
-                    </div>
-
-                    <!-- Room available seats -->
-                    <div class="form-group w-50 float-right pl-1">
-                        <label for="inputAvailableSeats" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
-                        <input type="number" class="form-control form form" id="inputAvailableSeats" name="inputAvailableSeats" value="42"  aria-describedby="inputAvailableSeatsHelp" min="1" max="10000" required>
-                    </div>
-                    <br>
-
-                    <!-- Part reserved for issue -->
-                    <div class="form-group w-100 float-left mt-3">
-                        <!-- defaults description -->
-                        <div class="w-100 d-inline-block">
-                            <div class="pr-2">
-                                <label for="inputDefaults" class="font-weight-bold form form w-25 float-left mr-2">Défaut(s) présent(s) dans la pièce :</label>
-                            </div>
-                            <div class="pl-2">
-                                <a onclick="addIssue()" type="button" class="btn btn-primary btn-block text-decoration-none form-control form form w-75 float-right">Ajouter un défaut</a>
-                            </div>
-                        </div>
-
-                        <!-- defaults information -->
-                        <div class="w-100 d-inline-block" id="issueBlock">
-                            <div class="pr-2">
-                                <!-- select a type of issue -->
-                                <select class="form-control form form w-25 float-left" id="addIssue" name="addIssue" onchange="">
-                                    <option>Sélectionner un type de défauts</option>
-                                    <?php
-                                    foreach ($issueType as $issue){
-                                        echo "<option>".$issue."</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="pl-2">
-                                <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="issueDescription" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l'entrée.">
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="form-group w-50 float-right pl-4" id="responsiveDisplay">
-                    <!-- Room Name -->
-                    <div class="form-group w-50 float-left pr-1">
-
-                        <label for="inputRoomName" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
-                        <input type="text" class="form-control form form" id="inputRoomName" name="inputRoomName" value="Cuisine" aria-describedby="inputRoomNameHelp" required>
-                    </div>
-
-                    <!-- Room available seats -->
-                    <div class="form-group w-50 float-right pl-1">
-                        <label for="inputAvailableSeats" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
-                        <input type="number" class="form-control form form" id="inputAvailableSeats" name="inputAvailableSeats" value="42"  aria-describedby="inputAvailableSeatsHelp" min="1" max="10000" required>
-                    </div>
-                    <br>
-
-                    <!-- Part reserved for issue -->
-                    <div class="form-group w-100 float-left mt-3">
-                        <!-- defaults description -->
-                        <div class="w-100 d-inline-block">
-                            <div class="pr-2">
-                                <label for="inputDefaults" class="font-weight-bold form form w-25 float-left mr-2">Défaut(s) présent(s) dans la pièce :</label>
-                            </div>
-                            <div class="pl-2">
-                                <a onclick="addIssue()" type="button" class="btn btn-primary btn-block text-decoration-none form-control form form w-75 float-right">Ajouter un défaut</a>
-                            </div>
-                        </div>
-
-                        <!-- defaults information -->
-                        <div class="w-100 d-inline-block" id="issueBlock">
-                            <div class="pr-2">
-                                <!-- select a type of issue -->
-                                <select class="form-control form form w-25 float-left" id="addIssue" name="addIssue" onchange="">
-                                    <option>Sélectionner un type de défauts</option>
-                                    <?php
-                                    foreach ($issueType as $issue){
-                                        echo "<option>".$issue."</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="pl-2">
-                                <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="issueDescription" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l'entrée.">
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
             </div>
-
-
 
 
             <!--Submit-->

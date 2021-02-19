@@ -9,38 +9,16 @@
 require_once 'dbConnector.php';
 
 
-function getBunkerInformationForm($bunkerName){
-    $result = array('basicsBunkerInformation', 'basicsRoomsInformation');
+function getInformationForm(){
+    $result = array('bunkerBasicInformation', 'issueType', 'bunkerRoomInformation');
+    //TODO bunkerBasicInformation = aux infos de base de l'abris nom nombre de places globales commune, responsable
+    $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `idAbris` = 0";
 
-    //Get basics information about a specific bunker
-    $result['basicsBunkerInformation'] = getListBunkerInformation($bunkerName);
+    //TODO issueType = aux différents type de défauts possibles d'avoir
+    $query = "";
 
-    //Get basics information about rooms of an bunker
-    $result['basicsRoomsInformation'] = getRoomsInformationForSpecificBunker($result['basicsBunkerInformation']['idAbris']);
-
-    return $result;
-}
-
-function getRoomsInformationForSpecificBunker($idBunker){
-    $query = "SELECT `idPiece`,`nom`,`placesDisponibles`,`type` FROM `pieces` WHERE `fkAbris` = ".$idBunker;
-
-    return executeQuery($query);
-}
-
-function getBaseInformationCheckForm(){
-    $result = array("bunkerName", "issueType");
-
-    //Prepare query to get issue type
-    $query = "SELECT `type` FROM `defauts`";
-    //Get issue type
-    $result['issueType'] = executeQuery($query);
-
-    //Prepare query to get bunker name
-    $query = "SELECT `nom` FROM `abris` WHERE `statutVisite` = 1 OR `statutVisite` = 0";
-    //Get bunkerName
-    $result['bunkerName'] = executeQuery($query);
-
-    return $result;
+    //TODO bunkerRoomInformation = récupérer toutes les pièces d'un abris avec leurs informations donc nom de la pièce, place dispo, type de pièce
+    $query = "";
 }
 
 
@@ -48,9 +26,8 @@ function getBaseInformationCheckForm(){
  * Function used to get the list of bunker with complete information for display.
  * With param status we can choose which list we want to get
  */
-function getListBunkerInformation($status = null, $name = null){
+function getListBunkerInformation($status = null){
     $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris`";
-    $strSep = '\'';
 
     if ($status != null){
         switch ($status){
@@ -62,9 +39,6 @@ function getListBunkerInformation($status = null, $name = null){
                 break;
             case 2:
                 $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 2";
-                break;
-            case 'specific':
-                $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `nom` = ".$strSep.$name.$strSep;
                 break;
             default:
                 $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris`";

@@ -6,10 +6,9 @@
  **/
 
 function displayForm(){
-    require_once 'model/selectQuery.php';
-    $data = getBaseInformationCheckForm();
-    $bunkerName = $data['bunkerName'];
-    $issueType = $data['issueType'];
+    $bunkerName = array('AbrisTest1', 'AbrisTest2');
+    $issueType = array('électrique', 'eau', 'sanitaire', 'mobilier', 'portes', 'fenêtre');
+    $bunkerRoomInformation = array();
 
     require 'view/cpaCheckForm.php';
 }
