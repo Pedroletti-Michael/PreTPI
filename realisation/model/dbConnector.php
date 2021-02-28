@@ -6,7 +6,7 @@
 * Description : File used to create a connection with the db and send query
 */
 
-require 'model/encryption.php';
+require 'encryption.php';
 
 
 /**

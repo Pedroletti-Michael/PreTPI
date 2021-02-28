@@ -42,6 +42,9 @@ if(isset($_GET['action']))
         case 'displayForm':
             displayForm();
             break;
+        case 'displayBunkerInformation':
+            displayForm($_GET['bunkerName']);
+            break;
         case 'home':
         default:
             if(testSessionTime()){break;}

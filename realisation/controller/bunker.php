@@ -5,8 +5,16 @@
  * Description : Contains all functions related to the bunker
  **/
 
-function displayForm(){
+function displayForm($get = null){
     require_once 'model/selectQuery.php';
+    if($get != null){
+        $data = getBunkerInformationForm($get['bunkerName']);
+
+        $basicsInformation = $data['basicsBunkerInformation'];
+        $roomsInformation = $data['roomsInformation'];
+        $data = array();
+    }
+
     $data = getBaseInformationCheckForm();
     $bunkerName = $data['bunkerName'];
     $issueType = $data['issueType'];

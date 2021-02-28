@@ -13,16 +13,18 @@ function getBunkerInformationForm($bunkerName){
     $result = array('basicsBunkerInformation', 'basicsRoomsInformation');
 
     //Get basics information about a specific bunker
-    $result['basicsBunkerInformation'] = getListBunkerInformation($bunkerName);
+    $resultListBunker = getListBunkerInformation('specific', $bunkerName);
 
     //Get basics information about rooms of an bunker
-    $result['basicsRoomsInformation'] = getRoomsInformationForSpecificBunker($result['basicsBunkerInformation']['idAbris']);
+    $resultRooms = getRoomsInformationForSpecificBunker($resultListBunker[0]);
+
+    $result = array('basicsBunkerInformation' => $resultListBunker, 'roomsInformation' => $resultRooms);
 
     return $result;
 }
 
 function getRoomsInformationForSpecificBunker($idBunker){
-    $query = "SELECT `idPiece`,`nom`,`placesDisponibles`,`type` FROM `pieces` WHERE `fkAbris` = ".$idBunker;
+    $query = "SELECT `idPiece`,`nom`,`placesDisponibles`,`type` FROM `pieces` WHERE `fkAbris` = ".$idBunker[0];
 
     return executeQuery($query);
 }
@@ -64,7 +66,7 @@ function getListBunkerInformation($status = null, $name = null){
                 $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 2";
                 break;
             case 'specific':
-                $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `nom` = ".$strSep.$name.$strSep;
+                $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `nom` = " .$strSep.$name.$strSep;
                 break;
             default:
                 $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris`";
