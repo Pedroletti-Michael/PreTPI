@@ -20,11 +20,22 @@ ob_start();
 </head>
 <body>
 <div class="container-fluid pt-3">
-    <div class="text-center border border-danger border-left-0 border-right-0 border-top-0 pb-3">
+    <div class="text-center pb-3">
         <h1>Liste globale des abris</h1>
     </div>
 
     <div class="table-responsive-xl">
+        <div class="form-group w-50 float-left mt-3 mb-3">
+            <div class="form-group w-33 float-left text-center" style="background-color: yellow; font-size: medium">
+                <label class="mr-3" >Visite à faire</label>
+            </div>
+            <div class="form-group w-33 float-left text-center" style="background-color: red; font-size: medium">
+                <label class="mr-3" style="color: white">Contre visite à faire</label>
+            </div>
+            <div class="form-group w-33 float-left text-center" style="background-color: green; font-size: medium">
+                <label class="mr-3" style="color: white">Visite effectuée, abris en ordre</label>
+            </div>
+        </div>
         <table class="table table-hover allVM">
             <thead class="thead-dark sticky-top">
             <tr>
@@ -65,6 +76,7 @@ ob_start();
             ?>
             </tbody>
         </table>
+    </div>
 </div>
 </body>
 

@@ -8,7 +8,7 @@
 function displayForm($get = null){
     require_once 'model/selectQuery.php';
     if($get != null){
-        $data = getBunkerInformationForm($get['bunkerName']);
+        $data = getBunkerInformationForm($get);
 
         $basicsInformation = $data['basicsBunkerInformation'];
         $roomsInformation = $data['roomsInformation'];
