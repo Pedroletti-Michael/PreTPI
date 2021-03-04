@@ -21,6 +21,7 @@ ob_start();
             var alertSelectBunkerName = document.getElementById("alertSelectBunkerName");
             var groupInputBunkerName = document.getElementById("groupInputBunkerName");
             var subBtn = document.getElementById("submitButton");
+            var resetBtn = document.getElementById("resetButton");
 
             alertSelectBunkerName.style.display = "none";
             groupInputBunkerName.style.display = "none";
@@ -28,14 +29,20 @@ ob_start();
             if(selectBunkerName.value === "Sélectionner un abris"){
                 alertSelectBunkerName.style.display = "";
                 subBtn.disabled = true;
+                subBtn.hidden = true;
+                resetBtn.hidden = true;
             }
             else if(selectBunkerName.value === "Autre"){
+                subBtn.hidden = false;
+                resetBtn.hidden = false;
                 groupInputBunkerName.style.display = "";
                 checkInputFieldName();
 
             }
             else{
                 subBtn.disabled = false;
+                subBtn.hidden = false;
+                resetBtn.hidden = false;
                 var actionButton = document.getElementById("actionButton");
                 var action = "index.php?action=displayBunkerInformation&bunkerName="+selectBunkerName.value;
 
@@ -111,7 +118,7 @@ ob_start();
             <div class="d-inline-block w-50">
                 <div class="form-group w-75 float-left pr-4" id="responsiveDisplay">
                     <div class="form-group">
-                        <!-- to select an existinf bunker -->
+                        <!-- to select an existing bunker -->
                         <label for="selectBunkerName" class="font-weight-bold">Sélectionner l'abris faisant l'objet d'une visite</label>
                         <select class="form-control" id="selectBunkerName" name="selectBunkerName" onchange="checkNameField()">
                             <option>Sélectionner un abris</option>
@@ -226,10 +233,10 @@ ob_start();
 
             <div class="d-inline-block w100">
                 <!--Submit-->
-                <button type='button' id='submitButton' class='btn btn-primary' disabled>Envoyer</button>
+                <button type='button' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id='submitButton' class='btn btn-primary mr-2' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "disabled"; endif; ?>>Envoyer</button>
 
                 <!--Cancel-->
-                <button type="reset" class="btn btn-danger float-right">Annuler</button>
+                <button type="reset" <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id="resetButton" class="btn btn-danger float-right">Annuler</button>
             </div>
         </form>
     </div>

@@ -78,7 +78,7 @@ function getListBunkerInformation($status = null, $name = null){
     $bunkerInformation = executeQuery($query);
     $query = "";
 
-    $query = "SELECT `idCommune`, `nom` FROM `communes`";
+    $query = "SELECT `idCommune`, `nom`, `region` FROM `communes`";
 
     //get region information
     $regionInformation = executeQuery($query);
@@ -90,6 +90,7 @@ function getListBunkerInformation($status = null, $name = null){
         foreach ($regionInformation as $region){
             if ($bunker['fkCommune'] == $region['idCommune']){
                 $bunkerInformation[$i]['fkCommune'] = $region['nom'];
+                $bunkerInformation[$i] += ['region' => $region['region']];
             }
         }
 
@@ -114,6 +115,31 @@ function getListBunkerInformation($status = null, $name = null){
     }
 
     return $bunkerInformation;
+}
+
+/**
+ * This function used to get different information used for filter in all list page
+ * return : table of information
+ */
+function getInformationForFilter(){
+    $result = array("municipality", "region", "managers");
+
+    //Prepare query to get all name of different municipality
+    $query = "SELECT DISTINCT nom FROM communes";
+    //Get municipality
+    $result['municipality'] = executeQuery($query);
+
+    //Prepare query to get all name of different region
+    $query = "SELECT DISTINCT region FROM communes";
+    //Get region
+    $result['region'] = executeQuery($query);
+
+    //Prepare query to get all name of different managers available
+    $query = "SELECT DISTINCT responsable FROM abris";
+    //Get managers
+    $result['managers'] = executeQuery($query);
+
+    return $result;
 }
 
 function getInformationStats(){

@@ -8,10 +8,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="icon" type="image/png" href="../images/favicon-32x32.png">
+        <link rel="icon" type="image/png" href="view/images/logo.PNG">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
+        <meta name="description" content="Platforme web dédié pour le contrôle périodique effectué par la protection civile suisse">
         <script rel="javascript" src="view/js/jquery.js"></script>
         <link rel="stylesheet" type="text/css" href="view/css/styles.css">
         <link rel="stylesheet" href="view/bootstrap-4.4.1-dist/css/bootstrap.css">
@@ -89,8 +89,8 @@
     <!-------------------------- Gabarit desktop  ------------------------------->
         <div class="d-inline-block w-100 fixed-top p-0 shadow" style="background-color: #e30613; height: 48px;">
             <!-- Home button -->
-            <div class="float-left text-center ml-3" style="margin-top: 0.5rem !important;">
-                <a class="responsive-phone-hidden text-decoration-none" href="index.php?action=home"><button class="btn"><i class="fa fa-home"></i></button></a>
+            <div class="float-left text-center ml-3">
+                <a class="responsive-phone-hidden text-decoration-none pt-0 mt-0" href="index.php?action=home"><button class="btn"><img class="border-dark border" src="view/images/logo.PNG" style="height: 30px; width: 30px"></button></a>
             </div>
             <!-- Logout button -->
             <div class="float-right text-center mr-3" style="margin-top: 0.9rem !important;">

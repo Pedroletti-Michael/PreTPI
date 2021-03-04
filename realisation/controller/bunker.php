@@ -26,6 +26,10 @@ function displayGlobalList(){
     require_once 'model/selectQuery.php';
 
     $informationBunkers = getListBunkerInformation();
+    $data = getInformationForFilter();
+    $managers = $data['managers'];
+    $municipality = $data['municipality'];
+    $region = $data['region'];
 
     require 'view/globalList.php';
 }
