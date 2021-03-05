@@ -37,9 +37,9 @@ ob_start();
                                     <?php if ($_SESSION['message'] == "addUserSuccesses") {
                                         echo 'Succès de l\'ajout de l\'utilisateur à la base de données.';
                                     } else if ($_SESSION['message'] == "addUserFailed") {
-                                        echo 'Échec de l\'ajout de l\'utilisateur à la base de données. Veuillez contactez le support.';
+                                        echo 'Échec de l\'ajout de l\'utilisateur à la base de données. Veuillez contacter le support.';
                                     } else if ($_SESSION['message'] == "userAlreadyExist"){
-                                        echo 'Échec de l\'ajout de l\'utilisateur à la base de données, l\'adresse e-mail est déjà utilisée.';
+                                        echo 'Échec de l\'ajout de l\'utilisateur à la base de données, l\'adresse e-mail est déjà utilisée, veuillez utiliser une autre adresse mail.';
                                     } ?>
                                 </h6>
                                 <button type="submit" class="btn btn-success float-right btn-close-phone" data-dismiss="modal">

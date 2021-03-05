@@ -82,12 +82,14 @@ ob_start();
         }
     </script>
     <script>
-        function addIssue(id) {
+        var i = 1;
+        function addIssue(id, idPiece) {
             var issueBlock = document.getElementById(id);
+
 
             issueBlock.innerHTML +=
                 '   <div class="pr-2 mb-2">'+
-                '        <select class="form-control form form w-25 float-left" id="addIssue" name="addIssue" onchange="">'+
+                '        <select class="form-control form form w-25 float-left" id="addIssue" name="'+idPiece+'addIssue'+i+'" onchange="">'+
                 '           <option>Sélectionner un type de défauts</option>'+
                             <?php
                                 foreach ($issueType as $issue){
@@ -97,10 +99,11 @@ ob_start();
                 '        </select>'+
                 '    </div>'+
                 '    <div class="pl-2">'+
-                '        <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="issueDescription" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l\'entrée.">'+
+                '        <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="'+idPiece+'issueDescription'+i+'" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l\'entrée.">'+
                 '    </div>'+
                 '    <br>'
             ;
+            i++;
         }
     </script>
     <meta charset="UTF-8">
@@ -112,8 +115,33 @@ ob_start();
             <h1>Formulaire contrôles CPA</h1>
         </div>
 
-        <form method="post" action="../index.php?action=RequestVM" class="mb-4">
+        <!-- Messages -->
+        <?php if (isset($_SESSION['message'])) : ?>
+            <div class="modal fade" id="messages" tabindex="-1" role="dialog"
+                 aria-labelledby="messages" aria-hidden="true">
+                <div class="modal-dialog m-auto w-470-px" role="document" style="top: 45%;">
+                    <div class="modal-content w-100">
+                        <div class="modal-body">
+                            <div class="w-100">
+                                <h6 class="float-left pt-2 text-center">
+                                    <?php if ($_SESSION['message'] == "errorSaveData") {
+                                        echo 'Erreur lors du traitement des données avant la sauvegarde vers la base de données, veuillez contacter le support.';
+                                    } else {
+                                        echo 'Erreur inconnue, veuillez contacter le support.';
+                                    } ?>
+                                </h6>
+                                <button type="submit" class="btn btn-success float-right btn-close-phone" data-dismiss="modal">
+                                    Fermer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>$('.modal').modal('show')</script>
+        <?php unset($_SESSION['message']); endif; ?>
 
+        <form method="post" action="index.php?action=saveFormData" class="mb-4">
             <!-- Name part of the bunker -->
             <div class="d-inline-block w-50">
                 <div class="form-group w-75 float-left pr-4" id="responsiveDisplay">
@@ -136,12 +164,12 @@ ob_start();
                     </div>
 
                     <!-- Button used to load information about a specific bunker -->
-                    <a type="button" id="actionButton" href="index.php?action=displayBunkerInformation&bunkerName=" class="btn btn-primary btn-block text-decoration-none form-control form form w-25 float-right">Charger l'abris</a>
+                    <a  id="actionButton" href="index.php?action=displayBunkerInformation&bunkerName=" class="btn btn-primary btn-block text-decoration-none form-control form form w-25 float-right">Charger l'abris</a>
 
                     <!-- to create a new one -->
                     <div class="form-group" id="groupInputBunkerName" style="display: none;">
                         <label for="inputBunkerName" class="font-weight-bold">Nom du nouvel abris<a style="color: #000000"> *</a></label>
-                        <input type="bunkerName" class="form-control form form" id="inputBunkerName" name="inputBunkerName" aria-describedby="bunkerNameHelp" placeholder="Exemple : Abris21" required onkeyup="checkInputFieldName()" value="">
+                        <input type="text" class="form-control form form" id="inputBunkerName" name="inputBunkerName" aria-describedby="bunkerNameHelp" placeholder="Exemple : Abris21" onkeyup="checkInputFieldName()" value="">
                         <small id="bunkerNameHelp" class="form-text text-muted">15 caractères maximum. Lettres, chiffres et trait d'union uniquement</small>
 
                         <div class="alert alert-warning w-100 align-middle text-center mt-2 mb-0" id="alertBunkerName" style="display: none;">
@@ -158,42 +186,53 @@ ob_start();
                 <div class="d-inline-block w-100 mb-5">
                     <div class="form-group w-25 float-left mt-3" id="informationBunkerName">
                         <label class=font-weight-bold>Nom de l'abris : </label> <?= $basicsInformation[0]['nom']; ?>
+                        <input hidden type="text" name="inputInformationBunkerName" value="<?= $basicsInformation[0]['nom']; ?>">
                     </div>
                     <div class="form-group w-25 float-left mt-3" id="informationRegion">
                         <label class=font-weight-bold>Commune : </label> <?= $basicsInformation[0]['fkCommune']; ?>
+                        <input hidden type="text" name="inputInformationRegion" value="<?= $basicsInformation[0]['fkCommune']; ?>">
                     </div>
                     <div class="form-group w-25 float-left mt-3" id="informationManager">
                         <label class=font-weight-bold>Responsable : </label> <?= $basicsInformation[0]['responsable']; ?>
+                        <input hidden type="text" name="inputInformationManager" value="<?= $basicsInformation[0]['responsable']; ?>">
                     </div>
                     <div class="form-group w-25 float-left mt-3" id="informationStatus">
-                        <label class=font-weight-bold>Statut de la visite : </label> <?= $basicsInformation[0]['statutVisite']; ?>
+                        <label class=font-weight-bold>Statut de la visite : </label> <?php if($basicsInformation[0]['statutVisite']== 0){echo "visite nécessaire";}elseif($basicsInformation[0]['statutVisite'] == 1){echo "contre visite nécessaire";}else{echo "abris OK";} ?>
+                        <input hidden type="text" name="inputInformationStatus" value="<?= $basicsInformation[0]['statutVisite']; ?>">
                     </div>
+
+                    <!-- Hidden field to know how many room on the bunker -->
+                    <input hidden type="text" class="form-control form form" id="inputNumberOfRoom" name="inputNumberOfRoom" value="<?= count($roomsInformation); ?>">
                 </div>
 
                 <div class="d-inline-block w-100" id="htmlRoomsSection">
                     <?php $i=1; foreach ($roomsInformation as $roomInformation) : if($i%2) :?>
                         <!-- Left room template information -->
-                        <div class="form-group w-50 float-left pr-4 mb-0 mt-0 border-right border-bottom <?php if ($i == 1) : echo "border-top"; endif; ?> border-dark" id="responsiveDisplay">
+                        <!--<div class="form-group w-50 float-left pr-4 mb-0 mt-0 border-right border-bottom <?php if ($i == 1) : echo "border-top"; endif; ?> border-dark" id="responsiveDisplay">  unoptimised method for the if -->
+                        <div class="form-group w-50 float-left pr-4 mb-0 mt-0 border-right border-bottom <?= ($i == 1) ? "border-top" : "" ?> border-dark" id="responsiveDisplay"> <!-- optimised method for the if -->
                     <?php else: ?>
                         <!-- Right room template information -->
                         <div class="form-group w-50 float-right pl-4 mb-0 mt-0 border-bottom <?php if ($i == 2) : echo "border-top"; endif; ?> border-dark" id="responsiveDisplay">
                     <?php endif; ?>
+                            <!-- Hidden field use to know the id of the room -->
+                            <input hidden type="text" class="form-control form form" id="inputIdRoom" name="inputIdRoom<?= $i ?>" value="<?= $roomInformation['idPiece']; ?>">
+
                             <!-- Room Name -->
                             <div class="form-group w-50 float-left pr-1 mt-3">
                                 <label for="inputRoomName" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
-                                <input type="text" class="form-control form form" id="inputRoomName" name="inputRoomName" value="<?= $roomInformation['nom']; ?>" aria-describedby="inputRoomNameHelp" required>
+                                <input type="text" class="form-control form form" id="inputRoomName" name="inputRoomName<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['nom']; ?>" aria-describedby="inputRoomNameHelp" required>
                             </div>
 
                             <!-- Room available seats -->
                             <div class="form-group w-50 float-right pl-1 mt-3">
                                 <label for="inputAvailableSeats" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
-                                <input type="number" class="form-control form form" id="inputAvailableSeats" name="inputAvailableSeats" value="<?= $roomInformation['placesDisponibles']; ?>"  aria-describedby="inputAvailableSeatsHelp" min="1" max="10000" required>
+                                <input type="number" class="form-control form form" id="inputAvailableSeats" name="inputAvailableSeats<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['placesDisponibles']; ?>"  aria-describedby="inputAvailableSeatsHelp" min="0" max="10000" required>
                             </div>
                             <br>
                             <!-- room type -->
                             <div class="form-group w-100 float-left pr-1">
                                 <label for="inputRoomType" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
-                                <input type="text" class="form-control form form" id="inputRoomType" name="inputRoomType" value="<?= $roomInformation['type']; ?>"  aria-describedby="inputRoomTypeHelp" required>
+                                <input type="text" class="form-control form form" id="inputRoomType" name="inputRoomType<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['type']; ?>"  aria-describedby="inputRoomTypeHelp" required>
                             </div>
 
                             <!-- Part reserved for issue -->
@@ -204,7 +243,7 @@ ob_start();
                                         <label for="inputDefaults" class="font-weight-bold form form w-25 float-left mr-2">Défaut(s) présent(s) dans la pièce :</label>
                                     </div>
                                     <div class="pl-2">
-                                        <a type="button" onclick="addIssue('issueBlock<?= $roomInformation['idPiece']; ?>')" class="btn btn-primary btn-block text-decoration-none form-control form form w-75 float-right">Ajouter un défaut</a>
+                                        <a type="button" onclick="addIssue('issueBlock<?= $roomInformation['idPiece']; ?>', '<?= $roomInformation['idPiece']; ?>')" class="btn btn-primary btn-block text-decoration-none form-control form form w-75 float-right">Ajouter un défaut</a>
                                     </div>
                                 </div>
 
@@ -212,7 +251,7 @@ ob_start();
                                 <div class="w-100 d-inline-block" id="issueBlock<?= $roomInformation['idPiece']; ?>">
                                     <div class="pr-2">
                                         <!-- select a type of issue -->
-                                        <select class="form-control form form w-25 float-left" id="addIssue" name="addIssue" onchange="">
+                                        <select class="form-control form form w-25 float-left" id="addIssue" name="<?= $roomInformation['idPiece']; ?>addIssue0">
                                             <option>Sélectionner un type de défauts</option>
                                             <?php
                                             foreach ($issueType as $issue){
@@ -222,7 +261,7 @@ ob_start();
                                         </select>
                                     </div>
                                     <div class="pl-2">
-                                        <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="issueDescription" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l\'entrée.">
+                                        <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="<?= $roomInformation['idPiece']; ?>issueDescription0" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l\'entrée.">
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +272,7 @@ ob_start();
 
             <div class="d-inline-block w100">
                 <!--Submit-->
-                <button type='button' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id='submitButton' class='btn btn-primary mr-2' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "disabled"; endif; ?>>Envoyer</button>
+                <button type='submit' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id='submitButton' class='btn btn-primary mr-2' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "disabled"; endif; ?>>Envoyer</button>
 
                 <!--Cancel-->
                 <button type="reset" <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id="resetButton" class="btn btn-danger float-right">Annuler</button>

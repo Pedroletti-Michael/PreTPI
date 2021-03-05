@@ -22,6 +22,19 @@ function displayForm($get = null){
     require 'view/cpaCheckForm.php';
 }
 
+function saveFormData($data){
+    require 'model/insertQuery.php';
+
+    if (isset($data['inputNumberOfRoom'])){
+        saveVisitData($data);
+    }
+    else{
+        $_SESSION['message'] = "errorSaveData";
+        require 'view/cpaCheckForm.php';
+    }
+}
+
+
 function displayGlobalList(){
     require_once 'model/selectQuery.php';
 
