@@ -38,7 +38,7 @@ function openDBConnexion(){
 * $query = query needed
 * return = result of the query
 */
-function executeQuery($query){
+function executeQuery($query, $type=null){
     $queryResult = null;
 
     $dbConnexion = openDBConnexion();
@@ -46,7 +46,12 @@ function executeQuery($query){
     if ($dbConnexion != null) {
         $statement = $dbConnexion->prepare($query);
         $statement->execute();
-        $queryResult = $statement->fetchAll();
+        if ($type == null){
+            $queryResult = $statement->fetchAll();
+        }
+        else{
+            $queryResult = $statement;
+        }
     }
 
     $dbConnexion = null;

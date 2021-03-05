@@ -26,7 +26,13 @@ function saveFormData($data){
     require 'model/insertQuery.php';
 
     if (isset($data['inputNumberOfRoom'])){
-        saveVisitData($data);
+        $return = saveVisitData($data);
+        if($return != null){
+            echo $return;
+            $_SESSION['message'] = 'successSavingFormDataVisit';
+            $_SESSION['bunkerName'] = $data['inputInformationBunkerName'];
+            require 'view/home.php';
+        }
     }
     else{
         $_SESSION['message'] = "errorSaveData";
