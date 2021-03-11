@@ -79,28 +79,19 @@ function getBaseInformationCheckForm(){
  * Function used to get the list of bunker with complete information for display.
  * With param status we can choose which list we want to get
  */
-function getListBunkerInformation($status = null, $name = null){
-    $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris`";
+function getListBunkerInformation($status = 99, $name = null){
     $strSep = '\'';
 
-    if ($status != null){
-        switch ($status){
-            case 0:
-                $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 0";
-                break;
-            case 1:
-                $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 1";
-                break;
-            case 2:
-                $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 2";
-                break;
-            case 'specific':
-                $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `nom` = " .$strSep.$name.$strSep;
-                break;
-            default:
-                $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris`";
-                break;
-        }
+    if ($status == 0) {
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 0";
+    } elseif ($status == 1) {
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 1";
+    } elseif ($status == 2) {
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 2";
+    } elseif ($status == 'specific') {
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `nom` = " . $strSep . $name . $strSep;
+    } else {
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris`";
     }
 
     //get bunker information depends on which query is used
@@ -169,6 +160,14 @@ function getInformationForFilter(){
     $result['managers'] = executeQuery($query);
 
     return $result;
+}
+
+function getManagerBunker($bunkerName){
+    $strSep = '\'';
+
+    $query = "SELECT responsable FROM abris WHERE nom =".$strSep.$bunkerName.$strSep;
+
+    return executeQuery($query);
 }
 
 function getInformationStats(){

@@ -53,9 +53,33 @@ function displayGlobalList(){
     require 'view/globalList.php';
 }
 
-function displayBunkerWhoNeedVisit(){
-    $bunkerNeeded = 1;
+function displayVisitList(){
+    require_once 'model/selectQuery.php';
 
+    $informationBunkers = getListBunkerInformation(0);
+    $data = getInformationForFilter();
+    $managers = $data['managers'];
+    $municipality = $data['municipality'];
+    $region = $data['region'];
+
+    require 'view/visitList.php';
+
+}
+
+function sendVisitNotice($get, $post){
+    require_once 'model/mailSender.php';
+    require_once 'model/selectQuery.php';
+
+    $manager = getManagerBunker($get['bunkerName']);
+
+    if(visitBunkerMail($_SESSION['userEmail'], $manager[0]['responsable'], $get['bunkerName'], $post['inputDateVisitMail'])){
+        $_SESSION['message'] = "mailVisitSendingSuccess";
+    }
+    else{
+        $_SESSION['message'] = "mailVisitSendingError";
+    }
+
+    displayVisitList();
 }
 
 function displayBunkerWhoNeedCounterInspection(){
