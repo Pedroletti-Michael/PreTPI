@@ -58,7 +58,7 @@ ob_start();
             <div class="btn-group-vertical" role="group">
                 <a href="index.php?action=displayForm" type="button" class="btn btn-primary btn-block text-decoration-none">Formulaire CPA</a>
                 <a href="index.php?action=displayGlobalList" type="button" class="btn btn-primary btn-block text-decoration-none">Liste globale des abris</a>
-                <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Liste visites CPA</a>
+                <a href="index.php?action=displayVisitList" type="button" class="btn btn-primary btn-block text-decoration-none">Liste visites CPA</a>
                 <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Liste contre-visites CPA</a>
                 <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Statistiques CPA</a>
                 <a href="index.php?action=displayUser" type="button" class="btn btn-primary btn-block text-decoration-none">Création d'utilisateur</a>

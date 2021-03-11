@@ -48,6 +48,12 @@ if(isset($_GET['action']))
         case 'saveFormData':
             saveFormData($_POST);
             break;
+        case 'displayVisitList':
+            displayVisitList();
+            break;
+        case 'sendVisitNotice':
+            sendVisitNotice($_GET, $_POST);
+            break;
         case 'home':
         default:
             if(testSessionTime()){break;}
