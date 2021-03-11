@@ -8,7 +8,11 @@
 
 require_once 'dbConnector.php';
 
-
+/**
+ * Get bunker information needed to display on the CPA FORM for the visit part
+ * param : $bunkerName : name of the bunker that we need to get the information
+ * return : array with all the necessary information
+ */
 function getBunkerInformationForm($bunkerName){
     $result = array('basicsBunkerInformation', 'basicsRoomsInformation');
 
@@ -18,13 +22,38 @@ function getBunkerInformationForm($bunkerName){
     //Get basics information about rooms of an bunker
     $resultRooms = getRoomsInformationForSpecificBunker($resultListBunker[0]);
 
+    //Get available issue a specific room and add it to the $resultRooms array
+    $i = 0;
+    foreach ($resultRooms as $room){
+        $resultAvailableIssue = getAvailableRoomIssue($room['idPiece']);
+        $resultRooms[$i] += ['availableIssue' => $resultAvailableIssue];
+
+        $i++;
+    }
+
     $result = array('basicsBunkerInformation' => $resultListBunker, 'roomsInformation' => $resultRooms);
 
     return $result;
 }
 
+/**
+ * This function is used to get all information about all room of a specified bunker
+ * param $idBunker = id of the specific bunker
+ * return : return basics informations for all room of a specified bunker
+ */
 function getRoomsInformationForSpecificBunker($idBunker){
     $query = "SELECT `idPiece`,`nom`,`placesDisponibles`,`type` FROM `pieces` WHERE `fkAbris` = ".$idBunker[0];
+
+    return executeQuery($query);
+}
+
+/**
+ * This function is used to get all available issue about a specified room.
+ * param : $roomId = id of the room
+ * return : Return all available issue
+ */
+function getAvailableRoomIssue($roomId){
+    $query = "SELECT `fkDefauts`, `type`, `description` FROM `defauts_possibles` INNER JOIN `defauts` ON `fkDefauts` = `idDefauts` WHERE `fkPieces` =".$roomId;
 
     return executeQuery($query);
 }

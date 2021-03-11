@@ -88,7 +88,7 @@ ob_start();
 
 
             issueBlock.innerHTML +=
-                '   <div class="pr-2 mb-2">'+
+                '   <div class="pr-2 pt-3">'+
                 '        <select class="form-control form form w-25 float-left" id="addIssue" name="'+idPiece+'addIssue'+i+'" onchange="">'+
                 '           <option>Sélectionner un type de défauts</option>'+
                             <?php
@@ -98,7 +98,7 @@ ob_start();
                             ?>
                 '        </select>'+
                 '    </div>'+
-                '    <div class="pl-2">'+
+                '    <div class="pl-2 pt-3">'+
                 '        <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="'+idPiece+'issueDescription'+i+'" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l\'entrée.">'+
                 '    </div>'+
                 '    <br>'
@@ -205,7 +205,7 @@ ob_start();
                     <input hidden type="text" class="form-control form form" id="inputNumberOfRoom" name="inputNumberOfRoom" value="<?= count($roomsInformation); ?>">
                 </div>
 
-                <div class="d-inline-block w-100" id="htmlRoomsSection">
+                <div class="d-inline-block w-100 h" id="htmlRoomsSection">
                     <?php $i=1; foreach ($roomsInformation as $roomInformation) : if($i%2) :?>
                         <!-- Left room template information -->
                         <!--<div class="form-group w-50 float-left pr-4 mb-0 mt-0 border-right border-bottom <?php if ($i == 1) : echo "border-top"; endif; ?> border-dark" id="responsiveDisplay">  unoptimised method for the if -->
@@ -229,10 +229,20 @@ ob_start();
                                 <input type="number" class="form-control form form" id="inputAvailableSeats" name="inputAvailableSeats<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['placesDisponibles']; ?>"  aria-describedby="inputAvailableSeatsHelp" min="0" max="10000" required>
                             </div>
                             <br>
-                            <!-- room type -->
+                            <!-- Room type -->
                             <div class="form-group w-100 float-left pr-1">
                                 <label for="inputRoomType" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
                                 <input type="text" class="form-control form form" id="inputRoomType" name="inputRoomType<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['type']; ?>"  aria-describedby="inputRoomTypeHelp" required>
+                            </div>
+
+                            <!-- Part reserved for the possible issue we need to check -->
+                            <div class="form-group w-100 float-left pr-1">
+                                <?php $y = 1; foreach ($roomInformation['availableIssue'] as $issueAvailable) :?>
+                                    <div class="form-group w-40 ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> mt-3">
+                                        <label class="form-check-label" for="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'];?>"><?=$issueAvailable['type'];?></label>
+                                        <input type="checkbox" class="form-check-input pl-3 ml-3" id="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'];?>">
+                                    </div>
+                                <?php $y++; endforeach; ?>
                             </div>
 
                             <!-- Part reserved for issue -->
@@ -249,7 +259,7 @@ ob_start();
 
                                 <!-- defaults information -->
                                 <div class="w-100 d-inline-block" id="issueBlock<?= $roomInformation['idPiece']; ?>">
-                                    <div class="pr-2">
+                                    <div class="pr-2 mt-3">
                                         <!-- select a type of issue -->
                                         <select class="form-control form form w-25 float-left" id="addIssue" name="<?= $roomInformation['idPiece']; ?>addIssue0">
                                             <option>Sélectionner un type de défauts</option>
@@ -260,7 +270,7 @@ ob_start();
                                             ?>
                                         </select>
                                     </div>
-                                    <div class="pl-2">
+                                    <div class="pl-2 mt-3">
                                         <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="<?= $roomInformation['idPiece']; ?>issueDescription0" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l\'entrée.">
                                     </div>
                                 </div>
