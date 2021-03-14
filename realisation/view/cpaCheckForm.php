@@ -33,6 +33,7 @@ ob_start();
                 resetBtn.hidden = true;
             }
             else if(selectBunkerName.value === "Autre"){
+                subBtn.disabled = false;
                 subBtn.hidden = false;
                 resetBtn.hidden = false;
                 groupInputBunkerName.style.display = "";
@@ -40,9 +41,9 @@ ob_start();
 
             }
             else{
-                subBtn.disabled = false;
-                subBtn.hidden = false;
-                resetBtn.hidden = false;
+                subBtn.disabled = true;
+                subBtn.hidden = true;
+                resetBtn.hidden = true;
                 var actionButton = document.getElementById("actionButton");
                 var action = "index.php?action=displayBunkerInformation&bunkerName="+selectBunkerName.value;
 
@@ -106,6 +107,27 @@ ob_start();
             i++;
         }
     </script>
+    <script>
+        function chkBoxCheck(){
+            const form = document.getElementById("cpaForm");
+            const chkBox = form.querySelectorAll("input[type='checkbox']");
+
+            let result = false;
+
+            for(const chk of chkBox){
+                if(!chk.checked && !result){
+                    result = true;
+                }
+            }
+
+            if(!result){
+                document.getElementById("submitButton").disabled = false;
+            }
+            else{
+                document.getElementById("submitButton").disabled = true;
+            }
+        }
+    </script>
     <meta charset="UTF-8">
     <title>Formulaire contrôles CPA - CPA-CP</title>
 </head>
@@ -141,7 +163,7 @@ ob_start();
             <script>$('.modal').modal('show')</script>
         <?php unset($_SESSION['message']); endif; ?>
 
-        <form method="post" action="index.php?action=saveFormData" class="mb-4">
+        <form method="post" action="index.php?action=saveFormData" id="cpaForm" class="mb-4">
             <!-- Name part of the bunker -->
             <div class="d-inline-block w-50">
                 <div class="form-group w-75 float-left pr-4" id="responsiveDisplay">
@@ -220,19 +242,19 @@ ob_start();
                             <!-- Room Name -->
                             <div class="form-group w-50 float-left pr-1 mt-3">
                                 <label for="inputRoomName" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
-                                <input type="text" class="form-control form form" id="inputRoomName" name="inputRoomName<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['nom']; ?>" aria-describedby="inputRoomNameHelp" required>
+                                <input readonly type="text" class="form-control form form" id="inputRoomName" name="inputRoomName<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['nom']; ?>" aria-describedby="inputRoomNameHelp" required>
                             </div>
 
                             <!-- Room available seats -->
                             <div class="form-group w-50 float-right pl-1 mt-3">
                                 <label for="inputAvailableSeats" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
-                                <input type="number" class="form-control form form" id="inputAvailableSeats" name="inputAvailableSeats<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['placesDisponibles']; ?>"  aria-describedby="inputAvailableSeatsHelp" min="0" max="10000" required>
+                                <input readonly type="number" class="form-control form form" id="inputAvailableSeats" name="inputAvailableSeats<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['placesDisponibles']; ?>"  aria-describedby="inputAvailableSeatsHelp" min="0" max="10000" required>
                             </div>
                             <br>
                             <!-- Room type -->
                             <div class="form-group w-100 float-left pr-1">
                                 <label for="inputRoomType" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
-                                <input type="text" class="form-control form form" id="inputRoomType" name="inputRoomType<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['type']; ?>"  aria-describedby="inputRoomTypeHelp" required>
+                                <input readonly type="text" class="form-control form form" id="inputRoomType" name="inputRoomType<?= $roomInformation['idPiece']; ?>" value="<?= $roomInformation['type']; ?>"  aria-describedby="inputRoomTypeHelp" required>
                             </div>
 
                             <!-- Part reserved for the possible issue we need to check -->
@@ -240,7 +262,7 @@ ob_start();
                                 <?php $y = 1; foreach ($roomInformation['availableIssue'] as $issueAvailable) :?>
                                     <div class="form-group w-40 ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> mt-3">
                                         <label class="form-check-label" for="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'];?>"><?=$issueAvailable['type'];?></label>
-                                        <input type="checkbox" class="form-check-input pl-3 ml-3" id="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'];?>">
+                                        <input onclick="chkBoxCheck();" type="checkbox" class="form-check-input pl-3 ml-3" id="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'];?>">
                                     </div>
                                 <?php $y++; endforeach; ?>
                             </div>

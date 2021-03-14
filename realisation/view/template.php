@@ -64,7 +64,7 @@
                 </div>
                 <div class="w-100 fixed-bottom d-inline-block" style="bottom: 20px">
                     <div class="float-left w-50 text-decoration-none pl-2">
-                        <a href="mailto:helpdesk@heig-vd.ch?subject=Plateforme GVM : [Titre de votre message]">
+                        <a href="mailto:helpdesk@test.ch?subject=CPA : [Titre de votre message]">
                             <h5 class="color-lightgrey">Contactez-nous</h5>
                         </a>
                     </div>
@@ -90,7 +90,12 @@
         <div class="d-inline-block w-100 fixed-top p-0 shadow" style="background-color: #e30613; height: 48px;">
             <!-- Home button -->
             <div class="float-left text-center ml-3">
-                <a class="responsive-phone-hidden text-decoration-none pt-0 mt-0" href="index.php?action=home"><button class="btn"><img class="border-dark border" src="view/images/logo.PNG" style="height: 30px; width: 30px"></button></a>
+                <a class="responsive-phone-hidden text-decoration-none pt-0 mt-0" data-toggle="dropdown" ><button class="btn"><img class="border-dark border" src="view/images/logo.PNG" style="height: 30px; width: 30px"></button></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="index.php?action=home">Accueil</a></li>
+                    <li><a class="dropdown-item" href="index.php?action=displayGlobalList">Liste des abris</a></li>
+                    <li><a class="dropdown-item" href="index.php?action=displayUser">Création d'utilisateur</a></li>
+                </ul>
             </div>
             <!-- Logout button -->
             <div class="float-right text-center mr-3" style="margin-top: 0.9rem !important;">
