@@ -122,9 +122,11 @@ ob_start();
 
             if(!result){
                 document.getElementById("submitButton").disabled = false;
+                document.getElementById("lblChkBoxIssue").hidden = true;
             }
             else{
                 document.getElementById("submitButton").disabled = true;
+                document.getElementById("lblChkBoxIssue").hidden = false;
             }
         }
     </script>
@@ -230,11 +232,10 @@ ob_start();
                 <div class="d-inline-block w-100 h" id="htmlRoomsSection">
                     <?php $i=1; foreach ($roomsInformation as $roomInformation) : if($i%2) :?>
                         <!-- Left room template information -->
-                        <!--<div class="form-group w-50 float-left pr-4 mb-0 mt-0 border-right border-bottom <?php if ($i == 1) : echo "border-top"; endif; ?> border-dark" id="responsiveDisplay">  unoptimised method for the if -->
-                        <div class="form-group w-50 float-left pr-4 mb-0 mt-0 border-right border-bottom <?= ($i == 1) ? "border-top" : "" ?> border-dark" id="responsiveDisplay"> <!-- optimised method for the if -->
+                        <div class="form-group w-50 float-left pr-4 pl-4 mb-0 mt-0 border-right border-bottom border-left <?= ($i == 1) ? "border-top" : "" ?> border-dark" id="responsiveDisplay"> <!-- optimised method for the if -->
                     <?php else: ?>
                         <!-- Right room template information -->
-                        <div class="form-group w-50 float-right pl-4 mb-0 mt-0 border-bottom <?php if ($i == 2) : echo "border-top"; endif; ?> border-dark" id="responsiveDisplay">
+                        <div class="form-group w-50 float-right pr-4 pl-4 mb-0 mt-0 border-bottom border-right border-left <?php if ($i == 2) : echo "border-top"; endif; ?> border-dark" id="responsiveDisplay">
                     <?php endif; ?>
                             <!-- Hidden field use to know the id of the room -->
                             <input hidden type="text" class="form-control form form" id="inputIdRoom" name="inputIdRoom<?= $i ?>" value="<?= $roomInformation['idPiece']; ?>">
@@ -266,6 +267,18 @@ ob_start();
                                     </div>
                                 <?php $y++; endforeach; ?>
                             </div>
+
+                            <?php if(isset($roomInformation['spottedIssue'])) : ?>
+                                <!-- Part reserved for counter inspection -->
+                                <div class="form-group w-100 float-left pr-1">
+                                    <?php $y = 1; foreach ($roomInformation['spottedIssue'] as $issueInformation) : ?>
+                                        <div class="form-group w-40 ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> mt-3">
+                                            <label class="form-check-label"><?= $issueInformation['type']. " " .$issueInformation['globalDescription']. " " .$issueInformation['description']; ?></label>
+
+                                        </div>
+                                    <?php $y++; endforeach; ?>
+                                </div>
+                            <?php endif; ?>
 
                             <!-- Part reserved for issue -->
                             <div class="form-group w-100 float-left mt-3">
@@ -302,12 +315,17 @@ ob_start();
                 </div>
             <?php endif; ?>
 
-            <div class="d-inline-block w100">
+            <div class="d-inline-block w-100">
                 <!--Submit-->
-                <button type='submit' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id='submitButton' class='btn btn-primary mr-2' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "disabled"; endif; ?>>Envoyer</button>
+                <button type='submit' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id='submitButton' class='btn btn-primary mr-2 mt-3 mb-0' <?php if(isset($basicsInformation) && isset($roomsInformation)) : echo "disabled"; endif; ?>>Envoyer</button>
 
                 <!--Cancel-->
-                <button type="reset" <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id="resetButton" class="btn btn-danger float-right">Annuler</button>
+                <button type="reset" <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id="resetButton" class="btn btn-danger mt-3 mb-0">Annuler</button>
+            </div>
+            <div class="d-inline-block w-100">
+                <?php if(isset($basicsInformation) && isset($roomsInformation)) : ?>
+                    <label id="lblChkBoxIssue" hidden class="font-weight-bold" style="color: red">Veuillez vérifier tous les points à vérifier de toutes les pièces.</label>
+                <?php endif; ?>
             </div>
         </form>
     </div>

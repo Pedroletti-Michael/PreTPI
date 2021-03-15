@@ -24,9 +24,17 @@ function getBunkerInformationForm($bunkerName){
 
     //Get available issue a specific room and add it to the $resultRooms array
     $i = 0;
+    // Get all available issue
     foreach ($resultRooms as $room){
         $resultAvailableIssue = getAvailableRoomIssue($room['idPiece']);
         $resultRooms[$i] += ['availableIssue' => $resultAvailableIssue];
+
+        // When the bunker as a counter inspection planed we get all issue for all room
+        if($resultListBunker[0]['statutVisite'] == 1){
+            //function who get all issue
+            $resultSpottedIssue = getSpottedIssueForRoom($room['idPiece']);
+            $resultRooms[$i] += ['spottedIssue' => $resultSpottedIssue];
+        }
 
         $i++;
     }
@@ -34,6 +42,16 @@ function getBunkerInformationForm($bunkerName){
     $result = array('basicsBunkerInformation' => $resultListBunker, 'roomsInformation' => $resultRooms);
 
     return $result;
+}
+
+/**
+ * param $idRoom id of the room that we need to get issue information
+ * return all information about issue of a specified room
+ */
+function getSpottedIssueForRoom($idRoom){
+    $query = "SELECT `fkDefauts`, `type`, defauts.description AS globalDescription, pieces_defauts.description FROM `pieces_defauts` INNER JOIN `defauts` ON `fkDefauts` = `idDefauts` WHERE `fkPieces` =".$idRoom;
+
+    return executeQuery($query);
 }
 
 /**
@@ -82,14 +100,18 @@ function getBaseInformationCheckForm(){
 function getListBunkerInformation($status = 99, $name = null){
     $strSep = '\'';
 
-    if ($status == 0) {
+    if ($status == 0) { // visit planned
         $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 0";
-    } elseif ($status == 1) {
+    } elseif ($status == 1) { // counter inspection planned
         $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 1";
-    } elseif ($status == 2) {
+    } elseif ($status == 2) { // bunker ok
         $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 2";
-    } elseif ($status == 'specific') {
-        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `nom` = " . $strSep . $name . $strSep;
+    } elseif ($status == 3) { // visit needed
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 3";
+    } elseif ($status == 4) { // counter inspection needed
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 4";
+    }elseif ($status == 'specific') {
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable`, `statutVisite` FROM `abris` WHERE `nom` = " . $strSep . $name . $strSep;
     } else {
         $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris`";
     }
