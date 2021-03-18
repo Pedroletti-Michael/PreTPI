@@ -3,7 +3,6 @@
 /**
  * Authors : Pedroletti Michael
  * CreationFile date : 15.02.2021
- * ModifFile date : 18.02.2021
  * Description File : Page for display of global list of bunker
  **/
 
@@ -17,11 +16,60 @@ ob_start();
     <script rel="javascript" src="view/js/script.js"></script>
     <script rel="javascript" src="view/js/filter.js"></script>
     <script rel="javascript" src="view/js/sortTable.js"></script>
+    <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.js"></script>
+    <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.bundle.js"></script>
+    <script>
+        function changeUrlInformation(bunkerName, manager){
+            var formMailVisit = document.getElementById("formMailVisit");
+            var action;
+            var statusDisplay = document.getElementById("displayStatus");
+
+            if(statusDisplay.value === "yellow"){
+                action = "index.php?action=sendVisitNotice&manager="+manager+"&bunkerName="+bunkerName;
+            }
+            else if(statusDisplay.value === "red"){
+                action = "index.php?action=sendCounterInspectionNotice&manager="+manager+"&bunkerName="+bunkerName;
+            }
+            else{
+                action = "#";
+            }
+
+            formMailVisit.action = action;
+        }
+    </script>
     <meta charset="UTF-8">
     <title>Liste globale des abris - CPA-CP</title>
 </head>
 <body>
 <!-- MODAL SECTION -->
+<!-- Messages -->
+<?php if (isset($_SESSION['message'])) : ?>
+    <div class="modal fade" id="messages" tabindex="-1" role="dialog"
+         aria-labelledby="messages" aria-hidden="true">
+        <div class="modal-dialog m-auto w-470-px" role="document" style="top: 45%;">
+            <div class="modal-content w-100">
+                <div class="modal-body">
+                    <div class="w-100">
+                        <h6 class="float-left pt-2 text-center">
+                            <?php if ($_SESSION['message'] == "mailVisitSendingSuccess") {
+                                echo 'Succès de l\'envoie de l\'email d\'avis de visite.';
+                            } elseif ($_SESSION['message'] == "mailVisitSendingError"){
+                                echo 'Erreur lors de l\'envoie de l\'email d\'avis de visite';
+                            } else {
+                                echo 'Erreur inconnue, veuillez contacter le support.';
+                            } ?>
+                        </h6>
+                        <button type="submit" class="btn btn-success float-right btn-close-phone" data-dismiss="modal">
+                            Fermer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>$('.modal').modal('show')</script>
+    <?php unset($_SESSION['message']); endif; ?>
+
 <!-- Municipality Modal Window -->
 <div class="modal fade" id="modalMunicipality" tabindex="-1" role="dialog" aria-labelledby="modalMunicipality"
      aria-hidden="true">
@@ -133,6 +181,37 @@ ob_start();
     </div>
 </div>
 
+<!-- Mail Modal Window -->
+<div class="modal fade" id="modalMail" tabindex="-1" role="dialog" aria-labelledby="modalMail"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="w-100 p-3">
+                <div class="w-100 float-left p-1">
+                    <p>Envoi de l'email pour l'abris : </p><a id="mailBunkerName"></a>
+                </div>
+                <div class="w-100 float-left p-1">
+                    <form action="#" id="formMailVisit" method="post">
+                        <div class="w-100 float-left p-1 mt2">
+                            <label for="inputDateVisitMail" class="font-weight-bold form form float-left mr-2">Veuillez sélectionner la date et l'heure à laquel vous souhaitez procéder à la visite de l'abris <a style="color: red"> *</a></label>
+                        </div>
+                        <div class="w-100 float-left p-1 mt2">
+                            <input type="datetime-local" class="form-control form form w-100 float-left" id="inputDateVisitMail" name="inputDateVisitMail" required value="<?= date('Y-m-d').'T'.date('H:i'); ?>">
+                        </div>
+                        <div class="w-100 float-left mt-3">
+                            <!--Cancel-->
+                            <button type="reset" id="resetButton" class='btn btn-danger mt-2 mb-3' data-dismiss="modal">Annuler</button>
+
+                            <!--Submit-->
+                            <button type='submit' id='submitButton' class='btn btn-primary mt-2 mb-3'>Envoyer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -143,19 +222,6 @@ ob_start();
     </div>
 
     <div class="table-responsive-xl">
-        <div class="form-group w-50 float-left mt-3 mb-3">
-            <div class="form-group w-33 float-left text-center" style="background-color: yellow; font-size: medium">
-                <label class="mr-3" >Visite à faire</label>
-            </div>
-            <div class="form-group w-33 float-left text-center" style="background-color: red; font-size: medium">
-                <label class="mr-3" style="color: white">Contre visite à faire</label>
-            </div>
-            <div class="form-group w-33 float-left text-center" style="background-color: green; font-size: medium">
-                <label class="mr-3" style="color: white">Visite effectuée, abris en ordre</label>
-            </div>
-
-        </div>
-
         <div class="d-inline-block w-100">
             <div class="form-group float-left mt-3 mb-3" style="width: 88%;">
                 <table class="table table-hover allVM" id="globalListTable">
@@ -268,6 +334,7 @@ ob_start();
                                       clip-rule="evenodd"/>
                             </svg>
                         </th> <!-- Responsable -->
+                        <th scope="col" hidden class="emailGloablListClass">E-mail</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -277,13 +344,19 @@ ob_start();
                             <tr>
                                 <td style="width: 100px; background-color: <?php
                                 switch($value['statutVisite']){
+                                    case 0 :
+                                        echo "orange";
+                                        break;
                                     case 1 :
-                                        echo "red";
+                                        echo "darkred";
                                         break;
                                     case 2 :
                                         echo "green";
                                         break;
-                                    case 0 :
+                                    case 4 :
+                                        echo "red";
+                                        break;
+                                    case 3 :
                                     default :
                                         echo "yellow";
                                         break;
@@ -293,7 +366,8 @@ ob_start();
                                 <td><?php echo $value['fkCommune']?></td>
                                 <td><?php echo $value['region']?></td>
                                 <td><?php echo $value['placesDisponibles']?></td>
-                                <td><?php echo $value['responsable']?></td>
+                                <td><?php echo $value['fkResponsable']['nom']." ".$value['fkResponsable']['prenom']; ?></td>
+                                <td hidden class="emailGloablListClass"><button type="button" class="btn btn-secondary btn-sm" onclick='changeUrlInformation("<?= $value['nom'];?>", "<?= $value['fkResponsable']['mail'];?>");' data-toggle="modal" data-target="#modalMail">Envoyer</button></td>
                             </tr>
                         <?php
                         endif;
@@ -308,21 +382,35 @@ ob_start();
                     <!-- Bunker who need a visit -->
                     <a onclick="filterByName('yellow', 0, 'global')">
                         <button type="button" class="btn btn-secondary w-100 rounded-0 mb-0 text-left" id="bunkerCounterInspectionFilterButton">
-                            <span class="badge badge-primary" id="bunkerVisit"> </span>
+                            <span class="badge badge-primary" id="bunkerVisit" style="background-color: yellow"> </span>
                             Abris nécessitant une visite
+                        </button>
+                    </a>
+                    <!-- Bunker who need a visit -->
+                    <a onclick="filterByName('orange', 0, 'global')">
+                        <button type="button" class="btn btn-secondary w-100 rounded-0 mb-0 text-left" id="bunkerCounterInspectionFilterButton">
+                            <span class="badge badge-primary" style="background-color: orange" id="bunkerVisit"> </span>
+                            Abris ayant une visite planifiée
                         </button>
                     </a>
                     <!-- Bunker who need a counter inscpection -->
                     <a onclick="filterByName('red', 0, 'global')">
                         <button type="button" class="btn btn-secondary w-100 rounded-0 mb-0 text-left" id="bunkerCounterInspectionFilterButton">
-                            <span class="badge badge-primary" id="bunkerCounterInspection"> </span>
+                            <span class="badge badge-primary" id="bunkerCounterInspection" style="background-color: red;"> </span>
                             Abris nécessitant une contre visite
+                        </button>
+                    </a>
+                    <!-- Bunker who need a counter inscpection -->
+                    <a onclick="filterByName('darkred', 0, 'global')">
+                        <button type="button" class="btn btn-secondary w-100 rounded-0 mb-0 text-left" id="bunkerCounterInspectionFilterButton">
+                            <span class="badge badge-primary" id="bunkerCounterInspection" style="background-color: darkred"> </span>
+                            Abris ayant une contre visite planifiée
                         </button>
                     </a>
                     <!-- Bunker who is ok -->
                     <a onclick="filterByName('green', 0, 'global')">
                         <button type="button" class="btn btn-secondary w-100 rounded-0 mb-0 text-left" id="bunkerOkFilterButton">
-                            <span class="badge badge-primary" id="bunkerOk"> </span>
+                            <span class="badge badge-primary" id="bunkerOk" style="background-color: green"> </span>
                             Abris OK
                         </button>
                     </a>
@@ -339,6 +427,8 @@ ob_start();
 
     </div>
 </div>
+
+<input hidden type="text" value="" id="displayStatus">
 </body>
 
 <?php

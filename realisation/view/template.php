@@ -12,18 +12,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Platforme web dédié pour le contrôle périodique effectué par la protection civile suisse">
-        <script rel="javascript" src="view/js/jquery.js"></script>
         <link rel="stylesheet" type="text/css" href="view/css/styles.css">
         <link rel="stylesheet" href="view/bootstrap-4.4.1-dist/css/bootstrap.css">
         <link rel="stylesheet" href="view/bootstrap-4.4.1-dist/css/bootstrap-grid.css">
         <link rel="stylesheet" href="view/bootstrap-4.4.1-dist/css/bootstrap-reboot.css">
         <link rel="stylesheet" href="view/css/dashboard.css">
-        <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.bundle.js"></script>
-        <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.js"></script>
-        <script rel="javascript" src="view/js/script.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script rel="javascript" src="view/js/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+        <script rel="javascript" src="view/js/script.js"></script>
     </head>
 <body>
     <?php if (isset($_SESSION['sessionTime'])): ?>
@@ -103,7 +103,7 @@
             </div>
             <!-- Display Username -->
             <div class="float-right text-center mr-3" style="margin-top: 0.9rem !important;">
-                <h6>Bonjour, <?= $_SESSION['userEmail']; ?></h6>
+                <h6>Bonjour, <?= $_SESSION['lastname']." ".$_SESSION['firstname']; ?></h6>
             </div>
 
             <!-- Title -->

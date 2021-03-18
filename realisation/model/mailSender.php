@@ -31,13 +31,14 @@ function sendMail($to, $subject, $message, $headers){
  * @param $date = date of the visite
  * @return bool
  */
-function visitBunkerMail($userMail, $manager, $bunkerName, $date){
+function visitBunkerMail($userMail, $manager, $bunkerName, $date, $counterInspection = null){
     $to  = $userMail . ', ' . $manager;
 
-    // subject
-    $subject = 'Avis de visite de l\'abris : '.$bunkerName;
+    if($counterInspection == null){
+        // subject
+        $subject = 'Avis de visite de l\'abris : '.$bunkerName;
 
-    $message = "
+        $message = "
         Bonjour,
         <br><br>
         Nous vous informons par ce mail que nous allons venir visiter l'arbis : ". $bunkerName ."
@@ -48,6 +49,23 @@ function visitBunkerMail($userMail, $manager, $bunkerName, $date){
         <br><br>
         ".$userMail."
         ";
+    }
+    else{
+        // subject
+        $subject = 'Avis de contre visite de l\'abris : '.$bunkerName;
+
+        $message = "
+        Bonjour,
+        <br><br>
+        Nous vous informons par ce mail que nous allons revenir visiter l'arbis : ". $bunkerName ."
+        <br><br>
+        Nous viendrons visiter l'abris le ".$date.", dans la journée. Nous vous prions donc de vous préparer à notre arrivée.
+        <br><br>
+        Meilleures salutations,
+        <br><br>
+        ".$userMail."
+        ";
+    }
 
     // To send HTML mail, the Content-type header must be set
     $headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -64,4 +82,5 @@ function visitBunkerMail($userMail, $manager, $bunkerName, $date){
     else{
         return false;
     }
+
 }

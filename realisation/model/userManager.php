@@ -30,7 +30,7 @@ function addUserToDB($lastname, $firstname, $mail, $pwd){
 */
 function userLogin($userLogin, $userPwd){
     if($userLogin == 'admin'){
-        return "amdin@test.ch";
+        return array("mail" => "admin@test.ch", "nom" => "blabla", "prenom" => "prenoun");
     }
     else{
         // get login information from db
@@ -40,7 +40,7 @@ function userLogin($userLogin, $userPwd){
 
         foreach ($information as $loginInfo){
             if($loginInfo['mail'] == $userLogin && password_verify($userPwd, $loginInfo['password'])){
-                $result = $loginInfo['mail'];
+                $result = getUserInformation($loginInfo['mail']);
             }
         }
 
@@ -81,5 +81,12 @@ function getLoginInformation(){
     $query = "SELECT `mail`, `password` FROM `utilisateurs`";
 
     // execute and return the result of the query
+    return executeQuery($query);
+}
+
+function getUserInformation($mail){
+    $strSep = '\'';
+    $query = "SELECT `mail`, `nom`, `prenom` FROM `utilisateurs` WHERE mail =".$strSep.$mail.$strSep;
+
     return executeQuery($query);
 }

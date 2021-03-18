@@ -101,19 +101,19 @@ function getListBunkerInformation($status = 99, $name = null){
     $strSep = '\'';
 
     if ($status == 0) { // visit planned
-        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 0";
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`fkResponsable` FROM `abris` WHERE `statutVisite` = 0";
     } elseif ($status == 1) { // counter inspection planned
-        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 1";
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`fkResponsable` FROM `abris` WHERE `statutVisite` = 1";
     } elseif ($status == 2) { // bunker ok
-        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 2";
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`fkResponsable` FROM `abris` WHERE `statutVisite` = 2";
     } elseif ($status == 3) { // visit needed
-        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 3";
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`fkResponsable` FROM `abris` WHERE `statutVisite` = 3";
     } elseif ($status == 4) { // counter inspection needed
-        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris` WHERE `statutVisite` = 4";
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`fkResponsable` FROM `abris` WHERE `statutVisite` = 4";
     }elseif ($status == 'specific') {
-        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable`, `statutVisite` FROM `abris` WHERE `nom` = " . $strSep . $name . $strSep;
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`fkResponsable`, `statutVisite` FROM `abris` WHERE `nom` = " . $strSep . $name . $strSep;
     } else {
-        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`responsable` FROM `abris`";
+        $query = "SELECT `idAbris`,`fkCommune`,`nom`,`statutVisite`,`fkResponsable` FROM `abris`";
     }
 
     //get bunker information depends on which query is used
@@ -126,6 +126,10 @@ function getListBunkerInformation($status = 99, $name = null){
     $regionInformation = executeQuery($query);
     $query = "";
 
+    $query = "SELECT `idUtilisateur`, `nom`, `prenom`, `mail` FROM `utilisateurs`";
+
+    $managers = executeQuery($query);
+
     //this section gonna check all bunker information to replace the "fkCommune" field to change with the real value like "nom" in table "communes"
     $i = 0;
     foreach ($bunkerInformation as $bunker){
@@ -133,6 +137,12 @@ function getListBunkerInformation($status = 99, $name = null){
             if ($bunker['fkCommune'] == $region['idCommune']){
                 $bunkerInformation[$i]['fkCommune'] = $region['nom'];
                 $bunkerInformation[$i] += ['region' => $region['region']];
+            }
+        }
+
+        foreach ($managers as $manager){
+            if ($manager['idUtilisateur'] == $bunker['fkResponsable']){
+                $bunkerInformation[$i]['fkResponsable'] = $manager;
             }
         }
 
@@ -167,17 +177,17 @@ function getInformationForFilter(){
     $result = array("municipality", "region", "managers");
 
     //Prepare query to get all name of different municipality
-    $query = "SELECT DISTINCT nom FROM communes";
+    $query = "SELECT DISTINCT `communes`.`nom` FROM abris INNER JOIN `communes` ON `fkCommune` = `idCommune`";
     //Get municipality
     $result['municipality'] = executeQuery($query);
 
     //Prepare query to get all name of different region
-    $query = "SELECT DISTINCT region FROM communes";
+    $query = "SELECT DISTINCT region FROM abris INNER JOIN `communes` ON `fkCommune` = `idCommune`";
     //Get region
     $result['region'] = executeQuery($query);
 
     //Prepare query to get all name of different managers available
-    $query = "SELECT DISTINCT responsable FROM abris";
+    $query = "SELECT DISTINCT `utilisateurs`.`nom`, prenom, mail FROM abris INNER JOIN `utilisateurs` ON `fkResponsable` = `idUtilisateur` WHERE `utilisateurs`.`role` =0";
     //Get managers
     $result['managers'] = executeQuery($query);
 
@@ -187,9 +197,26 @@ function getInformationForFilter(){
 function getManagerBunker($bunkerName){
     $strSep = '\'';
 
-    $query = "SELECT responsable FROM abris WHERE nom =".$strSep.$bunkerName.$strSep;
+    $query = "SELECT fkResponsable FROM abris WHERE nom =".$strSep.$bunkerName.$strSep;
+    $return = executeQuery($query);
+    $query = '';
 
-    return executeQuery($query);
+    $query = "SELECT `idUtilisateur`, `nom`, `prenom`, `mail` FROM `utilisateurs`";
+
+    $managers = executeQuery($query);
+
+    $i = 0;
+    foreach ($return as $bunker){
+        foreach ($managers as $manager){
+            if ($manager['idUtilisateur'] == $bunker['fkResponsable']){
+                $return[$i]['fkResponsable'] = $manager;
+            }
+        }
+
+        $i ++;
+    }
+
+    return $return;
 }
 
 function getInformationStats(){

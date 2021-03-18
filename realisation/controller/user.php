@@ -42,11 +42,11 @@ function login($loginRequest)
          $userPwd = $loginRequest['userPassword'];
 
          require_once "model/userManager.php";
-         $userEmail = userLogin($userLogin, $userPwd);
+         $userInformation = userLogin($userLogin, $userPwd);
 
-         if ($userEmail!=null || $userEmail!=false)
+         if ($userInformation[0]['mail']!=null || $userInformation[0]['mail']!=false)
          {
-             createSession($userEmail);
+             createSession($userInformation[0]);
 
              displayHome();
          }
@@ -71,7 +71,9 @@ function login($loginRequest)
  */
 function createSession($userEmail)
 {
-    $_SESSION['userEmail'] = $userEmail;
+    $_SESSION['userEmail'] = $userEmail['mail'];
+    $_SESSION['firstname'] = $userEmail['prenom'];
+    $_SESSION['lastname'] = $userEmail['nom'];
 
     $_SESSION['sessionTime'] = strtotime(date("Y-m-d H:i:s"));
 }

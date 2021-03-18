@@ -217,8 +217,8 @@ ob_start();
                         <input hidden type="text" name="inputInformationRegion" value="<?= $basicsInformation[0]['fkCommune']; ?>">
                     </div>
                     <div class="form-group w-25 float-left mt-3" id="informationManager">
-                        <label class=font-weight-bold>Responsable : </label> <?= $basicsInformation[0]['responsable']; ?>
-                        <input hidden type="text" name="inputInformationManager" value="<?= $basicsInformation[0]['responsable']; ?>">
+                        <label class=font-weight-bold>Responsable : </label> <?= $basicsInformation[0]['fkResponsable']['nom']." ".$basicsInformation[0]['fkResponsable']['prenom']; ?>
+                        <input hidden type="text" name="inputInformationManager" value="<?= $basicsInformation[0]['fkResponsable']['mail']; ?>">
                     </div>
                     <div class="form-group w-25 float-left mt-3" id="informationStatus">
                         <label class=font-weight-bold>Statut de la visite : </label> <?php if($basicsInformation[0]['statutVisite']== 0){echo "visite nécessaire";}elseif($basicsInformation[0]['statutVisite'] == 1){echo "contre visite nécessaire";}else{echo "abris OK";} ?>

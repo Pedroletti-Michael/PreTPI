@@ -51,3 +51,12 @@ CREATE TABLE `gg110_cpa`.`pieces_defauts` (
     `fkPiece` INT NOT NULL ,
     `fkDefaut` INT NOT NULL )
     ENGINE = InnoDB;
+
+CREATE TABLE `gg110_cpa`.`visite` (
+    `idVisite` INT NOT NULL AUTO_INCREMENT ,
+    `idExpert` INT NOT NULL ,
+    `dateVisite` DATETIME NOT NULL ,
+    `statutVisite` BOOLEAN NOT NULL ,
+    `type` BOOLEAN NOT NULL ,
+    PRIMARY KEY (`idVisite`))
+    ENGINE = InnoDB;

@@ -66,22 +66,32 @@ function displayVisitList(){
 
 }
 
-function sendVisitNotice($get, $post){
+function sendVisitNotice($get, $post, $counterInspection = null){
     require_once 'model/mailSender.php';
     require_once 'model/selectQuery.php';
 
-    $manager = getManagerBunker($get['bunkerName']);
+    $manager = $get['manager'];
+    if($manager == null || $manager == ''){
+        $manager = getManagerBunker($get['bunkerName']);
+    }
 
-    if(visitBunkerMail($_SESSION['userEmail'], $manager[0]['responsable'], $get['bunkerName'], $post['inputDateVisitMail'])){
-        $_SESSION['message'] = "mailVisitSendingSuccess";
+    if($counterInspection != null){
+        if(visitBunkerMail($_SESSION['userEmail'], $manager, $get['bunkerName'], $post['inputDateVisitMail'], true)){
+            $_SESSION['message'] = "mailVisitSendingSuccess";
+        }
+        else{
+            $_SESSION['message'] = "mailVisitSendingError";
+        }
     }
     else{
-        $_SESSION['message'] = "mailVisitSendingError";
+        if(visitBunkerMail($_SESSION['userEmail'], $manager, $get['bunkerName'], $post['inputDateVisitMail'])){
+            $_SESSION['message'] = "mailVisitSendingSuccess";
+        }
+        else{
+            $_SESSION['message'] = "mailVisitSendingError";
+        }
     }
 
-    displayVisitList();
+    displayGlobalList();
 }
 
-function displayBunkerWhoNeedCounterInspection(){
-    $bunkerNeeded = 2;
-}

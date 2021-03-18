@@ -3,6 +3,16 @@ function filterByName(valueName, whichRow, whichList) {
     input = valueName;
     filter = input.toUpperCase();
 
+    if(valueName === "red" || valueName === "yellow"){
+        document.getElementById("displayStatus").value = valueName;
+        Array.from(document.getElementsByClassName("emailGloablListClass")).forEach(function(element){element.hidden = false;});
+    }
+    else{
+        document.getElementById("displayStatus").value = "doNotDisplayButton";
+        Array.from(document.getElementsByClassName("emailGloablListClass")).forEach(element => {element.hidden = true;});
+    }
+
+
     //get the good table for get the good tr
     if(whichList === "global"){
         table = document.getElementById("globalListTable");
@@ -47,3 +57,4 @@ function filterByName(valueName, whichRow, whichList) {
     }
 
 }
+
