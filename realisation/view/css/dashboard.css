@@ -5,8 +5,7 @@ body {
 }
 
 @font-face {
-    font-family: AppleGothic, "CenturyGothic", CenturyGothic !important;
-    src: url("../font/Century-Gothic_9791.ttf") format("truetype") !important;*/
+    font-family: AppleGothic, "CenturyGothic", CenturyGothic, sans-serif !important;
 }
 
 

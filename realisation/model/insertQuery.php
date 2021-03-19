@@ -44,3 +44,42 @@ function saveCounterInspectionData(){
 function saveNewBunker(){
 
 }
+
+
+/**
+ * @param $bunkerName : it's the id of the bunker that we want to change the status
+ * @param $status : status that we want to update to
+ * @return bool : return true or false in function of what we get
+ */
+function changeBunkerStatus($bunkerName, $status){
+    $strSep = '\'';
+    $return = true;
+    $query = null;
+
+    switch($status){
+        case 0:
+            $query = "UPDATE `abris` SET `statutVisite`=0 WHERE `nom`=".$strSep.$bunkerName.$strSep;
+            break;
+        case 1:
+            $query = "UPDATE `abris` SET `statutVisite`=1 WHERE `nom`=".$strSep.$bunkerName.$strSep;
+            break;
+        case 2:
+            $query = "UPDATE `abris` SET `statutVisite`=2 WHERE `nom`=".$strSep.$bunkerName.$strSep;
+            break;
+        case 3:
+            $query = "UPDATE `abris` SET `statutVisite`=3 WHERE `nom`=".$strSep.$bunkerName.$strSep;
+            break;
+        case 4:
+            $query = "UPDATE `abris` SET `statutVisite`=4 WHERE `nom`=".$strSep.$bunkerName.$strSep;
+            break;
+        default:
+            $return = false;
+            break;
+    }
+
+    if($query != null){
+        executeQuery($query);
+    }
+
+    return $return;
+}

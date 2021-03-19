@@ -188,7 +188,7 @@ ob_start();
                     </div>
 
                     <!-- Button used to load information about a specific bunker -->
-                    <a  id="actionButton" href="index.php?action=displayBunkerInformation&bunkerName=" class="btn btn-primary btn-block text-decoration-none form-control form form w-25 float-right">Charger l'abris</a>
+                    <a  id="actionButton" href="/?action=displayBunkerInformation&bunkerName=" class="btn btn-primary btn-block text-decoration-none form-control form form w-25 float-right">Charger l'abri</a>
 
                     <!-- to create a new one -->
                     <div class="form-group" id="groupInputBunkerName" style="display: none;">
@@ -317,7 +317,7 @@ ob_start();
 
             <div class="d-inline-block w-100">
                 <!--Submit-->
-                <button type='submit' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id='submitButton' class='btn btn-primary mr-2 mt-3 mb-0' <?php if(isset($basicsInformation) && isset($roomsInformation)) : echo "disabled"; endif; ?>>Envoyer</button>
+                <button type='submit' <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id='submitButton' class='btn btn-primary mr-2 mt-3 mb-0' <?php if(isset($basicsInformation) && isset($roomsInformation)) : echo "disabled"; endif; ?>>Terminer</button>
 
                 <!--Cancel-->
                 <button type="reset" <?php if(!isset($basicsInformation) && !isset($roomsInformation)) : echo "hidden"; endif; ?> id="resetButton" class="btn btn-danger mt-3 mb-0">Annuler</button>

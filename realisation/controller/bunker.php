@@ -31,7 +31,7 @@ function saveFormData($data){
             echo $return;
             $_SESSION['message'] = 'successSavingFormDataVisit';
             $_SESSION['bunkerName'] = $data['inputInformationBunkerName'];
-            require 'view/home.php';
+            header("location:/?action=home");
         }
     }
     else{

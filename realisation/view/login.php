@@ -16,7 +16,7 @@ ob_start();
         <title>Connexion - CPA-CP</title>
     </head>
     <body class="responsive-phone-bg fixed-top">
-    <div class="mr-auto ml-auto responsive-phone" style="width: 700px; margin-top: 17%;">
+    <div class="mr-auto ml-auto responsive-phone" style="width: 700px; margin-top: 17%;text-align: center;">
         <div class="d-inline-block bg-light m-auto">
             <div class="w-100 pl-3 pr-3">
                 <form method="post" action="index.php?action=RequestLogin">

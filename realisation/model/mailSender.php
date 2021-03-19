@@ -77,7 +77,24 @@ function visitBunkerMail($userMail, $manager, $bunkerName, $date, $counterInspec
     $headers .= 'From: '.$userMail."\r\n";
 
     if(sendMail($to, $subject, $message, $headers)){
-        return true;
+        require_once 'insertQuery.php';
+
+        if($counterInspection == null){
+            if(changeBunkerStatus($bunkerName, 0)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            if(changeBunkerStatus($bunkerName, 1)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     }
     else{
         return false;

@@ -218,7 +218,7 @@ ob_start();
 
 <div class="container-fluid pt-3">
     <div class="text-center pb-3">
-        <h1>Liste globale des abris</h1>
+        <h1>Liste des abris</h1>
     </div>
 
     <div class="table-responsive-xl">

@@ -12,6 +12,7 @@ function displayHome()
 {
     if(isset($_SESSION['sessionTime']) && $_SESSION['sessionTime'] != null){
         $_GET['action'] = "home";
+        $notDisplayDropdown = '';
         require_once "view/home.php";
     }
     else{
@@ -44,7 +45,7 @@ function login($loginRequest)
          require_once "model/userManager.php";
          $userInformation = userLogin($userLogin, $userPwd);
 
-         if ($userInformation[0]['mail']!=null || $userInformation[0]['mail']!=false)
+         if (isset($userInformation[0]['mail']) && $userInformation[0]['mail']!=null && $userInformation[0]['mail']!=false)
          {
              createSession($userInformation[0]);
 
