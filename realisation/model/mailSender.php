@@ -81,6 +81,7 @@ function visitBunkerMail($userMail, $manager, $bunkerName, $date, $counterInspec
 
         if($counterInspection == null){
             if(changeBunkerStatus($bunkerName, 0)){
+                saveVisitInformation($bunkerName,$date,0);
                 return true;
             }
             else{
@@ -89,6 +90,7 @@ function visitBunkerMail($userMail, $manager, $bunkerName, $date, $counterInspec
         }
         else{
             if(changeBunkerStatus($bunkerName, 1)){
+                saveVisitInformation($bunkerName,$date,1);
                 return true;
             }
             else{

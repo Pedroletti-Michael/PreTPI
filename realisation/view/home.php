@@ -14,6 +14,10 @@ ob_start();
 <head>
     <meta charset="UTF-8">
     <title>Page d'accueil - CPA-CP</title>
+    <script rel="javascript" src="view/js/jquery.js"></script>
+    <script rel="javascript" src="view/js/script.js"></script>
+    <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.js"></script>
+    <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.bundle.js"></script>
 </head>
 <body>
     <div class="container-fluid pt-3">
@@ -23,7 +27,6 @@ ob_start();
 
         <!-- Messages -->
         <?php if (isset($_SESSION['message'])) : ?>
-
             <div class="modal fade" id="messages" tabindex="-1" role="dialog"
                  aria-labelledby="messages" aria-hidden="true">
                 <div class="modal-dialog m-auto w-470-px" role="document" style="top: 45%;">
@@ -47,8 +50,7 @@ ob_start();
                 </div>
             </div>
             <script>$('#messages').modal('show')</script>
-
-            <?php unset($_SESSION['message']); endif; ?>
+        <?php unset($_SESSION['message']); endif; ?>
 
         <div class="text-center">
             <div class="btn-group-vertical" role="group">
@@ -59,11 +61,6 @@ ob_start();
             </div>
         </div>
     </div>
-
-    <script rel="javascript" src="view/js/jquery.js"></script>
-    <script rel="javascript" src="view/js/script.js"></script>
-    <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.js"></script>
-    <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.bundle.js"></script>
 </body>
 
 <?php

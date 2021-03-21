@@ -40,7 +40,9 @@ function saveFormData($data){
     }
 }
 
-
+/**
+ * Function used to display global list of all bunker
+ */
 function displayGlobalList(){
     require_once 'model/selectQuery.php';
 
@@ -53,6 +55,10 @@ function displayGlobalList(){
     require 'view/globalList.php';
 }
 
+/**
+ * Display list of bunker who need a visit
+ * /!\ Function unused /!\
+ */
 function displayVisitList(){
     require_once 'model/selectQuery.php';
 
@@ -66,6 +72,12 @@ function displayVisitList(){
 
 }
 
+/**
+ * This function is used to send notice by mail to the bunker manager and change status of the bunker and save the visit
+ * @param $get
+ * @param $post
+ * @param null $counterInspection
+ */
 function sendVisitNotice($get, $post, $counterInspection = null){
     require_once 'model/mailSender.php';
     require_once 'model/selectQuery.php';

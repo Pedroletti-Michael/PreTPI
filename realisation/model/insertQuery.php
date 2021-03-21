@@ -17,15 +17,36 @@ function saveVisitData($dataToSave){
 
     for($i=1; $i < $numberOfRoom+1; $i++){
         $roomId = $dataToSave['inputIdRoom'.$i];
-        $roomName = $dataToSave['inputRoomName'.$roomId];
-        $availableSeats = $dataToSave['inputAvailableSeats'.$roomId];
-        $roomType = $dataToSave['inputRoomType'.$roomId];
 
-        $query = "UPDATE `pieces` SET `nom`=".$strSep.$roomName.$strSep.",`placesDisponibles`=".$availableSeats.",`type`=".$strSep.$roomType.$strSep." WHERE `idPiece`=".$roomId;
+        if(isset($dataToSave[$roomId.'numberOfIssue'])){
+            $numberOfSpottedIssue = $dataToSave[$roomId.'numberOfIssue'];
+            for($y = 1; $y < $numberOfSpottedIssue+1; $y++){
+                //Test if the checkbox is on
+                if(isset($dataToSave[$roomId.'spottedIssue'.$y])){
+                    //if the checkbox is on that say that the issue is solve, so we change the status of the issue
+                    $query = "UPDATE `pieces_defauts` SET `statut`=1 WHERE `idPiecesDefauts`=".$dataToSave[$roomId.'idRoomIssue'.$y];
+                    executeQuery($query);
+                }
+                else{
+                    $return = 404;
+                }
+            }
+        }
 
 
+    }
+
+    if($return != 404){
+        //Change bunker status on "bunker OK"
+        $query = "UPDATE `abris` SET `statutVisite`=2 WHERE `idAbris`=".$dataToSave['inputInformationBunkerName'];
         executeQuery($query);
-        $return = $query;
+        $return = "bunkerOK";
+    }
+    else{
+        //Change bunker status on "counter inspection needed"
+        $query = "UPDATE `abris` SET `statutVisite`=4 WHERE `idAbris`=".$dataToSave['inputInformationBunkerName'];
+        executeQuery($query);
+        $return = "counterInspection";
     }
 
     return $return;
@@ -82,4 +103,22 @@ function changeBunkerStatus($bunkerName, $status){
     }
 
     return $return;
+}
+
+/**
+ * Function used to save visit information into the DB
+ * @param $bunkerName
+ * @param $visitDate
+ * @param $type
+ */
+function saveVisitInformation($bunkerName, $visitDate, $type){
+    $strSep = '\'';
+
+    //Get ID of Manager who send the notice and the bunker concerned to insert these data into the DB
+    $managerID = getManagerID($_SESSION['userEmail']);
+    $bunkerID = getBunkerID($bunkerName);
+
+    $query = "INSERT INTO `visite`(`fkExpert`, `fkAbris`, `dateVisite`, `type`) VALUES (".$managerID.",".$bunkerID.",".$strSep.$visitDate.$strSep.",".$type.")";
+
+    executeQuery($query);
 }

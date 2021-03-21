@@ -110,7 +110,7 @@ ob_start();
     <script>
         function chkBoxCheck(){
             const form = document.getElementById("cpaForm");
-            const chkBox = form.querySelectorAll("input[type='checkbox']");
+            const chkBox = document.getElementsByClassName("availableIssue");
 
             let result = false;
 
@@ -188,7 +188,7 @@ ob_start();
                     </div>
 
                     <!-- Button used to load information about a specific bunker -->
-                    <a  id="actionButton" href="/?action=displayBunkerInformation&bunkerName=" class="btn btn-primary btn-block text-decoration-none form-control form form w-25 float-right">Charger l'abri</a>
+                    <a  id="actionButton" href="/?action=displayBunkerInformation&bunkerName=" class="btn btn-primary btn-block text-decoration-none form-control form form w-25 float-right" style="width: 125px!important">Charger l'abri</a>
 
                     <!-- to create a new one -->
                     <div class="form-group" id="groupInputBunkerName" style="display: none;">
@@ -263,7 +263,7 @@ ob_start();
                                 <?php $y = 1; foreach ($roomInformation['availableIssue'] as $issueAvailable) :?>
                                     <div class="form-group w-40 ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> mt-3">
                                         <label class="form-check-label" for="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'];?>"><?=$issueAvailable['type'];?></label>
-                                        <input onclick="chkBoxCheck();" type="checkbox" class="form-check-input pl-3 ml-3" id="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'];?>">
+                                        <input onclick="chkBoxCheck();" type="checkbox" class="form-check-input pl-3 ml-3 availableIssue" id="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'];?>">
                                     </div>
                                 <?php $y++; endforeach; ?>
                             </div>
@@ -272,11 +272,13 @@ ob_start();
                                 <!-- Part reserved for counter inspection -->
                                 <div class="form-group w-100 float-left pr-1">
                                     <?php $y = 1; foreach ($roomInformation['spottedIssue'] as $issueInformation) : ?>
-                                        <div class="form-group w-40 ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> mt-3">
-                                            <label class="form-check-label"><?= $issueInformation['type']. " " .$issueInformation['globalDescription']. " " .$issueInformation['description']; ?></label>
-
+                                        <div class="form-group w-100 d-inline-block ml-2 float-left pr-1 mt-3">
+                                            <input type="checkbox" id="<?=$roomInformation['idPiece'];?>spottedIssue<?=$y;?>" name="<?=$roomInformation['idPiece'];?>spottedIssue<?=$y;?>">
+                                            <label for="<?=$roomInformation['idPiece'];?>spottedIssue<?=$y;?>" class="form-check-label"><?= $issueInformation['type']. " : " .$issueInformation['description']; ?></label>
+                                            <input name="<?=$roomInformation['idPiece'];?>idRoomIssue<?=$y;?>" value="<?=$issueInformation['idPiecesDefauts'];?>" type="hidden" hidden>
                                         </div>
                                     <?php $y++; endforeach; ?>
+                                    <input name="<?=$roomInformation['idPiece'];?>numberOfIssue" value="<?=$y;?>" type="hidden" hidden>
                                 </div>
                             <?php endif; ?>
 

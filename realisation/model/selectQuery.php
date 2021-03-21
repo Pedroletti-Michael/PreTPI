@@ -49,7 +49,7 @@ function getBunkerInformationForm($bunkerName){
  * return all information about issue of a specified room
  */
 function getSpottedIssueForRoom($idRoom){
-    $query = "SELECT `fkDefauts`, `type`, defauts.description AS globalDescription, pieces_defauts.description FROM `pieces_defauts` INNER JOIN `defauts` ON `fkDefauts` = `idDefauts` WHERE `fkPieces` =".$idRoom;
+    $query = "SELECT `idPiecesDefauts`, `fkDefauts`, `type`, defauts.description AS globalDescription, pieces_defauts.description FROM `pieces_defauts` INNER JOIN `defauts` ON `fkDefauts` = `idDefauts` WHERE `fkPieces` =".$idRoom;
 
     return executeQuery($query);
 }
@@ -217,6 +217,22 @@ function getManagerBunker($bunkerName){
     }
 
     return $return;
+}
+
+function getManagerID($managerName){
+    $strSep = '\'';
+
+    $query = "SELECT `idUtilisateur` FROM `utilisateurs` WHERE `mail`=".$strSep.$managerName.$strSep;
+
+    return executeQuery($query);
+}
+
+function getBunkerID($bunkerName){
+    $strSep = '\'';
+
+    $query = "SELECT `idAbris` FROM `abris` WHERE `nom`=".$strSep.$bunkerName.$strSep;
+
+    return executeQuery($query);
 }
 
 function getInformationStats(){
