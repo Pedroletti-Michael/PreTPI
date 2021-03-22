@@ -83,14 +83,19 @@ ob_start();
         }
     </script>
     <script>
-        var i = 1;
         function addIssue(id, idPiece) {
-            var issueBlock = document.getElementById(id);
-
+            const issueBlock = document.getElementById(id);
+            const idNumberOfCount = idPiece+"countOfNewIssue";
+            const numberOfCount = document.getElementById(idNumberOfCount);
+            if(parseInt(numberOfCount.value) === 0){
+                numberOfCount.value = 1;
+            }
+            let i = numberOfCount.value;
+            numberOfCount.value = parseInt(i)+1;
 
             issueBlock.innerHTML +=
-                '   <div class="pr-2 pt-3">'+
-                '        <select class="form-control form form w-25 float-left" id="addIssue" name="'+idPiece+'addIssue'+i+'" onchange="">'+
+                '   <div class="pr-2 mt-1 form form w-25 float-left">'+
+                '        <select class="form-control " id="addIssue" name="'+idPiece+'addIssue'+i+'">'+
                 '           <option>Sélectionner un type de défauts</option>'+
                             <?php
                                 foreach ($issueType as $issue){
@@ -99,8 +104,8 @@ ob_start();
                             ?>
                 '        </select>'+
                 '    </div>'+
-                '    <div class="pl-2 pt-3">'+
-                '        <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="'+idPiece+'issueDescription'+i+'" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l\'entrée.">'+
+                '    <div class="pl-2 mt-1 form form w-75 float-right">'+
+                '        <input type="text" class="form-control " id="issueDescription" name="'+idPiece+'issueDescription'+i+'" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l\'entrée.">'+
                 '    </div>'+
                 '    <br>'
             ;
@@ -223,6 +228,7 @@ ob_start();
                     <div class="form-group w-25 float-left mt-3" id="informationStatus">
                         <label class=font-weight-bold>Statut de la visite : </label> <?php if($basicsInformation[0]['statutVisite']== 0){echo "visite nécessaire";}elseif($basicsInformation[0]['statutVisite'] == 1){echo "contre visite nécessaire";}else{echo "abris OK";} ?>
                         <input hidden type="text" name="inputInformationStatus" value="<?= $basicsInformation[0]['statutVisite']; ?>">
+                        <input hidden type="hidden" name="visitID" value="<?= $basicsInformation[0]['visitID'];?>">
                     </div>
 
                     <!-- Hidden field to know how many room on the bunker -->
@@ -296,20 +302,8 @@ ob_start();
 
                                 <!-- defaults information -->
                                 <div class="w-100 d-inline-block" id="issueBlock<?= $roomInformation['idPiece']; ?>">
-                                    <div class="pr-2 mt-3">
-                                        <!-- select a type of issue -->
-                                        <select class="form-control form form w-25 float-left" id="addIssue" name="<?= $roomInformation['idPiece']; ?>addIssue0">
-                                            <option>Sélectionner un type de défauts</option>
-                                            <?php
-                                            foreach ($issueType as $issue){
-                                                echo "<option>".$issue['type']."</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="pl-2 mt-3">
-                                        <input type="text" class="form-control form form w-75 float-right" id="issueDescription" name="<?= $roomInformation['idPiece']; ?>issueDescription0" value="" aria-describedby="issueDescriptionHelp" placeholder="Exemple : Problème avec la prise directement a droite de l\'entrée.">
-                                    </div>
+
+                                    <input type="hidden" hidden value="1" id="<?= $roomInformation['idPiece']; ?>countOfNewIssue" name="<?= $roomInformation['idPiece']; ?>countOfNewIssue">
                                 </div>
                             </div>
                         </div>

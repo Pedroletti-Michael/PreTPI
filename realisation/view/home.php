@@ -15,6 +15,7 @@ ob_start();
     <meta charset="UTF-8">
     <title>Page d'accueil - CPA-CP</title>
     <script rel="javascript" src="view/js/jquery.js"></script>
+    <script rel="javascript" src="view/js/jquery-3.6.0.min.js"></script>
     <script rel="javascript" src="view/js/script.js"></script>
     <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.js"></script>
     <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.bundle.js"></script>
@@ -56,7 +57,7 @@ ob_start();
             <div class="btn-group-vertical" role="group">
                 <a href="/?action=displayForm" type="button" class="btn btn-primary btn-block text-decoration-none">Formulaire CPA</a>
                 <a href="/?action=displayGlobalList" type="button" class="btn btn-primary btn-block text-decoration-none">Liste globale des abris</a>
-                <a href="#" type="button" class="btn btn-primary btn-block text-decoration-none">Statistiques CPA</a>
+                <a href="#" onclick="demoFromHTML()" type="button" class="btn btn-primary btn-block text-decoration-none">Statistiques CPA</a>
                 <a href="/?action=displayUser" type="button" class="btn btn-primary btn-block text-decoration-none">Création d'utilisateur</a>
             </div>
         </div>

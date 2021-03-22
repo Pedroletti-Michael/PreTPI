@@ -18,6 +18,17 @@ function saveVisitData($dataToSave){
     for($i=1; $i < $numberOfRoom+1; $i++){
         $roomId = $dataToSave['inputIdRoom'.$i];
 
+        //Check if any new issue is added
+        if(isset($dataToSave[$roomId.'countOfNewIssue']) && $dataToSave[$roomId.'countOfNewIssue'] != 0){
+            $countNewIssue = $dataToSave[$roomId.'countOfNewIssue'];
+            $idVisit = $dataToSave['visitID'];
+            for ($y=0;$y<$countNewIssue;$y++){
+                //Save new issue into db
+                $query = "";
+                executeQuery($query);
+            }
+        }
+
         if(isset($dataToSave[$roomId.'numberOfIssue'])){
             $numberOfSpottedIssue = $dataToSave[$roomId.'numberOfIssue'];
             for($y = 1; $y < $numberOfSpottedIssue+1; $y++){
@@ -118,7 +129,7 @@ function saveVisitInformation($bunkerName, $visitDate, $type){
     $managerID = getManagerID($_SESSION['userEmail']);
     $bunkerID = getBunkerID($bunkerName);
 
-    $query = "INSERT INTO `visite`(`fkExpert`, `fkAbris`, `dateVisite`, `type`) VALUES (".$managerID.",".$bunkerID.",".$strSep.$visitDate.$strSep.",".$type.")";
+    $query = "INSERT INTO `visite`(`fkExpert`, `fkAbris`, `dateVisite`, `type`) VALUES (".$managerID[0]['idUtilisateur'].",".$bunkerID[0]['idAbris'].",FROM_UNIXTIME(".strtotime($visitDate)."),".$type.")";
 
     executeQuery($query);
 }

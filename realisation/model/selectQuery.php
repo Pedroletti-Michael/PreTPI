@@ -158,6 +158,17 @@ function getListBunkerInformation($status = 99, $name = null){
 
     $i = 0;
     foreach ($bunkerInformation as $bunker){
+        $query = "SELECT idVisite FROM visite WHERE statutVisite=1 AND fkAbris=".$bunker['idAbris'];
+        $idVisit = executeQuery($query);
+        $query ="";
+
+        if(isset($idVisit[0]['idVisite'])){
+            $bunkerInformation[$i] += ['visitID' => $idVisit[0]['idVisite']];
+        }
+        else{
+            $bunkerInformation[$i] += ['visitID' => "noVisitPlanned"];
+        }
+
         foreach ($roomInformation as $room){
             if($room['fkAbris'] == $bunker['idAbris']){
                 $bunkerInformation[$i]['placesDisponibles'] += $room['placesDisponibles'];
