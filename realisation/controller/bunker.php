@@ -107,3 +107,6 @@ function sendVisitNotice($get, $post, $counterInspection = null){
     displayGlobalList();
 }
 
+function displayStats(){
+    require 'view/statistic.php';
+}

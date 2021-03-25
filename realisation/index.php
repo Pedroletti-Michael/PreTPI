@@ -57,6 +57,9 @@ if(isset($_GET['action']))
         case 'sendCounterInspectionNotice':
             sendVisitNotice($_GET, $_POST, true);
             break;
+        case 'displayStats':
+            displayStats();
+            break;
         case 'home':
         default:
             if(testSessionTime()){break;}

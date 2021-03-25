@@ -14,6 +14,7 @@ function saveVisitData($dataToSave){
     $numberOfRoom = $dataToSave['inputNumberOfRoom'];
     $strSep = '\'';
     $return = 45;
+    $idVisit = $dataToSave['visitID'];
 
     for($i=1; $i < $numberOfRoom+1; $i++){
         $roomId = $dataToSave['inputIdRoom'.$i];
@@ -21,10 +22,11 @@ function saveVisitData($dataToSave){
         //Check if any new issue is added
         if(isset($dataToSave[$roomId.'countOfNewIssue']) && $dataToSave[$roomId.'countOfNewIssue'] != 0){
             $countNewIssue = $dataToSave[$roomId.'countOfNewIssue'];
-            $idVisit = $dataToSave['visitID'];
             for ($y=0;$y<$countNewIssue;$y++){
+                $desc = ""; //TODO GET THE DESCRIPTION OF THE NEW ISSUE
+                $defaultID= 1; //TODO GET THE ID OF THE DEFAULT (INFO IN DB TABLE"DEFAUTS")
                 //Save new issue into db
-                $query = "";
+                $query = "INSERT INTO `pieces_defauts`(`fkPieces`, `fkDefauts`, `fkVisite`, `description`) VALUES (".$roomId.",".$defaultID.",".$idVisit.",".$strSep.$desc.$strSep.")";
                 executeQuery($query);
             }
         }
@@ -47,16 +49,22 @@ function saveVisitData($dataToSave){
 
     }
 
+
+    //Change status of the visit
+    $query = "UPDATE `visite` SET `statutVisite`=0 WHERE `idVisite`=".$idVisit;
+    executeQuery($query);
     if($return != 404){
         //Change bunker status on "bunker OK"
-        $query = "UPDATE `abris` SET `statutVisite`=2 WHERE `idAbris`=".$dataToSave['inputInformationBunkerName'];
+        $query = "UPDATE `abris` SET `statutVisite`=2 WHERE `idAbris`=".$dataToSave['inputInformationBunkerID'];
         executeQuery($query);
+
         $return = "bunkerOK";
     }
     else{
         //Change bunker status on "counter inspection needed"
-        $query = "UPDATE `abris` SET `statutVisite`=4 WHERE `idAbris`=".$dataToSave['inputInformationBunkerName'];
+        $query = "UPDATE `abris` SET `statutVisite`=4 WHERE `idAbris`=".$dataToSave['inputInformationBunkerID'];
         executeQuery($query);
+
         $return = "counterInspection";
     }
 

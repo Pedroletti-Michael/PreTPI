@@ -289,6 +289,14 @@
         .sidenav a {font-size: 18px;}
     }
 }
+
+
+@media screen and (max-width: 560px) {
+    .hide-for-phone{
+        display: none!important;
+    }
+}
+
 /* ------------------------------------------- Responsive for phones -------------------------------------------------*/
 @media handheld and (min-device-width: 600px){
     .responsive-phone{

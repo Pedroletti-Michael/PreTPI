@@ -21,8 +21,8 @@ ob_start();
     <script rel="javascript" src="view/bootstrap-4.4.1-dist/js/bootstrap.bundle.js"></script>
 </head>
 <body>
-    <div class="container-fluid pt-3">
-        <div class="text-center">
+    <div class="container-fluid pt-3 mt-3">
+        <div class="text-center mt-3">
             <h1>Page d'accueil</h1>
         </div>
 
@@ -57,11 +57,13 @@ ob_start();
             <div class="btn-group-vertical" role="group">
                 <a href="/?action=displayForm" type="button" class="btn btn-primary btn-block text-decoration-none">Formulaire CPA</a>
                 <a href="/?action=displayGlobalList" type="button" class="btn btn-primary btn-block text-decoration-none">Liste globale des abris</a>
-                <a href="#" onclick="demoFromHTML()" type="button" class="btn btn-primary btn-block text-decoration-none">Statistiques CPA</a>
+                <a href="/?action=displayStats" type="button" class="btn btn-primary btn-block text-decoration-none">Statistiques CPA</a>
                 <a href="/?action=displayUser" type="button" class="btn btn-primary btn-block text-decoration-none">Création d'utilisateur</a>
             </div>
         </div>
     </div>
+
+
 </body>
 
 <?php

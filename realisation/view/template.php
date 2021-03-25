@@ -41,25 +41,19 @@
                 </svg>
             </button>
             <div class="w3-sidebar w3-bar-block w3-card w3-animate-bottom w-100" style="display:none;bottom: 0; z-index: 999" id="phoneMenu">
-                <!-- Search form -->
-                <div class="w-100 mt-5">
-                    <form method="post" action="../index.php?action=research" class="btn-group search-responsive w-100">
-                        <input class="form-control form-control-light w-100 rounded-0" style="font-size: 20px" name="inputResearch" type="text" placeholder="Recherche" aria-label="Recherche" <?php if(!isset($_SESSION['sessionTime']) && $_SESSION == null){echo 'disabled'; } ?>>
-                    </form>
-                </div>
                 <hr color="lightgrey" style="height: 1px;" class="w-75">
                 <div class="w-100 m-auto text-center pt-1">
                     <?php if ($_GET['action'] == "home"): ?>
-                        <a href="index.php?action=home" class="alert-link active color-lightgrey text-decoration-none"><h5 class="color-lightgrey"><a class="menu-phone-selected">Mes VM</a></h5></a>
+                        <a href="/?action=home" class="alert-link active color-lightgrey text-decoration-none"><h5 class="color-lightgrey"><a class="menu-phone-selected">Accueil</a></h5></a>
                     <?php else : ?>
-                        <a href="index.php?action=home" class="color-lightgrey text-decoration-none"><h5 class="color-lightgrey">Mes VM</h5></a>
+                        <a href="/?action=home" class="color-lightgrey text-decoration-none"><h5 class="color-lightgrey">Accueil</h5></a>
                     <?php endif; ?>
                 </div>
                 <div class="w-100 m-auto text-center pt-1">
                     <?php if ($_GET['action'] == "form"): ?>
-                        <a class="alert-link active color-lightgrey text-decoration-none" href="index.php?action=form"><h5 class="color-lightgrey"><a class="menu-phone-selected">Formulaire</a></h5></a>
+                        <a class="alert-link active color-lightgrey text-decoration-none" href="/?action=displayForm"><h5 class="color-lightgrey"><a class="menu-phone-selected">Formulaire</a></h5></a>
                     <?php else : ?>
-                        <a class="color-lightgrey text-decoration-none" href="index.php?action=form"><h5 class="color-lightgrey pb-0">Formulaire</h5></a>
+                        <a class="color-lightgrey text-decoration-none" href="/?action=displayForm"><h5 class="color-lightgrey pb-0">Formulaire</h5></a>
                     <?php endif; ?>
                 </div>
                 <div class="w-100 fixed-bottom d-inline-block" style="bottom: 20px">
@@ -71,15 +65,15 @@
                     <div class="float-right w-50 text-decoration-none text-right pr-4">
                         <?php if ($_GET['action'] == "signIn"): ?>
                             <?php if(isset($_SESSION['sessionTime'])): ?>
-                                <a href="index.php?action=signOut" class="alert-link active text-decoration-none"><h5 class="color-lightgrey"><a class="menu-phone-selected">Déconnexion</a></h5></a>
+                                <a href="/?action=signOut" class="alert-link active text-decoration-none"><h5 class="color-lightgrey"><a class="menu-phone-selected">Déconnexion</a></h5></a>
                             <?php else : ?>
-                                <a href="index.php?action=signIn" class="alert-link active text-decoration-none"><h5 class="color-lightgrey"><a class="menu-phone-selected">Se connecter</a></h5></a>
+                                <a href="/?action=signIn" class="alert-link active text-decoration-none"><h5 class="color-lightgrey"><a class="menu-phone-selected">Se connecter</a></h5></a>
                             <?php endif; ?>
                         <?php else : ?>
                             <?php if(isset($_SESSION['sessionTime'])): ?>
-                                <a href="index.php?action=signOut"><h5 style="color: lightgray">Déconnexion</h5></a>
+                                <a href="/?action=signOut"><h5 style="color: lightgray">Déconnexion</h5></a>
                             <?php else : ?>
-                                <a href="index.php?action=signIn"><h5 style="color: lightgray">Se connecter</h5></a>
+                                <a href="/?action=signIn"><h5 style="color: lightgray">Se connecter</h5></a>
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
@@ -103,10 +97,10 @@
             </div>
             <!-- Logout button -->
             <div class="float-right text-center mr-3" style="margin-top: 0.9rem !important;">
-                <h6><a class="responsive-phone-hidden text-decoration-none" href="index.php?action=signOut" style="color: white;">Déconnexion</a></h6>
+                <h6><a class="responsive-phone-hidden text-decoration-none" href="/?action=signOut" style="color: white;">Déconnexion</a></h6>
             </div>
             <!-- Display Username -->
-            <div class="float-right text-center mr-3" style="margin-top: 0.9rem !important;">
+            <div class="float-right text-center mr-3 display-laptop" style="margin-top: 0.9rem !important;">
                 <h6>Bonjour, <?= $_SESSION['lastname']." ".$_SESSION['firstname']; ?></h6>
             </div>
 
@@ -117,7 +111,7 @@
 
         </div>
     <?php endif; ?>
-    <main id="main" role="main" class="h-100 w-100 mt-5">
+    <main id="main" role="main" class="h-100 w-100">
         <?= $contenu; ?>
     </main>
 </body>

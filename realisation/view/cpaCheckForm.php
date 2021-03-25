@@ -215,7 +215,8 @@ ob_start();
                 <div class="d-inline-block w-100 mb-5">
                     <div class="form-group w-25 float-left mt-3" id="informationBunkerName">
                         <label class=font-weight-bold>Nom de l'abris : </label> <?= $basicsInformation[0]['nom']; ?>
-                        <input hidden type="text" name="inputInformationBunkerName" value="<?= $basicsInformation[0]['nom']; ?>">
+                        <input hidden type="hidden" name="inputInformationBunkerName" value="<?= $basicsInformation[0]['nom']; ?>">
+                        <input hidden type="hidden" name="inputInformationBunkerID" value="<?= $basicsInformation[0]['idAbris']; ?>">
                     </div>
                     <div class="form-group w-25 float-left mt-3" id="informationRegion">
                         <label class=font-weight-bold>Commune : </label> <?= $basicsInformation[0]['fkCommune']; ?>
@@ -303,7 +304,7 @@ ob_start();
                                 <!-- defaults information -->
                                 <div class="w-100 d-inline-block" id="issueBlock<?= $roomInformation['idPiece']; ?>">
 
-                                    <input type="hidden" hidden value="1" id="<?= $roomInformation['idPiece']; ?>countOfNewIssue" name="<?= $roomInformation['idPiece']; ?>countOfNewIssue">
+                                    <input type="hidden" hidden value="0" id="<?= $roomInformation['idPiece']; ?>countOfNewIssue" name="<?= $roomInformation['idPiece']; ?>countOfNewIssue">
                                 </div>
                             </div>
                         </div>
