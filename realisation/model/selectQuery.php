@@ -247,5 +247,56 @@ function getBunkerID($bunkerName){
 }
 
 function getInformationStats(){
-    $query = "";
+    //Query used to select count of bunker by region
+    $query = "SELECT communes.region, COUNT(idAbris) AS countRegion FROM abris INNER JOIN communes WHERE fkCommune = idCommune GROUP BY communes.region";
+    $countBunkerRegion = executeQuery($query);
+    $countMax = 0;
+    foreach ($countBunkerRegion as $a){
+        $countMax+=$a['countRegion'];
+    }
+    $i=0;
+    $lastOne = array_pop($countBunkerRegion);
+    $lastOne['countRegion'] = 100;
+    foreach ($countBunkerRegion as $regionCounter){
+        $countBunkerRegion[$i]['countRegion'] = round((($regionCounter['countRegion']/$countMax)*100), 2);
+        $lastOne['countRegion'] -= round((($regionCounter['countRegion']/$countMax)*100), 2);
+        $i++;
+    }
+    array_push($countBunkerRegion, $lastOne);
+
+    //Query used to select count of visit by region
+    $query = "SELECT region, COUNT(idAbris) AS countVisit FROM abris INNER JOIN visite ON abris.idAbris = visite.fkAbris INNER JOIN communes ON abris.fkCommune = communes.idCommune WHERE visite.type = 0 GROUP BY communes.region";
+    $countVisitRegion = executeQuery($query);
+    $countMax = 0;
+    foreach ($countVisitRegion as $a){
+        $countMax+=$a['countVisit'];
+    }
+    $i=0;
+    $lastOne = array_pop($countVisitRegion);
+    $lastOne['countVisit'] = 100;
+    foreach ($countVisitRegion as $visitCount){
+        $countVisitRegion[$i]['countVisit'] = round((($visitCount['countVisit']/$countMax)*100), 2);
+        $lastOne['countVisit'] -= round((($visitCount['countVisit']/$countMax)*100), 2);
+        $i++;
+    }
+    array_push($countVisitRegion, $lastOne);
+
+    //Query used to select count of counter inspection by region
+    $query = "SELECT region, COUNT(idAbris) AS countCounterInspection FROM abris INNER JOIN visite ON abris.idAbris = visite.fkAbris INNER JOIN communes ON abris.fkCommune = communes.idCommune WHERE visite.type = 1 GROUP BY communes.region";
+    $countCounterInspectionRegion = executeQuery($query);
+    $countMax = 0;
+    foreach ($countCounterInspectionRegion as $a){
+        $countMax+=$a['countCounterInspection'];
+    }
+    $i=0;
+    foreach ($countCounterInspectionRegion as $counterInspectionCount){
+        $countCounterInspectionRegion[$i]['countCounterInspection'] = round((($counterInspectionCount['countCounterInspection']/$countMax)*100), 2);
+        $i++;
+    }
+
+    //Query used to select number of visit, counter inspection and date with region
+    $query = "SELECT communes.region, visite.type, visite.dateVisite FROM abris INNER JOIN visite ON abris.idAbris = visite.fkAbris INNER JOIN communes ON abris.fkCommune = communes.idCommune";
+    $tableStats = executeQuery($query);
+
+    return array("countBunkerRegion"=>$countBunkerRegion, "countVisitRegion"=>$countVisitRegion, "countCounterInspectionRegion"=>$countCounterInspectionRegion,"tableStats"=>$tableStats);
 }

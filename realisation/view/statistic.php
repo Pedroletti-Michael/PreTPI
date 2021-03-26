@@ -108,7 +108,6 @@ ob_start();
 </div>
 
 
-
 <script>
     // Build all charts
     Highcharts.chart('numberOfBunkerByRegionPieChart', {
@@ -119,7 +118,7 @@ ob_start();
             type: 'pie'
         },
         title: {
-            text: 'Nombre d\'abris par cantons'
+            text: 'Nombre d\'abris par canton'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -140,27 +139,16 @@ ob_start();
             }
         },
         series: [{
-            name: 'Regions',
+            name: 'Pourcentage',
             colorByPoint: true,
-            data: [{
-                name: 'Chrome',
-                y: 61.41
-            }, {
-                name: 'Internet Explorer',
-                y: 11.84
-            }, {
-                name: 'Firefox',
-                y: 10.85
-            }, {
-                name: 'Edge',
-                y: 4.67
-            }, {
-                name: 'Safari',
-                y: 4.18
-            }, {
-                name: 'Other',
-                y: 7.05
-            }]
+            data: [<?php $i = 0; foreach ($stats['countBunkerRegion'] as $a) {
+                if (count($stats['countBunkerRegion']) == $i + 1) {
+                    echo "{name: '" . $a['region'] . "',y: " . $a['countRegion'] . "}";
+                } else {
+                    echo "{name: '" . $a['region'] . "',y: " . $a['countRegion'] . "},";
+                }
+                $i++;
+            }?>]
         }]
     });
 
@@ -193,27 +181,16 @@ ob_start();
             }
         },
         series: [{
-            name: 'Brands',
+            name: 'Pourcentage',
             colorByPoint: true,
-            data: [{
-                name: 'Chrome',
-                y: 61.41
-            }, {
-                name: 'Internet Explorer',
-                y: 11.84
-            }, {
-                name: 'Firefox',
-                y: 10.85
-            }, {
-                name: 'Edge',
-                y: 4.67
-            }, {
-                name: 'Safari',
-                y: 4.18
-            }, {
-                name: 'Other',
-                y: 7.05
-            }]
+            data: [<?php $i = 0; foreach ($stats['countVisitRegion'] as $a) {
+                if (count($stats['countVisitRegion']) == $i + 1) {
+                    echo "{name: '" . $a['region'] . "',y: " . $a['countVisit'] . "}";
+                } else {
+                    echo "{name: '" . $a['region'] . "',y: " . $a['countVisit'] . "},";
+                }
+                $i++;
+            }?>]
         }]
     });
 

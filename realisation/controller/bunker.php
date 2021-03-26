@@ -108,5 +108,8 @@ function sendVisitNotice($get, $post, $counterInspection = null){
 }
 
 function displayStats(){
+    require_once 'model/selectQuery.php';
+
+    $stats = getInformationStats();
     require 'view/statistic.php';
 }
