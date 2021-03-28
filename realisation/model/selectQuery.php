@@ -76,8 +76,12 @@ function getAvailableRoomIssue($roomId){
     return executeQuery($query);
 }
 
+/**
+ * Get all information that we need to display the CPA check form
+ * @return array = information that we need to display cpa check form
+ */
 function getBaseInformationCheckForm(){
-    $result = array("bunkerName", "issueType");
+    $result = array("bunkerName", "issueType", "allBunkerName");
 
     //Prepare query to get issue type
     $query = "SELECT `type` FROM `defauts`";
@@ -88,6 +92,11 @@ function getBaseInformationCheckForm(){
     $query = "SELECT `nom` FROM `abris` WHERE `statutVisite` = 1 OR `statutVisite` = 0";
     //Get bunkerName
     $result['bunkerName'] = executeQuery($query);
+
+    //Prepare query to get all bunker name
+    $query = "SELECT `nom` FROM `abris`";
+    //Get all bunkerName
+    $result['allBunkerName'] = executeQuery($query);
 
     return $result;
 }
@@ -205,6 +214,11 @@ function getInformationForFilter(){
     return $result;
 }
 
+/**
+ * Get information of a manger for a specified bunker
+ * @param $bunkerName = Name of the bunker that we need to have the information about manager
+ * @return array = return query send to the db with information wanted
+ */
 function getManagerBunker($bunkerName){
     $strSep = '\'';
 
@@ -230,6 +244,11 @@ function getManagerBunker($bunkerName){
     return $return;
 }
 
+/**
+ * Get ID of a manager by his name
+ * @param $managerName = Name of the manager that we need to have the id
+ * @return array = return query send to the db with information wanted
+ */
 function getManagerID($managerName){
     $strSep = '\'';
 
@@ -238,6 +257,11 @@ function getManagerID($managerName){
     return executeQuery($query);
 }
 
+/**
+ * Get ID of a bunker by his name
+ * @param $bunkerName = Name of the bunker that we need the id
+ * @return array = query send to the db with information wanted
+ */
 function getBunkerID($bunkerName){
     $strSep = '\'';
 
@@ -246,6 +270,10 @@ function getBunkerID($bunkerName){
     return executeQuery($query);
 }
 
+/**
+ * Get all information needed for display of stats on the page named "page de statistiques"
+ * @return array = array of stats information
+ */
 function getInformationStats(){
     //Query used to select count of bunker by region
     $query = "SELECT communes.region, COUNT(idAbris) AS countRegion FROM abris INNER JOIN communes WHERE fkCommune = idCommune GROUP BY communes.region";
@@ -298,5 +326,94 @@ function getInformationStats(){
     $query = "SELECT communes.region, visite.type, visite.dateVisite FROM abris INNER JOIN visite ON abris.idAbris = visite.fkAbris INNER JOIN communes ON abris.fkCommune = communes.idCommune";
     $tableStats = executeQuery($query);
 
-    return array("countBunkerRegion"=>$countBunkerRegion, "countVisitRegion"=>$countVisitRegion, "countCounterInspectionRegion"=>$countCounterInspectionRegion,"tableStats"=>$tableStats);
+    //Here where going to prepare data for display, so we need the number of visit in each month for each region
+    $monthTable = array(
+        "visitJan"=>array(),"counterJan"=>array(),
+        "visitFeb"=>array(),"counterFeb"=>array(),
+        "visitMar"=>array(),"counterMar"=>array(),
+        "visitApr"=>array(),"counterApr"=>array(),
+        "visitMay"=>array(),"counterMay"=>array(),
+        "visitJun"=>array(),"counterJun"=>array(),
+        "visitJul"=>array(),"counterJul"=>array(),
+        "visitAug"=>array(),"counterAug"=>array(),
+        "visitSep"=>array(),"counterSep"=>array(),
+        "visitOct"=>array(),"counterOct"=>array(),
+        "visitNov"=>array(),"counterNov"=>array(),
+        "visitDec"=>array(),"counterDec"=>array()
+    );
+    foreach($tableStats as $stat){
+        $month = date("m", strtotime($stat['dateVisite']));
+        switch($month){
+            case "02":
+                $array = "Feb";
+                break;
+            case "03":
+                $array = "Mar";
+                break;
+            case "04":
+                $array = "Apr";
+                break;
+            case "05":
+                $array = "May";
+                break;
+            case "06":
+                $array = "Jun";
+                break;
+            case "07":
+                $array = "Jul";
+                break;
+            case "08":
+                $array = "Aug";
+                break;
+            case "09":
+                $array = "Sep";
+                break;
+            case "10":
+                $array = "Oct";
+                break;
+            case "11":
+                $array = "Nov";
+                break;
+            case "12":
+                $array = "Dec";
+                break;
+            case "01":
+            default:
+                $array = "Jan";
+                break;
+        }
+
+        if($stat['type']==0){
+            array_push($monthTable['visit'.$array], array("region"=>$stat['region']));
+        }
+        else{
+            array_push($monthTable['counter'.$array], array("region"=>$stat['region']));
+        }
+    }
+
+    $tableMonthStats = $monthTable = array(
+        "visitJan"=>count($monthTable['visitJan']),"counterJan"=>count($monthTable['counterJan']),
+        "visitFeb"=>count($monthTable['visitFeb']),"counterFeb"=>count($monthTable['counterFeb']),
+        "visitMar"=>count($monthTable['visitMar']),"counterMar"=>count($monthTable['counterMar']),
+        "visitApr"=>count($monthTable['visitApr']),"counterApr"=>count($monthTable['counterApr']),
+        "visitMay"=>count($monthTable['visitMay']),"counterMay"=>count($monthTable['counterMay']),
+        "visitJun"=>count($monthTable['visitJun']),"counterJun"=>count($monthTable['counterJun']),
+        "visitJul"=>count($monthTable['visitJul']),"counterJul"=>count($monthTable['counterJul']),
+        "visitAug"=>count($monthTable['visitAug']),"counterAug"=>count($monthTable['counterAug']),
+        "visitSep"=>count($monthTable['visitSep']),"counterSep"=>count($monthTable['counterSep']),
+        "visitOct"=>count($monthTable['visitOct']),"counterOct"=>count($monthTable['counterOct']),
+        "visitNov"=>count($monthTable['visitNov']),"counterNov"=>count($monthTable['counterNov']),
+        "visitDec"=>count($monthTable['visitDec']),"counterDec"=>count($monthTable['counterDec'])
+    );
+
+    return array("countBunkerRegion"=>$countBunkerRegion, "countVisitRegion"=>$countVisitRegion, "countCounterInspectionRegion"=>$countCounterInspectionRegion,"tableMonthStats"=>$tableMonthStats);
+}
+
+
+function getIDDefault($name){
+    $strSep = '\'';
+
+    $query = "SELECT `idDefauts` FROM `defauts` WHERE `type`=".$strSep.$name.$strSep;
+
+    return executeQuery($query);
 }

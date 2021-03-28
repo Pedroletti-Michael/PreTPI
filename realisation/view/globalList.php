@@ -38,7 +38,7 @@ ob_start();
         }
     </script>
     <meta charset="UTF-8">
-    <title>Liste globale des abris - CPA-CP</title>
+    <title>Liste des abris - CPA-CP</title>
 </head>
 <body>
 <!-- MODAL SECTION -->
@@ -213,11 +213,8 @@ ob_start();
 </div>
 
 
-
-
-
-<div class="container-fluid pt-3">
-    <div class="text-center pb-3">
+<div class="container-fluid pt-3 mt-3">
+    <div class="text-center pb-3 mt-3">
         <h1>Liste des abris</h1>
     </div>
 

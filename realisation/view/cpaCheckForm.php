@@ -17,37 +17,48 @@ ob_start();
     <script rel="javascript" src="view/js/script.js"></script>
     <script>
         function checkNameField(){
-            var selectBunkerName = document.getElementById("selectBunkerName");
-            var alertSelectBunkerName = document.getElementById("alertSelectBunkerName");
-            var groupInputBunkerName = document.getElementById("groupInputBunkerName");
-            var subBtn = document.getElementById("submitButton");
-            var resetBtn = document.getElementById("resetButton");
+            const selectBunkerName = document.getElementById("selectBunkerName");
+            const alertSelectBunkerName = document.getElementById("alertSelectBunkerName");
+            const groupInputBunkerName = document.getElementById("groupInputBunkerName");
+            const actionBtn = document.getElementById("actionButton")
+            const subBtn = document.getElementById("submitButton");
+            const resetBtn = document.getElementById("resetButton");
+            const newBunker = document.getElementById("newBunkerDiv");
 
             alertSelectBunkerName.style.display = "none";
             groupInputBunkerName.style.display = "none";
+            newBunker.hidden = true;
 
             if(selectBunkerName.value === "Sélectionner un abris"){
                 alertSelectBunkerName.style.display = "";
                 subBtn.disabled = true;
                 subBtn.hidden = true;
+                actionBtn.hidden = false;
                 resetBtn.hidden = true;
+                newBunker.hidden = true;
             }
             else if(selectBunkerName.value === "Autre"){
                 subBtn.disabled = false;
+                actionBtn.hidden = true;
                 subBtn.hidden = false;
                 resetBtn.hidden = false;
                 groupInputBunkerName.style.display = "";
-                checkInputFieldName();
+                newBunker.hidden = false;
 
+                const newBunkerAction = "/?action=SaveNewBunker";
+                actionBtn.action = newBunkerAction;
+                checkInputFieldName();
             }
             else{
                 subBtn.disabled = true;
                 subBtn.hidden = true;
+                actionBtn.hidden = false;
                 resetBtn.hidden = true;
-                var actionButton = document.getElementById("actionButton");
-                var action = "index.php?action=displayBunkerInformation&bunkerName="+selectBunkerName.value;
+                newBunker.hidden = true;
 
-                actionButton.href = action;
+                const actionOther = "/?action=displayBunkerInformation&bunkerName=" + selectBunkerName.value;
+
+                actionBtn.href = actionOther;
             }
 
         }
@@ -55,15 +66,16 @@ ob_start();
 
         function checkInputFieldName(){
             var i = 0;
-            var bunkerNames = <?= json_encode($bunkerName); ?>;
+            var bunkerNames = <?= json_encode($allBunkerName); ?>;
             var result = false;
             var inputBunkerName = document.getElementById("inputBunkerName");
             var alertInputBunkerName = document.getElementById("alertBunkerName");
             var subBtn = document.getElementById("submitButton");
 
             result = false;
-            for(i=0; i <= bunkerNames.length; i++){
-                if(inputBunkerName.value === bunkerNames[i]){
+            for(i=0; i < bunkerNames.length; i++){
+                var name = bunkerNames[i];
+                if(inputBunkerName.value === name[0]){
                     result = true;
                 }
             }
@@ -139,8 +151,8 @@ ob_start();
     <title>Formulaire contrôles CPA - CPA-CP</title>
 </head>
 <body>
-    <div class="container-fluid pt-3">
-        <div class="text-center">
+    <div class="container-fluid pt-3 mt-3">
+        <div class="text-center mt-3">
             <h1>Formulaire contrôles CPA</h1>
         </div>
 
@@ -269,8 +281,8 @@ ob_start();
                             <div class="form-group w-100 float-left pr-1">
                                 <?php $y = 1; foreach ($roomInformation['availableIssue'] as $issueAvailable) :?>
                                     <div class="form-group w-40 ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> mt-3">
-                                        <label class="form-check-label" for="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'];?>"><?=$issueAvailable['type'];?></label>
-                                        <input onclick="chkBoxCheck();" type="checkbox" class="form-check-input pl-3 ml-3 availableIssue" id="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'];?>">
+                                        <label class="form-check-label" for="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'].$roomInformation['idPiece'];?>"><?=$issueAvailable['type'];?></label>
+                                        <input onclick="chkBoxCheck();" type="checkbox" class="form-check-input pl-3 ml-3 availableIssue" id="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'].$roomInformation['idPiece'];?>" name="<?=$issueAvailable['type'].$issueAvailable['fkDefauts'].$roomInformation['idPiece'];?>">
                                     </div>
                                 <?php $y++; endforeach; ?>
                             </div>
@@ -311,6 +323,28 @@ ob_start();
                     <?php $i++; endforeach; ?>
                 </div>
             <?php endif; ?>
+
+            <div class="d-inline-block w-100" id="newBunkerDiv" hidden>
+                <div class="w-100 mb-2 form-group">
+                    <div class="form-group w-50 float-left mt-3" id="informationRegion">
+                        <label class="font-weight-bold w-50">Commune : </label>
+                        <select class="form-control w-50">
+                            <option>Vaud</option>
+                            <option>Berne</option>
+                            <option>Zurich</option>
+                            <option>Genève</option>
+                            <option>Valais</option>
+                        </select>
+                    </div>
+                    <div class="form-group w-50 float-left mt-3" id="informationRegion">
+                        <label class="font-weight-bold w-50">Responsable : </label>
+                        <select class="form-control w-50">
+                            <option>Michael Pedroletti</option>
+                            <option>Bryoutze Evangelistique</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
             <div class="d-inline-block w-100">
                 <!--Submit-->

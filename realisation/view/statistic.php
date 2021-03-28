@@ -225,25 +225,14 @@ ob_start();
         series: [{
             name: 'Brands',
             colorByPoint: true,
-            data: [{
-                name: 'Chrome',
-                y: 61.41
-            }, {
-                name: 'Internet Explorer',
-                y: 11.84
-            }, {
-                name: 'Firefox',
-                y: 10.85
-            }, {
-                name: 'Edge',
-                y: 4.67
-            }, {
-                name: 'Safari',
-                y: 4.18
-            }, {
-                name: 'Other',
-                y: 7.05
-            }]
+            data: [<?php $i = 0; foreach ($stats['countCounterInspectionRegion'] as $a) {
+                if (count($stats['countCounterInspectionRegion']) == $i + 1) {
+                    echo "{name: '" . $a['region'] . "',y: " . $a['countCounterInspection'] . "}";
+                } else {
+                    echo "{name: '" . $a['region'] . "',y: " . $a['countCounterInspection'] . "},";
+                }
+                $i++;
+            }?>]
         }]
     });
 
@@ -252,38 +241,38 @@ ob_start();
             type: 'column'
         },
         title: {
-            text: 'Monthly Average Rainfall'
+            text: 'Nombre de visite et contre visite par mois'
         },
         subtitle: {
-            text: 'Source: WorldClimate.com'
+            text: 'Données récupérée des différentes visites et contres visites enregistrées'
         },
         xAxis: {
             categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec'
+                'Janvier',
+                'Février',
+                'Mars',
+                'Avril',
+                'Mai',
+                'Juin',
+                'Juillet',
+                'Août',
+                'Septempbre',
+                'Octobre',
+                'Novembre',
+                'Décembre'
             ],
             crosshair: true
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Rainfall (mm)'
+                text: 'Nombre de visite et contre visite par mois'
             }
         },
         tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                '</tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true
@@ -295,20 +284,16 @@ ob_start();
             }
         },
         series: [{
-            name: 'Tokyo',
-            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+            name: 'Visite',
+            data: [
+                <?= $stats['tableMonthStats']['visitJan'].",".$stats['tableMonthStats']['visitFeb'].",".$stats['tableMonthStats']['visitMar'].",".$stats['tableMonthStats']['visitApr'].",".$stats['tableMonthStats']['visitMay'].",".$stats['tableMonthStats']['visitJun'].",".$stats['tableMonthStats']['visitJul'].",".$stats['tableMonthStats']['visitAug'].",".$stats['tableMonthStats']['visitSep'].",".$stats['tableMonthStats']['visitOct'].",".$stats['tableMonthStats']['visitNov'].",".$stats['tableMonthStats']['visitDec'];?>
+            ]
 
         }, {
-            name: 'New York',
-            data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-        }, {
-            name: 'London',
-            data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-        }, {
-            name: 'Berlin',
-            data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+            name: 'Contre visite',
+            data: [
+                <?= $stats['tableMonthStats']['counterJan'].",".$stats['tableMonthStats']['counterFeb'].",".$stats['tableMonthStats']['counterMar'].",".$stats['tableMonthStats']['counterApr'].",".$stats['tableMonthStats']['counterMay'].",".$stats['tableMonthStats']['counterJun'].",".$stats['tableMonthStats']['counterJul'].",".$stats['tableMonthStats']['counterAug'].",".$stats['tableMonthStats']['counterSep'].",".$stats['tableMonthStats']['counterOct'].",".$stats['tableMonthStats']['counterNov'].",".$stats['tableMonthStats']['counterDec']; ?>
+            ]
 
         }]
     });

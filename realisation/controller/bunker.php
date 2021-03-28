@@ -17,6 +17,7 @@ function displayForm($get = null){
 
     $data = getBaseInformationCheckForm();
     $bunkerName = $data['bunkerName'];
+    $allBunkerName = $data['allBunkerName'];
     $issueType = $data['issueType'];
 
     require 'view/cpaCheckForm.php';

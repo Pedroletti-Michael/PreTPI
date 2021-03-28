@@ -20,8 +20,8 @@ ob_start();
     <title>Page de de création d'utilisateur - CPA-CP</title>
 </head>
 <body>
-    <div class="container-fluid pt-3">
-        <div class="text-center">
+    <div class="container-fluid pt-3 mt-3">
+        <div class="text-center mt-3">
             <h1>Création d'utilisateur</h1>
         </div>
 

@@ -54,9 +54,17 @@ ob_start();
         <?php unset($_SESSION['message']); endif; ?>
 
         <div class="text-center">
+            <div class="border border-dark rounded p-3 m-5">
+                <p>Bienvenue sur la platforme de gestion des contrôle périodique des abris.</p>
+                <p>
+                    Cette platforme est utilisée par la protection civil Suisse, pour gérer les visites, contres visites et avoir un aperçu globales des différents abris sur le territoire suisse.
+                    On retrouvera donc une page dédiée au formulaire, permettant d'effectuer les visites, les contres visites, ainsi que l'ajout de nouvel abri. Une liste de tous les abris, permettant de voir
+                    les informations de bases de ces derniers. Et finalement une page de statistiques permettant de voir différentes statistiques sur le travail effectué par la protection civil.
+                </p>
+            </div>
             <div class="btn-group-vertical" role="group">
                 <a href="/?action=displayForm" type="button" class="btn btn-primary btn-block text-decoration-none">Formulaire CPA</a>
-                <a href="/?action=displayGlobalList" type="button" class="btn btn-primary btn-block text-decoration-none">Liste globale des abris</a>
+                <a href="/?action=displayGlobalList" type="button" class="btn btn-primary btn-block text-decoration-none">Liste des abris</a>
                 <a href="/?action=displayStats" type="button" class="btn btn-primary btn-block text-decoration-none">Statistiques CPA</a>
                 <a href="/?action=displayUser" type="button" class="btn btn-primary btn-block text-decoration-none">Création d'utilisateur</a>
             </div>

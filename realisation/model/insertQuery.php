@@ -11,8 +11,9 @@ require_once 'dbConnector.php';
  * Function used to save data from the visit form
  */
 function saveVisitData($dataToSave){
+    require_once 'selectQuery.php';
     $numberOfRoom = $dataToSave['inputNumberOfRoom'];
-    $strSep = '\'';
+    $strSep = '"';
     $return = 45;
     $idVisit = $dataToSave['visitID'];
 
@@ -23,10 +24,11 @@ function saveVisitData($dataToSave){
         if(isset($dataToSave[$roomId.'countOfNewIssue']) && $dataToSave[$roomId.'countOfNewIssue'] != 0){
             $countNewIssue = $dataToSave[$roomId.'countOfNewIssue'];
             for ($y=0;$y<$countNewIssue;$y++){
-                $desc = ""; //TODO GET THE DESCRIPTION OF THE NEW ISSUE
-                $defaultID= 1; //TODO GET THE ID OF THE DEFAULT (INFO IN DB TABLE"DEFAUTS")
+                $desc = $dataToSave[$roomId.'issueDescription'.($y+1)];
+                $defaultID= getIDDefault($dataToSave[$roomId.'addIssue'.($y+1)])[0]['idDefauts'];
                 //Save new issue into db
                 $query = "INSERT INTO `pieces_defauts`(`fkPieces`, `fkDefauts`, `fkVisite`, `description`) VALUES (".$roomId.",".$defaultID.",".$idVisit.",".$strSep.$desc.$strSep.")";
+                var_dump($query);
                 executeQuery($query);
             }
         }
