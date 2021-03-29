@@ -49,7 +49,7 @@ function getBunkerInformationForm($bunkerName){
  * return all information about issue of a specified room
  */
 function getSpottedIssueForRoom($idRoom){
-    $query = "SELECT `idPiecesDefauts`, `fkDefauts`, `type`, defauts.description AS globalDescription, pieces_defauts.description FROM `pieces_defauts` INNER JOIN `defauts` ON `fkDefauts` = `idDefauts` WHERE `fkPieces` =".$idRoom;
+    $query = "SELECT `idPiecesDefauts`, `fkDefauts`, `type`, defauts.description AS globalDescription, pieces_defauts.description FROM `pieces_defauts` INNER JOIN `defauts` ON `fkDefauts` = `idDefauts` WHERE `pieces_defauts`.statut = 0 AND `fkPieces` =".$idRoom;
 
     return executeQuery($query);
 }
@@ -81,7 +81,7 @@ function getAvailableRoomIssue($roomId){
  * @return array = information that we need to display cpa check form
  */
 function getBaseInformationCheckForm(){
-    $result = array("bunkerName", "issueType", "allBunkerName");
+    $result = array("bunkerName", "issueType", "allBunkerName", "cityName", "managers");
 
     //Prepare query to get issue type
     $query = "SELECT `type` FROM `defauts`";
@@ -97,6 +97,14 @@ function getBaseInformationCheckForm(){
     $query = "SELECT `nom` FROM `abris`";
     //Get all bunkerName
     $result['allBunkerName'] = executeQuery($query);
+
+    //Prepare query to get all "communes" name
+    $query = "SELECT communes.nom FROM communes";
+    $result['cityName'] = executeQuery($query);
+
+    //Prepare query to get all managers name
+    $query = "SELECT `prenom`,`nom` FROM `utilisateurs` WHERE `statutUtilisateur` = 0 AND utilisateurs.role = 1";
+    $result['managers'] = executeQuery($query);
 
     return $result;
 }
@@ -322,6 +330,24 @@ function getInformationStats(){
         $i++;
     }
 
+    //Query used to select count of places available by region
+    $query = "SELECT SUM(placesDisponibles) AS countPlaces, communes.region FROM pieces INNER JOIN abris ON pieces.fkAbris = abris.idAbris INNER JOIN communes ON abris.fkCommune = communes.idCommune GROUP BY communes.region";
+    $countPlacesRegion = executeQuery($query);
+    $countMax = 0;
+    foreach($countPlacesRegion as $city){
+        $countMax += $city['countPlaces'];
+    }
+    array_push($countPlacesRegion, $countMax);
+
+    //Query used to select count of places available by city
+    $query = "SELECT SUM(placesDisponibles) AS countPlaces, communes.nom FROM pieces INNER JOIN abris ON pieces.fkAbris = abris.idAbris INNER JOIN communes ON abris.fkCommune = communes.idCommune GROUP BY communes.nom";
+    $countPlacesCity = executeQuery($query);
+    $countMax = 0;
+    foreach($countPlacesCity as $city){
+        $countMax += $city['countPlaces'];
+    }
+    array_push($countPlacesCity, $countMax);
+
     //Query used to select number of visit, counter inspection and date with region
     $query = "SELECT communes.region, visite.type, visite.dateVisite FROM abris INNER JOIN visite ON abris.idAbris = visite.fkAbris INNER JOIN communes ON abris.fkCommune = communes.idCommune";
     $tableStats = executeQuery($query);
@@ -406,7 +432,7 @@ function getInformationStats(){
         "visitDec"=>count($monthTable['visitDec']),"counterDec"=>count($monthTable['counterDec'])
     );
 
-    return array("countBunkerRegion"=>$countBunkerRegion, "countVisitRegion"=>$countVisitRegion, "countCounterInspectionRegion"=>$countCounterInspectionRegion,"tableMonthStats"=>$tableMonthStats);
+    return array("countBunkerRegion"=>$countBunkerRegion, "countVisitRegion"=>$countVisitRegion, "countCounterInspectionRegion"=>$countCounterInspectionRegion, "countPlacesRegion"=> $countPlacesRegion, "countPlacesCity" => $countPlacesCity, "tableMonthStats"=>$tableMonthStats);
 }
 
 
@@ -417,3 +443,4 @@ function getIDDefault($name){
 
     return executeQuery($query);
 }
+

@@ -67,25 +67,25 @@ ob_start();
     </div>
 
     <!-- Pie charts with legend -->
-    <div class="text-center d-inline-flex w-100 mt-3 mb-5 justify-content-center">
-        <div class="float-left w-25">
-            <figure class="highcharts-figure float-left ml-2 mr-2">
+    <div class="text-center d-lg-inline-flex w-100 mt-3 mb-5 p-0" style="text-align: center !important;">
+        <div class="container-fluid w-20 p-0">
+            <figure class="highcharts-figure">
                 <div id="numberOfBunkerByRegionPieChart"></div>
                 <p class="highcharts-description">
                     Vous pouvez observer ci-dessus le nombre d'abris que contient chaque canton
                 </p>
             </figure>
         </div>
-        <div class="float-left w-25">
-            <figure class="highcharts-figure float-left ml-2 mr-2">
+        <div class="container-fluid w-20 p-0">
+            <figure class="highcharts-figure">
                 <div id="numberOfVisitByRegion"></div>
                 <p class="highcharts-description">
                     Vous pouvez observer ci-dessus le nombre de visite qui ont été effectué par canton
                 </p>
             </figure>
         </div>
-        <div class="float-left w-25">
-            <figure class="highcharts-figure float-left ml-2 mr-2">
+        <div class="container-fluid w-20 p-0">
+            <figure class="highcharts-figure">
                 <div id="numberOfCounterInspectionByRegion"></div>
                 <p class="highcharts-description">
                     Vous pouvez observer ci-dessus le nombre de contre visite qui ont été effectué par canton
@@ -94,9 +94,29 @@ ob_start();
         </div>
     </div>
 
+    <!-- Pie charts with legend -->
+    <div class="text-center d-lg-inline-flex w-100 mt-3 mb-5" style="text-align: center !important;">
+        <div class="container-fluid w-33">
+            <figure class="highcharts-figure ml-2 mr-2">
+                <div id="countReservedPlacesRegion"></div>
+                <p class="highcharts-description">
+                    Vous pouvez ci-dessus observer le nombre de place réservée disponible par canton. Nombre total de places : <?= $stats['countPlacesRegion'][count($stats['countPlacesRegion'])-1]; ?>
+                </p>
+            </figure>
+        </div>
+        <div class="container-fluid w-33">
+            <figure class="highcharts-figure ml-2 mr-2">
+                <div id="countReservedPlacesCity"></div>
+                <p class="highcharts-description">
+                    Vous pouvez observer ci-dessus le nombre de place réservée disponible par commune. Nombre total de places : <?= $stats['countPlacesCity'][count($stats['countPlacesCity'])-1]; ?>
+                </p>
+            </figure>
+        </div>
+    </div>
+
     <!-- Basic column chart -->
-    <div class="text-center d-inline-block w-100 mt-3 mb-5">
-        <div class="btn-group-vertical" role="group">
+    <div class="text-center d-lg-inline-flex w-100 mt-3 mb-5">
+        <div class="container-fluid w-75" role="group">
             <figure class="highcharts-figure">
                 <div id="numberOfVisitAndCounterInspectionByMonth"></div>
                 <p class="highcharts-description">
@@ -105,6 +125,7 @@ ob_start();
             </figure>
         </div>
     </div>
+
 </div>
 
 
@@ -230,6 +251,94 @@ ob_start();
                     echo "{name: '" . $a['region'] . "',y: " . $a['countCounterInspection'] . "}";
                 } else {
                     echo "{name: '" . $a['region'] . "',y: " . $a['countCounterInspection'] . "},";
+                }
+                $i++;
+            }?>]
+        }]
+    });
+
+    Highcharts.chart('countReservedPlacesRegion', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Nombre de place réservée par canton'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: ''
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            name: 'places',
+            colorByPoint: true,
+            data: [<?php $i = 0; foreach ($stats['countPlacesRegion'] as $a) {
+                if (count($stats['countPlacesRegion']) == $i) {
+                    echo "{name: '" . $a['countPlaces'] . " - ". $a['region'] . "',y: " . $a['countPlaces'] . "}";
+                } elseif (count($stats['countPlacesRegion']) == $i +1){
+
+                } else {
+                    echo "{name: '" . $a['countPlaces'] . " - ". $a['region'] . "',y: " . $a['countPlaces'] . "},";
+                }
+                $i++;
+            }?>]
+        }]
+    });
+
+    Highcharts.chart('countReservedPlacesCity', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Nombre de place par commune'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: ''
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            name: 'Places',
+            colorByPoint: true,
+            data: [<?php $i = 0; foreach ($stats['countPlacesCity'] as $a) {
+                if (count($stats['countPlacesCity']) == $i) {
+                    echo "{name: '" . $a['countPlaces'] . " - ". $a['nom'] . "',y: " . $a['countPlaces'] . "}";
+                } elseif (count($stats['countPlacesCity']) == $i +1){
+
+                } else {
+                    echo "{name: '" . $a['countPlaces'] . " - ". $a['nom'] . "',y: " . $a['countPlaces'] . "},";
                 }
                 $i++;
             }?>]

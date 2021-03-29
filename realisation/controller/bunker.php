@@ -19,6 +19,8 @@ function displayForm($get = null){
     $bunkerName = $data['bunkerName'];
     $allBunkerName = $data['allBunkerName'];
     $issueType = $data['issueType'];
+    $managers = $data['managers'];
+    $cityName = $data['cityName'];
 
     require 'view/cpaCheckForm.php';
 }

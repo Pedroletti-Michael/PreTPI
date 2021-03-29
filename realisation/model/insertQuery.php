@@ -14,7 +14,7 @@ function saveVisitData($dataToSave){
     require_once 'selectQuery.php';
     $numberOfRoom = $dataToSave['inputNumberOfRoom'];
     $strSep = '"';
-    $return = 45;
+    $return = 404;
     $idVisit = $dataToSave['visitID'];
 
     for($i=1; $i < $numberOfRoom+1; $i++){
@@ -30,6 +30,7 @@ function saveVisitData($dataToSave){
                 $query = "INSERT INTO `pieces_defauts`(`fkPieces`, `fkDefauts`, `fkVisite`, `description`) VALUES (".$roomId.",".$defaultID.",".$idVisit.",".$strSep.$desc.$strSep.")";
                 var_dump($query);
                 executeQuery($query);
+                $return = 403;
             }
         }
 
@@ -41,9 +42,9 @@ function saveVisitData($dataToSave){
                     //if the checkbox is on that say that the issue is solve, so we change the status of the issue
                     $query = "UPDATE `pieces_defauts` SET `statut`=1 WHERE `idPiecesDefauts`=".$dataToSave[$roomId.'idRoomIssue'.$y];
                     executeQuery($query);
-                }
-                else{
-                    $return = 404;
+                    if($return != 403){
+                        $return = 234;
+                    }
                 }
             }
         }
@@ -53,8 +54,11 @@ function saveVisitData($dataToSave){
 
 
     //Change status of the visit
-    $query = "UPDATE `visite` SET `statutVisite`=0 WHERE `idVisite`=".$idVisit;
-    executeQuery($query);
+    if($idVisit != "noVisitPlanned"){
+        $query = "UPDATE `visite` SET `statutVisite`= 0 WHERE `idVisite`=".$idVisit;
+        executeQuery($query);
+    }
+
     if($return != 404){
         //Change bunker status on "bunker OK"
         $query = "UPDATE `abris` SET `statutVisite`=2 WHERE `idAbris`=".$dataToSave['inputInformationBunkerID'];

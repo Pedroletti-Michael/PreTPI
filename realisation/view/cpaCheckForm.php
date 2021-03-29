@@ -324,27 +324,83 @@ ob_start();
                 </div>
             <?php endif; ?>
 
-            <div class="d-inline-block w-100" id="newBunkerDiv" hidden>
-                <div class="w-100 mb-2 form-group">
+            <!--===New Bunker Section-->
+            <div class="d-inline-block w-100 " id="newBunkerDiv" hidden>
+                <div class="w-100 mb-5 form-group">
                     <div class="form-group w-50 float-left mt-3" id="informationRegion">
                         <label class="font-weight-bold w-50">Commune : </label>
                         <select class="form-control w-50">
-                            <option>Vaud</option>
-                            <option>Berne</option>
-                            <option>Zurich</option>
-                            <option>Genève</option>
-                            <option>Valais</option>
+                            <?php foreach($cityName as $city) :?>
+                                <option><?= $city['nom']; ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group w-50 float-left mt-3" id="informationRegion">
                         <label class="font-weight-bold w-50">Responsable : </label>
                         <select class="form-control w-50">
-                            <option>Michael Pedroletti</option>
-                            <option>Bryoutze Evangelistique</option>
+                            <?php foreach($managers as $manager) :?>
+                                <option><?= $manager['nom']. " " .$manager['prenom']; ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
+
+
+                <div class="d-inline-block w-100 h" id="newRoomSection">
+                    <!--  -->
+                    <div class="form-group w-50 float-left pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
+                        <!-- Room Name -->
+                        <div class="form-group w-50 float-left pr-1 mt-3">
+                            <label for="inputRoomNewRoomName0" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomNewRoomName0" name="inputRoomNewRoomName0" value="Bureau chef d'abri" required>
+                        </div>
+
+                        <!-- Room available seats -->
+                        <div class="form-group w-50 float-right pl-1 mt-3">
+                            <label for="inputAvailableSeats0" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
+                            <input type="number" class="form-control form form" id="inputAvailableSeats0" name="inputAvailableSeats0" value="0" min="0" max="10000" required>
+                        </div>
+                        <br>
+                        <!-- Room type -->
+                        <div class="form-group w-100 float-left pr-1">
+                            <label for="inputRoomType0" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomType0" name="inputRoomType0" value="Bureau" required>
+                        </div>
+
+                        <!-- Part reserved for the possible issue we need to check -->
+                        <div class="form-group w-100 float-left pr-1">
+                            <!-- TODO CHANGE AND MAKE POSSIBLE TO ADD DIFFERENT TYPE OF ISSUE -->
+                        </div>
+                    </div>
+
+                    <div class="form-group w-50 float-right pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
+                        <!-- Room Name -->
+                        <div class="form-group w-50 float-left pr-1 mt-3">
+                            <label for="inputRoomNewRoomName1" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomNewRoomName1" name="inputRoomNewRoomName1" value="Cuisine" required>
+                        </div>
+
+                        <!-- Room available seats -->
+                        <div class="form-group w-50 float-right pl-1 mt-3">
+                            <label for="inputAvailableSeats1" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
+                            <input type="number" class="form-control form form" id="inputAvailableSeats1" name="inputAvailableSeats1" value="0" min="0" max="10000" required>
+                        </div>
+                        <br>
+                        <!-- Room type -->
+                        <div class="form-group w-100 float-left pr-1">
+                            <label for="inputRoomType1" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomType1" name="inputRoomType1" value="Cuisine" required>
+                        </div>
+
+                        <!-- Part reserved for the possible issue we need to check -->
+                        <div class="form-group w-100 float-left pr-1">
+                            <!-- TODO CHANGE AND MAKE POSSIBLE TO ADD DIFFERENT TYPE OF ISSUE -->
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
 
             <div class="d-inline-block w-100">
                 <!--Submit-->
