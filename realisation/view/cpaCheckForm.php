@@ -347,7 +347,7 @@ ob_start();
 
 
                 <div class="d-inline-block w-100 h" id="newRoomSection">
-                    <!--  -->
+                    <!-- Manager desk -->
                     <div class="form-group w-50 float-left pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
                         <!-- Room Name -->
                         <div class="form-group w-50 float-left pr-1 mt-3">
@@ -373,6 +373,7 @@ ob_start();
                         </div>
                     </div>
 
+                    <!-- Kitchen -->
                     <div class="form-group w-50 float-right pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
                         <!-- Room Name -->
                         <div class="form-group w-50 float-left pr-1 mt-3">
@@ -390,6 +391,84 @@ ob_start();
                         <div class="form-group w-100 float-left pr-1">
                             <label for="inputRoomType1" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
                             <input type="text" class="form-control form form" id="inputRoomType1" name="inputRoomType1" value="Cuisine" required>
+                        </div>
+
+                        <!-- Part reserved for the possible issue we need to check -->
+                        <div class="form-group w-100 float-left pr-1">
+                            <!-- TODO CHANGE AND MAKE POSSIBLE TO ADD DIFFERENT TYPE OF ISSUE -->
+                        </div>
+                    </div>
+
+                    <!-- Bedroom -->
+                    <div class="form-group w-50 float-left pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
+                        <!-- Room Name -->
+                        <div class="form-group w-50 float-left pr-1 mt-3">
+                            <label for="inputRoomNewRoomName2" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomNewRoomName2" name="inputRoomNewRoomName2" value="Dortoir" required>
+                        </div>
+
+                        <!-- Room available seats -->
+                        <div class="form-group w-50 float-right pl-1 mt-3">
+                            <label for="inputAvailableSeats2" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
+                            <input type="number" class="form-control form form" id="inputAvailableSeats2" name="inputAvailableSeats2" value="14" min="0" max="10000" required>
+                        </div>
+                        <br>
+                        <!-- Room type -->
+                        <div class="form-group w-100 float-left pr-1">
+                            <label for="inputRoomType2" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomType2" name="inputRoomType2" value="Dortoir" required>
+                        </div>
+
+                        <!-- Part reserved for the possible issue we need to check -->
+                        <div class="form-group w-100 float-left pr-1">
+                            <!-- TODO CHANGE AND MAKE POSSIBLE TO ADD DIFFERENT TYPE OF ISSUE -->
+                        </div>
+                    </div>
+
+                    <!-- Sanitary -->
+                    <div class="form-group w-50 float-right pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
+                        <!-- Room Name -->
+                        <div class="form-group w-50 float-left pr-1 mt-3">
+                            <label for="inputRoomNewRoomName3" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomNewRoomName3" name="inputRoomNewRoomName3" value="Sanitaire" required>
+                        </div>
+
+                        <!-- Room available seats -->
+                        <div class="form-group w-50 float-right pl-1 mt-3">
+                            <label for="inputAvailableSeats3" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
+                            <input type="number" class="form-control form form" id="inputAvailableSeats3" name="inputAvailableSeats3" value="0" min="0" max="10000" required>
+                        </div>
+                        <br>
+                        <!-- Room type -->
+                        <div class="form-group w-100 float-left pr-1">
+                            <label for="inputRoomType3" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomType3" name="inputRoomType3" value="Sanitaire" required>
+                        </div>
+
+                        <!-- Part reserved for the possible issue we need to check -->
+                        <div class="form-group w-100 float-left pr-1">
+                            <!-- TODO CHANGE AND MAKE POSSIBLE TO ADD DIFFERENT TYPE OF ISSUE -->
+                        </div>
+                    </div>
+
+                    <!-- Bedroom -->
+                    <div class="form-group w-50 float-left pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
+                        <!-- Room Name -->
+                        <div class="form-group w-50 float-left pr-1 mt-3">
+                            <label for="inputRoomNewRoomName2" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomNewRoomName2" name="inputRoomNewRoomName2" value="Dortoir" required>
+                        </div>
+
+                        <!-- Room available seats -->
+                        <div class="form-group w-50 float-right pl-1 mt-3">
+                            <label for="inputAvailableSeats2" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
+                            <input type="number" class="form-control form form" id="inputAvailableSeats2" name="inputAvailableSeats2" value="14" min="0" max="10000" required>
+                        </div>
+                        <br>
+                        <!-- Room type -->
+                        <div class="form-group w-100 float-left pr-1">
+                            <label for="inputRoomType2" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomType2" name="inputRoomType2" value="Dortoir" required>
                         </div>
 
                         <!-- Part reserved for the possible issue we need to check -->
