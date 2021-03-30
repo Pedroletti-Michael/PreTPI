@@ -324,6 +324,8 @@ ob_start();
                 </div>
             <?php endif; ?>
 
+
+
             <!--===New Bunker Section-->
             <div class="d-inline-block w-100 " id="newBunkerDiv" hidden>
                 <div class="w-100 mb-5 form-group">
@@ -346,9 +348,9 @@ ob_start();
                 </div>
 
 
-                <div class="d-inline-block w-100 h" id="newRoomSection">
+                <div class="d-inline-block w-100 text-center" id="newRoomSection">
                     <!-- Manager desk -->
-                    <div class="form-group w-50 float-left pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
+                    <div class="form-group float-left pr-4 pl-4 mb-1 mr-1 mt-0 border border-dark" style="width: 48% !important;" id="responsiveDisplay">
                         <!-- Room Name -->
                         <div class="form-group w-50 float-left pr-1 mt-3">
                             <label for="inputRoomNewRoomName0" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
@@ -369,12 +371,18 @@ ob_start();
 
                         <!-- Part reserved for the possible issue we need to check -->
                         <div class="form-group w-100 float-left pr-1">
-                            <!-- TODO CHANGE AND MAKE POSSIBLE TO ADD DIFFERENT TYPE OF ISSUE -->
+                            <?php $y=0; foreach($issueType as $type):?>
+                                <div class="form-group text-left w-40 d-inline-block ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> pr-1 mt-3">
+                                    <input type="checkbox" id="0issue" name="0issue">
+                                    <label for="0issue" class="form-check-label"><?= $type['type'] ?></label>
+                                    <input type="hidden" name="0issuePossible" value="<?= $type['type'] ?>">
+                                </div>
+                            <?php $y++;endforeach;?>
                         </div>
                     </div>
 
                     <!-- Kitchen -->
-                    <div class="form-group w-50 float-right pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
+                    <div class="form-group float-right pr-4 pl-4 mb-1 mr-1 mt-0 border border-dark" style="width: 48% !important;" id="responsiveDisplay">
                         <!-- Room Name -->
                         <div class="form-group w-50 float-left pr-1 mt-3">
                             <label for="inputRoomNewRoomName1" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
@@ -395,12 +403,18 @@ ob_start();
 
                         <!-- Part reserved for the possible issue we need to check -->
                         <div class="form-group w-100 float-left pr-1">
-                            <!-- TODO CHANGE AND MAKE POSSIBLE TO ADD DIFFERENT TYPE OF ISSUE -->
+                            <?php $y=0; foreach($issueType as $type):?>
+                                <div class="form-group text-left w-40 d-inline-block ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> pr-1 mt-3">
+                                    <input type="checkbox" id="1issue" name="1issue">
+                                    <label for="1issue" class="form-check-label"><?= $type['type'] ?></label>
+                                    <input type="hidden" name="1issuePossible" value="<?= $type['type'] ?>">
+                                </div>
+                            <?php $y++;endforeach;?>
                         </div>
                     </div>
 
                     <!-- Bedroom -->
-                    <div class="form-group w-50 float-left pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
+                    <div class="form-group float-left pr-4 pl-4 mb-1 mr-1 mt-0 border border-dark" style="width: 48% !important;" id="responsiveDisplay">
                         <!-- Room Name -->
                         <div class="form-group w-50 float-left pr-1 mt-3">
                             <label for="inputRoomNewRoomName2" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
@@ -421,12 +435,18 @@ ob_start();
 
                         <!-- Part reserved for the possible issue we need to check -->
                         <div class="form-group w-100 float-left pr-1">
-                            <!-- TODO CHANGE AND MAKE POSSIBLE TO ADD DIFFERENT TYPE OF ISSUE -->
+                            <?php $y=0; foreach($issueType as $type):?>
+                                <div class="form-group text-left w-40 d-inline-block ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> pr-1 mt-3">
+                                    <input type="checkbox" id="2issue" name="2issue">
+                                    <label for="2issue" class="form-check-label"><?= $type['type'] ?></label>
+                                    <input type="hidden" name="2issuePossible" value="<?= $type['type'] ?>">
+                                </div>
+                            <?php $y++;endforeach;?>
                         </div>
                     </div>
 
                     <!-- Sanitary -->
-                    <div class="form-group w-50 float-right pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
+                    <div class="form-group float-right pr-4 pl-4 mb-1 mr-1 mt-0 border border-dark" style="width: 48% !important;" id="responsiveDisplay">
                         <!-- Room Name -->
                         <div class="form-group w-50 float-left pr-1 mt-3">
                             <label for="inputRoomNewRoomName3" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
@@ -447,33 +467,45 @@ ob_start();
 
                         <!-- Part reserved for the possible issue we need to check -->
                         <div class="form-group w-100 float-left pr-1">
-                            <!-- TODO CHANGE AND MAKE POSSIBLE TO ADD DIFFERENT TYPE OF ISSUE -->
+                            <?php $y=0; foreach($issueType as $type):?>
+                                <div class="form-group text-left w-40 d-inline-block ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> pr-1 mt-3">
+                                    <input type="checkbox" id="3issue" name="3issue">
+                                    <label for="3issue" class="form-check-label"><?= $type['type'] ?></label>
+                                    <input type="hidden" name="3issuePossible" value="<?= $type['type'] ?>">
+                                </div>
+                            <?php $y++;endforeach;?>
                         </div>
                     </div>
 
-                    <!-- Bedroom -->
-                    <div class="form-group w-50 float-left pr-4 pl-4 mb-0 mt-0 border border-dark" id="responsiveDisplay">
+                    <!-- diner room -->
+                    <div class="form-group float-left pr-4 pl-4 mb-1 mr-1 mt-0 border border-dark" style="width: 48% !important;" id="responsiveDisplay">
                         <!-- Room Name -->
                         <div class="form-group w-50 float-left pr-1 mt-3">
-                            <label for="inputRoomNewRoomName2" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
-                            <input type="text" class="form-control form form" id="inputRoomNewRoomName2" name="inputRoomNewRoomName2" value="Dortoir" required>
+                            <label for="inputRoomNewRoomName4" class="font-weight-bold">Nom de la pièce<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomNewRoomName4" name="inputRoomNewRoomName4" value="Salle à manger" required>
                         </div>
 
                         <!-- Room available seats -->
                         <div class="form-group w-50 float-right pl-1 mt-3">
-                            <label for="inputAvailableSeats2" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
-                            <input type="number" class="form-control form form" id="inputAvailableSeats2" name="inputAvailableSeats2" value="14" min="0" max="10000" required>
+                            <label for="inputAvailableSeats4" class="font-weight-bold">Places disponibles<a style="color: red"> *</a>:</label>
+                            <input type="number" class="form-control form form" id="inputAvailableSeats4" name="inputAvailableSeats4" value="0" min="0" max="10000" required>
                         </div>
                         <br>
                         <!-- Room type -->
                         <div class="form-group w-100 float-left pr-1">
-                            <label for="inputRoomType2" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
-                            <input type="text" class="form-control form form" id="inputRoomType2" name="inputRoomType2" value="Dortoir" required>
+                            <label for="inputRoomType4" class="font-weight-bold">Types de pièces<a style="color: red"> *</a>:</label>
+                            <input type="text" class="form-control form form" id="inputRoomType4" name="inputRoomType4" value="salle à manger" required>
                         </div>
 
                         <!-- Part reserved for the possible issue we need to check -->
                         <div class="form-group w-100 float-left pr-1">
-                            <!-- TODO CHANGE AND MAKE POSSIBLE TO ADD DIFFERENT TYPE OF ISSUE -->
+                            <?php $y=0; foreach($issueType as $type):?>
+                                <div class="form-group text-left w-40 d-inline-block ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> pr-1 mt-3">
+                                    <input type="checkbox" id="4issue" name="4issue">
+                                    <label for="4issue" class="form-check-label"><?= $type['type'] ?></label>
+                                    <input type="hidden" name="4issuePossible" value="<?= $type['type'] ?>">
+                                </div>
+                            <?php $y++;endforeach;?>
                         </div>
                     </div>
                 </div>
