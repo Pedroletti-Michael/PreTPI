@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2020-07-01" view-index="0" gantt-divider-location="1084" resource-divider-location="300" version="2.8.1" locale="fr">
+    <description/>
+    <view zooming-state="default:11" id="gantt-chart">
+        <field id="tpd3" name="Nom" width="766" order="0"/>
+        <field id="tpd4" name="Date de début" width="146" order="1"/>
+        <field id="tpd5" name="Date de fin" width="153" order="2"/>
+        <option id="color.recent"><![CDATA[#333333 #cc66ff #ff3300 #ff9900 #00cccc #66cc00 #ffcc33 #3366ff #999999]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nom" width="210" order="0"/>
+        <field id="1" name="Rôle par défaut" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="13" name="Séparation des tâches" color="#999999" meeting="false" start="2021-02-01" duration="1" complete="0" expand="true"/>
+        <task id="14" name="Planification initiale" color="#999999" meeting="false" start="2021-02-01" duration="5" complete="0" expand="true"/>
+        <task id="21" name="Ajout des stories" color="#999999" meeting="false" start="2021-02-04" duration="12" complete="0" expand="true"/>
+        <task id="32" name="Sprint 1" meeting="false" start="2021-02-08" duration="10" complete="0" expand="true">
+            <task id="33" name="Page de connexion sécurisée au portail web" color="#3366ff" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true">
+                <task id="76" name="Page de login" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true"/>
+                <task id="82" name="Fonction de vérification de la connexion" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true"/>
+                <task id="83" name="Ajout d'un statut de connexion" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true"/>
+            </task>
+            <task id="34" name="Page d'accueil" color="#3366ff" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true">
+                <task id="90" name="Page responsive" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true"/>
+                <task id="91" name="Ajout des boutons pour chaque page" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true"/>
+                <task id="92" name="Ajout du logo de la PC" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true"/>
+            </task>
+            <task id="35" name="Fonction de récupération des données" color="#3366ff" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true">
+                <task id="101" name="Création de la base de données" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true"/>
+                <task id="102" name="Fonctions pour la page nécessitant des abris nécessitant une visite" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true"/>
+                <task id="103" name="Fonctions pour la page des abris nécessitant une contre visite" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true"/>
+                <task id="104" name="fonctions pour la page des stats" meeting="false" start="2021-02-08" duration="4" complete="0" expand="true"/>
+            </task>
+            <task id="41" name="Affichage d'une liste globale des abris" color="#66cc00" meeting="false" start="2021-02-11" duration="6" complete="0" expand="true">
+                <task id="112" name="Création du tableau avec les différents champs nécessaires" meeting="false" start="2021-02-11" duration="6" complete="0" expand="true"/>
+                <task id="113" name="Ajout de l'affichage des informations" meeting="false" start="2021-02-11" duration="6" complete="0" expand="true"/>
+                <task id="114" name="Ajout d'éléments permettant d'identifier le statut" meeting="false" start="2021-02-11" duration="6" complete="0" expand="true"/>
+                <task id="115" name="Affichage d'une légende pour les statuts" meeting="false" start="2021-02-11" duration="6" complete="0" expand="true"/>
+            </task>
+            <task id="44" name="Page de formulaire pour les contrôles" color="#ffcc33" meeting="false" start="2021-02-11" duration="7" complete="0" expand="true">
+                <task id="122" name="Ajout de la base du formulaire" meeting="false" start="2021-02-11" duration="7" complete="0" expand="true"/>
+                <task id="125" name="Préparation des champs nécessaires à la fonctionnalité pour la récupération d'info des abris" meeting="false" start="2021-02-11" duration="7" complete="0" expand="true"/>
+                <task id="126" name="Préparation des champs nécessaires à la fonctionnalité permettant de créer un nouvel abri" meeting="false" start="2021-02-11" duration="7" complete="0" expand="true"/>
+                <task id="128" name="Ajout des éléments dans bd pour faire les checklist (défauts possibles)" meeting="false" start="2021-02-11" duration="7" complete="0" expand="true"/>
+                <task id="130" name="Ajout d'une checklist pour les visites et contres visites pour savoir quelles éléments sont à vérifier" meeting="false" start="2021-02-11" duration="7" complete="0" expand="true"/>
+                <task id="132" name="Ajout d'une vue pour les contres visites" meeting="false" start="2021-02-11" duration="7" complete="0" expand="true"/>
+                <task id="134" name="Ajout d'une vue pour l'ajout de nouvel abri" meeting="false" start="2021-02-11" duration="7" complete="0" expand="true"/>
+            </task>
+            <task id="55" name="Test des fonctionnalités" color="#00cccc" meeting="false" start="2021-02-18" duration="2" complete="0" expand="true"/>
+        </task>
+        <task id="74" name="Relâches" color="#333333" meeting="false" start="2021-02-22" duration="5" complete="0" expand="true"/>
+        <task id="38" name="Sprint 2" meeting="false" start="2021-02-19" duration="11" complete="0" expand="true">
+            <task id="42" name="Options de tri d'affichage par commune et par région" color="#66cc00" meeting="false" start="2021-02-19" duration="11" complete="0" expand="true">
+                <task id="136" name="Ajout d'option de tri par commune" meeting="false" start="2021-02-19" duration="11" complete="0" expand="true"/>
+                <task id="138" name="Ajout d'option de tri par région" meeting="false" start="2021-02-19" duration="11" complete="0" expand="true"/>
+                <task id="140" name="Ajout d'option de tri par responsable" meeting="false" start="2021-02-19" duration="11" complete="0" expand="true"/>
+                <task id="142" name="Ajout d'option afin d'organiser par ordre croissant ou décroissant les colonnes nom, région, commune et responsable" meeting="false" start="2021-02-19" duration="11" complete="0" expand="true"/>
+                <task id="144" name="Ajout d'une panneau de contrôles pour les différentes options de tri" meeting="false" start="2021-02-19" duration="11" complete="0" expand="true"/>
+                <task id="146" name="Option permettant le tri en fonction du statut des abris" meeting="false" start="2021-02-19" duration="11" complete="0" expand="true"/>
+            </task>
+            <task id="43" name="Sauvegarde des données du formulaire" color="#ffcc33" meeting="false" start="2021-02-26" duration="6" complete="0" expand="true">
+                <task id="148" name="Sauvegarde des données pour le formulaire visite" meeting="false" start="2021-02-26" duration="6" complete="0" expand="true"/>
+                <task id="150" name="Sauvegarde des données pour les contres visites" meeting="false" start="2021-02-26" duration="6" complete="0" expand="true"/>
+                <task id="152" name="Sauvegarde des données pour les nouveaux abris" meeting="false" start="2021-02-26" duration="6" complete="0" expand="true"/>
+            </task>
+            <task id="53" name="Test des fonctionnalités" color="#00cccc" meeting="false" start="2021-03-04" duration="2" complete="0" expand="true"/>
+        </task>
+        <task id="39" name="Sprint 3" meeting="false" start="2021-03-05" duration="15" complete="0" expand="true">
+            <task id="45" name="Page d'affichage des abris qui ont besoin d'une visite" color="#ff9900" meeting="false" start="2021-03-05" duration="5" complete="0" expand="true">
+                <task id="156" name="Tableau avec tous les abris ayant le le statut visite nécessaire et toutes les informations relative à l'abri" meeting="false" start="2021-03-05" duration="5" complete="0" expand="true"/>
+                <task id="158" name="Filtre comme sur la page de liste global" meeting="false" start="2021-03-05" duration="5" complete="0" expand="true"/>
+            </task>
+            <task id="46" name="Fonction d'envoi d'e-mails d'avertissement de visite" color="#ff9900" meeting="false" start="2021-03-05" duration="6" complete="0" expand="true">
+                <task id="160" name="Bouton sur la page de visite" meeting="false" start="2021-03-05" duration="6" complete="0" expand="true"/>
+                <task id="162" name="Fonction permettant l'envoi du mail" meeting="false" start="2021-03-05" duration="6" complete="0" expand="true"/>
+                <task id="164" name="Changement de statut en visite planifiée" meeting="false" start="2021-03-05" duration="6" complete="0" expand="true"/>
+            </task>
+            <task id="10" name="Page affichant la liste des abris ayant un ou plusieurs défauts" color="#ff3300" meeting="false" start="2021-03-12" duration="2" complete="0" expand="true">
+                <task id="167" name="Tableau affichant les abris qui nécessite une contre visite, ainsi que les information à propos de cet abri" meeting="false" start="2021-03-12" duration="2" complete="0" expand="true"/>
+                <task id="169" name="Ajout des filtres comme sur la page de liste global" meeting="false" start="2021-03-12" duration="2" complete="0" expand="true"/>
+            </task>
+            <task id="7" name="Bouton permettant de contacter les abris ayant un ou plusieurs défauts" color="#ff3300" meeting="false" start="2021-03-12" duration="5" complete="0" expand="true">
+                <task id="172" name="Bouton dans pour tous les abris nécessitants une contre visite" meeting="false" start="2021-03-12" duration="5" complete="0" expand="true"/>
+                <task id="178" name="Fonction d'envoi de mail" meeting="false" start="2021-03-12" duration="5" complete="0" expand="true"/>
+                <task id="180" name="Changement de statut en contre visite planifiée" meeting="false" start="2021-03-12" duration="5" complete="0" expand="true"/>
+            </task>
+            <task id="11" name="Page affichant les statistiques des places protégées disponibles" color="#cc66ff" meeting="false" start="2021-03-15" duration="9" complete="0" expand="true">
+                <task id="182" name="Affichage dans un tableau des données" meeting="false" start="2021-03-15" duration="9" complete="0" expand="true"/>
+                <task id="184" name="Affichage dans un graphique des données" meeting="false" start="2021-03-15" duration="9" complete="0" expand="true"/>
+                <task id="186" name="Amélioration de la fonciton de récupération et ajout de la fonction js" meeting="false" start="2021-03-15" duration="9" complete="0" expand="true"/>
+            </task>
+            <task id="51" name="Test des fonctionnalités" color="#00cccc" meeting="false" start="2021-03-22" duration="4" complete="0" expand="true"/>
+        </task>
+        <task id="73" name="Vacances pâques" color="#333333" meeting="false" start="2021-04-02" duration="11" complete="0" expand="true"/>
+        <task id="40" name="Sprint final" meeting="false" start="2021-03-25" duration="6" complete="0" expand="true">
+            <task id="12" name="Tri des statistiques" color="#cc66ff" meeting="false" start="2021-03-25" duration="3" complete="0" expand="true">
+                <task id="188" name="Test de la fonctionnalité de tri disponible avec la librairie utilisée (highcharts)" meeting="false" start="2021-03-25" duration="3" complete="0" expand="true"/>
+            </task>
+            <task id="47" name="Fonction d'export des statistiques en PDF" color="#cc66ff" meeting="false" start="2021-03-29" duration="4" complete="0" expand="true">
+                <task id="193" name="Test des fonctions d'export mis en place avec la librairie utilisée" meeting="false" start="2021-03-29" duration="4" complete="0" expand="true"/>
+            </task>
+            <task id="49" name="Test des fonctionnalités" color="#00cccc" meeting="false" start="2021-04-01" duration="1" complete="0" expand="true"/>
+        </task>
+        <task id="17" name="Documentation" color="#999999" meeting="false" start="2021-02-01" duration="44" complete="0" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="0" name="Documentation" function="Default:0" contacts="" phone=""/>
+    </resources>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
