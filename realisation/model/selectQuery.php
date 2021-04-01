@@ -103,12 +103,17 @@ function getBaseInformationCheckForm(){
     $result['cityName'] = executeQuery($query);
 
     //Prepare query to get all managers name
-    $query = "SELECT `prenom`,`nom` FROM `utilisateurs` WHERE `statutUtilisateur` = 0 AND utilisateurs.role = 1";
+    $query = "SELECT `idUtilisateur`,`prenom`,`nom` FROM `utilisateurs` WHERE `statutUtilisateur` = 0 AND utilisateurs.role = 1";
     $result['managers'] = executeQuery($query);
 
     return $result;
 }
 
+function getAvailableIssue(){
+    $query = "SELECT `idDefauts`, `type` FROM `defauts`";
+
+    return executeQuery($query);
+}
 
 /**
  * Function used to get the list of bunker with complete information for display.
@@ -440,6 +445,14 @@ function getIDDefault($name){
     $strSep = '\'';
 
     $query = "SELECT `idDefauts` FROM `defauts` WHERE `type`=".$strSep.$name.$strSep;
+
+    return executeQuery($query);
+}
+
+function getIDCity($city){
+    $strSep = '\'';
+
+    $query = "SELECT `idCommune` FROM `communes` WHERE `nom`=".$strSep.$city.$strSep;
 
     return executeQuery($query);
 }

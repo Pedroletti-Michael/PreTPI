@@ -60,6 +60,9 @@ if(isset($_GET['action']))
         case 'displayStats':
             displayStats();
             break;
+        case 'SaveNewBunker':
+            saveNewBunker($_POST);
+            break;
         case 'home':
         default:
             if(testSessionTime()){break;}

@@ -5,6 +5,10 @@
  * Description : Contains all functions related to the bunker
  **/
 
+/**
+ * Display form page
+ * @param $get = can be null if we don't need to display info about a bunker
+ */
 function displayForm($get = null){
     require_once 'model/selectQuery.php';
     if($get != null){
@@ -25,6 +29,10 @@ function displayForm($get = null){
     require 'view/cpaCheckForm.php';
 }
 
+/**
+ * save visit or counter inspection form
+ * @param $data = data to save
+ */
 function saveFormData($data){
     require 'model/insertQuery.php';
 
@@ -110,9 +118,32 @@ function sendVisitNotice($get, $post, $counterInspection = null){
     displayGlobalList();
 }
 
+/**
+ * Display statistics page
+ */
 function displayStats(){
     require_once 'model/selectQuery.php';
 
     $stats = getInformationStats();
     require 'view/statistic.php';
+}
+
+/**
+ * Function used to save new bunker request
+ * @param $post = data to save
+ */
+function saveNewBunker($post){
+    require 'model/insertQuery.php';
+    if (isset($post['countNewRoom'])){
+        $return = saveNewData($post);
+        if($return){
+            $_SESSION['message'] = 'successSavingNewBunker';
+            $_SESSION['bunkerName'] = $post['inputBunkerName'];
+            header("location:/?action=home");
+        }
+    }
+    else{
+        $_SESSION['message'] = "errorSaveData";
+        require 'view/cpaCheckForm.php';
+    }
 }

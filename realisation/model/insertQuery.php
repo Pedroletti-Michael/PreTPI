@@ -78,17 +78,44 @@ function saveVisitData($dataToSave){
 }
 
 /**
- * Function used to save data from the counter inspection form
+ * Function used to save new bunker
+ * @param $dataToSave
+ * @return bool
  */
-function saveCounterInspectionData(){
+function saveNewData($dataToSave){
+    require_once 'selectQuery.php';
+    $possibleIssue = getAvailableIssue();
+    $select = str_replace(" ", "_", $dataToSave['selectManager']);
+    $managerID = $dataToSave[$select];
+    $cityID = getIDCity($dataToSave['selectCity'])[0]['idCommune'];
 
-}
+    //insert new bunker
+    $strSep = '"';
+    $query = "INSERT INTO `abris`(`fkCommune`, `nom`, `statutVisite`, `fkResponsable`) VALUES (".$cityID.", ". $strSep.$dataToSave['inputBunkerName'].$strSep .", 0, ".$managerID.");";
+    executeQuery($query);
 
-/**
- * Function used to save data from the new bunker form
- */
-function saveNewBunker(){
+    //get the last ID of the bunker
+    $query = "SELECT MAX(idAbris) as idLastBunker FROM abris";
+    $lastBunker = (int)executeQuery($query)[0]['idLastBunker'];
 
+    for( $i = 0; $i < $dataToSave['countNewRoom']; $i++){
+        //insert one of the new room
+        $query = "INSERT INTO `pieces`(`fkAbris`, `nom`, `placesDisponibles`, `type`) VALUES (".$lastBunker.",".$strSep.$dataToSave['inputRoomNewRoomName'.$i].$strSep.",".$dataToSave['inputAvailableSeats'.$i].",".$strSep.$dataToSave['inputRoomType'.$i].$strSep.")";
+        executeQuery($query);
+
+        $query= "SELECT MAX(idPiece) as idLastRoom FROM pieces";
+        $lastRoom = executeQuery($query)[0]['idLastRoom'];
+        foreach ($possibleIssue as $issue){
+            $selection = $i.$issue['type'];
+            if(isset($dataToSave[$selection])){
+
+                $query = "INSERT INTO `defauts_possibles`(`fkPieces`, `fkDefauts`) VALUES (".$lastRoom.",".$issue['idDefauts'].");";
+                executeQuery($query);
+            }
+        }
+    }
+
+    return true;
 }
 
 

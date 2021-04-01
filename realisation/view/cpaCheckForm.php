@@ -24,6 +24,8 @@ ob_start();
             const subBtn = document.getElementById("submitButton");
             const resetBtn = document.getElementById("resetButton");
             const newBunker = document.getElementById("newBunkerDiv");
+            const formAction = document.getElementById("cpaForm");
+            const baseAction = "/?action=SaveFormData";
 
             alertSelectBunkerName.style.display = "none";
             groupInputBunkerName.style.display = "none";
@@ -36,6 +38,7 @@ ob_start();
                 actionBtn.hidden = false;
                 resetBtn.hidden = true;
                 newBunker.hidden = true;
+                formAction.action = baseAction;
             }
             else if(selectBunkerName.value === "Autre"){
                 subBtn.disabled = false;
@@ -46,7 +49,7 @@ ob_start();
                 newBunker.hidden = false;
 
                 const newBunkerAction = "/?action=SaveNewBunker";
-                actionBtn.action = newBunkerAction;
+                formAction.action = newBunkerAction;
                 checkInputFieldName();
             }
             else{
@@ -57,7 +60,7 @@ ob_start();
                 newBunker.hidden = true;
 
                 const actionOther = "/?action=displayBunkerInformation&bunkerName=" + selectBunkerName.value;
-
+                formAction.action = baseAction;
                 actionBtn.href = actionOther;
             }
 
@@ -210,8 +213,8 @@ ob_start();
                     <!-- to create a new one -->
                     <div class="form-group" id="groupInputBunkerName" style="display: none;">
                         <label for="inputBunkerName" class="font-weight-bold">Nom du nouvel abris<a style="color: #000000"> *</a></label>
-                        <input type="text" class="form-control form form" id="inputBunkerName" name="inputBunkerName" aria-describedby="bunkerNameHelp" placeholder="Exemple : Abris21" onkeyup="checkInputFieldName()" value="">
-                        <small id="bunkerNameHelp" class="form-text text-muted">15 caractères maximum. Lettres, chiffres et trait d'union uniquement</small>
+                        <input type="text" class="form-control form form" id="inputBunkerName" name="inputBunkerName" aria-describedby="bunkerNameHelp" placeholder="Exemple : Abris21" maxlength="20" onkeyup="checkInputFieldName()" value="">
+                        <small id="bunkerNameHelp" class="form-text text-muted">20 caractères maximum</small>
 
                         <div class="alert alert-warning w-100 align-middle text-center mt-2 mb-0" id="alertBunkerName" style="display: none;">
                             <strong>Attention!</strong> Ce nom est déjà utilisé ou ne peut être utilisé. Veuillez en utiliser un autre !
@@ -331,7 +334,7 @@ ob_start();
                 <div class="w-100 mb-5 form-group">
                     <div class="form-group w-50 float-left mt-3" id="informationRegion">
                         <label class="font-weight-bold w-50">Commune : </label>
-                        <select class="form-control w-50">
+                        <select class="form-control w-50" name="selectCity">
                             <?php foreach($cityName as $city) :?>
                                 <option><?= $city['nom']; ?></option>
                             <?php endforeach; ?>
@@ -339,11 +342,14 @@ ob_start();
                     </div>
                     <div class="form-group w-50 float-left mt-3" id="informationRegion">
                         <label class="font-weight-bold w-50">Responsable : </label>
-                        <select class="form-control w-50">
+                        <select class="form-control w-50" name="selectManager">
                             <?php foreach($managers as $manager) :?>
                                 <option><?= $manager['nom']. " " .$manager['prenom']; ?></option>
                             <?php endforeach; ?>
                         </select>
+                        <?php foreach ($managers as $manager) :?>
+                            <input hidden type="hidden" value="<?= $manager['idUtilisateur'] ?>" name="<?= $manager['nom']."_".$manager['prenom']; ?>">
+                        <?php endforeach;?>
                     </div>
                 </div>
 
@@ -373,8 +379,8 @@ ob_start();
                         <div class="form-group w-100 float-left pr-1">
                             <?php $y=0; foreach($issueType as $type):?>
                                 <div class="form-group text-left w-40 d-inline-block ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> pr-1 mt-3">
-                                    <input type="checkbox" id="0issue" name="0issue">
-                                    <label for="0issue" class="form-check-label"><?= $type['type'] ?></label>
+                                    <input type="checkbox" id="0<?=$type['type'];?>" name="0<?=$type['type'];?>">
+                                    <label for="0<?=$type['type'];?>" class="form-check-label"><?= $type['type'] ?></label>
                                     <input type="hidden" name="0issuePossible" value="<?= $type['type'] ?>">
                                 </div>
                             <?php $y++;endforeach;?>
@@ -405,8 +411,8 @@ ob_start();
                         <div class="form-group w-100 float-left pr-1">
                             <?php $y=0; foreach($issueType as $type):?>
                                 <div class="form-group text-left w-40 d-inline-block ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> pr-1 mt-3">
-                                    <input type="checkbox" id="1issue" name="1issue">
-                                    <label for="1issue" class="form-check-label"><?= $type['type'] ?></label>
+                                    <input type="checkbox" id="1<?=$type['type'];?>" name="1<?=$type['type'];?>">
+                                    <label for="1<?=$type['type'];?>" class="form-check-label"><?= $type['type'] ?></label>
                                     <input type="hidden" name="1issuePossible" value="<?= $type['type'] ?>">
                                 </div>
                             <?php $y++;endforeach;?>
@@ -437,8 +443,8 @@ ob_start();
                         <div class="form-group w-100 float-left pr-1">
                             <?php $y=0; foreach($issueType as $type):?>
                                 <div class="form-group text-left w-40 d-inline-block ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> pr-1 mt-3">
-                                    <input type="checkbox" id="2issue" name="2issue">
-                                    <label for="2issue" class="form-check-label"><?= $type['type'] ?></label>
+                                    <input type="checkbox" id="2<?=$type['type'];?>" name="2<?=$type['type'];?>">
+                                    <label for="2<?=$type['type'];?>" class="form-check-label"><?= $type['type'] ?></label>
                                     <input type="hidden" name="2issuePossible" value="<?= $type['type'] ?>">
                                 </div>
                             <?php $y++;endforeach;?>
@@ -469,8 +475,8 @@ ob_start();
                         <div class="form-group w-100 float-left pr-1">
                             <?php $y=0; foreach($issueType as $type):?>
                                 <div class="form-group text-left w-40 d-inline-block ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> pr-1 mt-3">
-                                    <input type="checkbox" id="3issue" name="3issue">
-                                    <label for="3issue" class="form-check-label"><?= $type['type'] ?></label>
+                                    <input type="checkbox" id="3<?=$type['type'];?>" name="3<?=$type['type'];?>">
+                                    <label for="3<?=$type['type'];?>" class="form-check-label"><?= $type['type'] ?></label>
                                     <input type="hidden" name="3issuePossible" value="<?= $type['type'] ?>">
                                 </div>
                             <?php $y++;endforeach;?>
@@ -501,15 +507,15 @@ ob_start();
                         <div class="form-group w-100 float-left pr-1">
                             <?php $y=0; foreach($issueType as $type):?>
                                 <div class="form-group text-left w-40 d-inline-block ml-2 <?= ($y%2) ? "float-left pr-1" : "float-right pl-1" ?> pr-1 mt-3">
-                                    <input type="checkbox" id="4issue" name="4issue">
-                                    <label for="4issue" class="form-check-label"><?= $type['type'] ?></label>
-                                    <input type="hidden" name="4issuePossible" value="<?= $type['type'] ?>">
+                                    <input type="checkbox" id="4<?=$type['type'];?>" name="4<?=$type['type'];?>">
+                                    <label for="4<?=$type['type'];?>" class="form-check-label"><?= $type['type'] ?></label>
                                 </div>
                             <?php $y++;endforeach;?>
                         </div>
                     </div>
                 </div>
             </div>
+            <input type="hidden" hidden name="countNewRoom" id="countNewRoom" value="5">
 
 
 
